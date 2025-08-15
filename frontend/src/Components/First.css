@@ -1,0 +1,188 @@
+
+* 
+{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.find-medicine-page 
+{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+  font-family: Arial, sans-serif;
+  background-color: #14967f; 
+}
+
+
+.fm-header 
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  height: 8vh;
+  background-color: #14967f;
+  color: white;
+}
+
+
+.fm-text 
+{
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+
+.fm-location 
+{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+
+.fm-location h6 
+{
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+
+
+.fm-main 
+{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
+  padding-top: 100px;
+  background-color: white; 
+}
+
+
+.fm-title 
+{
+  font-size: 2.5rem; 
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.fm-input-group,
+.fm-input-groups 
+{
+  width: 800px;
+  height: 50px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 10px; 
+}
+
+
+.flexrow
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width :800px;
+  gap: 20px;
+}
+
+
+.fm-input-groups
+{
+  flex-grow: 1;
+}
+
+
+.fm-input 
+{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cad4d9;
+  background-color: #cad4d9;
+  border-radius: 5px; 
+  font-size: 1rem;
+}
+
+
+.fm-input::placeholder 
+{
+  color: #415055;
+}
+
+
+.fm-search-btn 
+{
+  width: 800px;
+  padding: 12px 20px;
+  background-color: #14967f; 
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+
+.fm-search-btn:disabled 
+{
+  cursor: not-allowed;
+}
+
+
+.fm-footer 
+{
+  display: flex;
+  justify-content: center;
+  align-items: normal;
+  height: 10vh;
+  flex-wrap: wrap;
+  gap: 200px;
+  padding: 16px;
+  background-color: #14967f;
+}
+
+
+.fm-footer a 
+{
+  text-decoration: none;
+  color: white;
+  font-size: 0.9rem;
+}
+
+
+.fm-footer a:hover
+{
+  text-decoration: underline;
+}
+
+
+.relative 
+{
+  position: relative;
+}
+
+
+.fm-icon 
+{
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #415055;
+  font-size: 1.2rem;
+}
+
+
+.with-icon 
+{
+  padding-left: 40px;
+}
