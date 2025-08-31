@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './login_page.css'
 
 function LoginPage({ onSwitchToSignup }) {
   const [email, setEmail] = useState('')
