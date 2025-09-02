@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { FaSearch, FaCapsules, FaSortNumericUp } from "react-icons/fa"; // added icons
+import { useNavigate } from "react-router-dom";
+import { FaSearch, FaCapsules, FaSortNumericUp } from "react-icons/fa";
 import "./First.css";
 
 function FindMedicine() {
@@ -7,18 +8,25 @@ function FindMedicine() {
   const [dosage, setDosage] = useState("");
   const [quantity, setQuantity] = useState("");
 
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    // Navigate to the map page
+    navigate("/mappage");
+  };
+
   return (
     <div className="find-medicine-page">
-      
+      {/* Header */}
       <header className="fm-header">
         <h6 className="fm-text">FindMeds</h6>
         <div className="fm-location">
           <h6>Current address</h6>
-          <h6>Select location </h6>
+          <h6>Select location</h6>
         </div>
       </header>
 
-      
+      {/* Main Content */}
       <main className="fm-main">
         <h2 className="fm-title">Find Your Medicine</h2>
 
@@ -57,12 +65,12 @@ function FindMedicine() {
           </div>
         </div>
 
-        <button className="fm-search-btn" disabled>
+        <button className="fm-search-btn" onClick={handleSearch}>
           Search Nearby
         </button>
       </main>
 
-      
+      {/* Footer */}
       <footer className="fm-footer">
         <a href="/">About Us</a>
         <a href="/">Services</a>
@@ -75,4 +83,3 @@ function FindMedicine() {
 }
 
 export default FindMedicine;
-
