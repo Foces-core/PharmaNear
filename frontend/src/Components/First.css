@@ -1,5 +1,5 @@
 
-* 
+*
 {
   margin: 0;
   padding: 0;
@@ -14,7 +14,9 @@
   min-height: 100vh;
   width: 100vw;
   font-family: Arial, sans-serif;
-  background-color: #14967f; 
+  background-color: #14967f;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 
@@ -23,10 +25,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 24px;
   height: 8vh;
   background-color: #14967f;
   color: white;
+  padding: 0 20px;
 }
 
 
@@ -40,8 +42,11 @@
 .fm-location 
 {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: column;      
+  align-items: flex-end;     
+  justify-content: center;     
+  height: 100%;
+  min-width: 140px;
 }
 
 
@@ -50,6 +55,21 @@
   margin: 0;
   font-size: 0.9rem;
   font-weight: normal;
+  cursor: pointer;
+  position: relative;
+  text-align: right;
+  width: 100%;
+  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+}
+
+
+.dropdown-arrow 
+{
+  margin-left: 4px;
+  font-size: 0.9rem;
+  color: white;
 }
 
 
@@ -59,42 +79,51 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   padding-top: 100px;
-  background-color: white; 
+  background-color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
 }
 
 
 .fm-title 
 {
-  font-size: 2.5rem; 
+  font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 30px;
   color: #333;
+  text-align: center;
+  max-width: 100%;
 }
+
 
 .fm-input-group,
 .fm-input-groups 
 {
-  width: 800px;
+  width: 100%;
+  max-width: 800px;
   height: 50px;
   margin-bottom: 16px;
   display: flex;
-  gap: 10px; 
+  gap: 10px;
 }
 
 
-.flexrow
+.flexrow 
 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width :800px;
+  width: 100%;
+  max-width: 800px;
   gap: 20px;
+  box-sizing: border-box;
 }
 
 
-.fm-input-groups
+.fm-input-groups 
 {
   flex-grow: 1;
 }
@@ -105,9 +134,19 @@
   width: 100%;
   padding: 12px;
   border: 1px solid #cad4d9;
-  background-color: #cad4d9;
-  border-radius: 5px; 
+  background-color: #f4f5f7;
+  color: #232323;
+  border-radius: 5px;
   font-size: 1rem;
+  box-sizing: border-box;
+}
+
+
+.fm-input:hover 
+{
+  background-color: #dee8ec;
+  border-color: #14967f;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 
 
@@ -119,9 +158,10 @@
 
 .fm-search-btn 
 {
-  width: 800px;
+  width: 100%;
+  max-width: 800px;
   padding: 12px 20px;
-  background-color: #14967f; 
+  background-color: #14967f;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -129,6 +169,7 @@
   font-weight: bold;
   cursor: pointer;
   margin-top: 10px;
+  box-sizing: border-box;
 }
 
 
@@ -142,12 +183,13 @@
 {
   display: flex;
   justify-content: center;
-  align-items: normal;
+  align-items: center;
   height: 10vh;
   flex-wrap: wrap;
   gap: 200px;
   padding: 16px;
   background-color: #14967f;
+  box-sizing: border-box;
 }
 
 
@@ -159,7 +201,7 @@
 }
 
 
-.fm-footer a:hover
+.fm-footer a:hover 
 {
   text-decoration: underline;
 }
@@ -185,4 +227,46 @@
 .with-icon 
 {
   padding-left: 40px;
+}
+
+
+@media (max-width: 900px) 
+{
+  .flexrow 
+  {
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    gap: 12px;
+  }
+
+  .fm-input-group,
+  .fm-input-groups,
+  .fm-search-btn 
+  {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .fm-main 
+  {
+    padding-top: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .fm-title 
+  {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .fm-footer 
+  {
+    gap: 16px;
+    padding: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
 }

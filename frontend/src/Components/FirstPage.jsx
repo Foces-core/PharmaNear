@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaSearch, FaCapsules, FaSortNumericUp } from "react-icons/fa"; // added icons
+import { FaSearch, FaCapsules, FaSortNumericUp } from "react-icons/fa"; 
 import "./First.css";
 
 function FindMedicine() {
@@ -14,7 +14,7 @@ function FindMedicine() {
         <h6 className="fm-text">FindMeds</h6>
         <div className="fm-location">
           <h6>Current address</h6>
-          <h6>Select location </h6>
+          <h6>Select location <span className="dropdown-arrow">▼</span></h6>
         </div>
       </header>
 
@@ -23,7 +23,7 @@ function FindMedicine() {
         <h2 className="fm-title">Find Your Medicine</h2>
 
         <div className="fm-input-group relative">
-          <FaSearch className="fm-icon" />
+          <FaSearch className="fm-icon" style={{ color: "#14967f" }}/>
           <input
             type="text"
             placeholder="Search for medicines & health products"
@@ -35,7 +35,7 @@ function FindMedicine() {
 
         <div className="flexrow">
           <div className="fm-input-groups relative">
-            <FaCapsules className="fm-icon" />
+            <FaCapsules className="fm-icon" style={{ color: "#14967f" }}/>
             <input
               type="text"
               placeholder="Dosage/Strength"
@@ -46,9 +46,9 @@ function FindMedicine() {
           </div>
 
           <div className="fm-input-groups relative">
-            <FaSortNumericUp className="fm-icon" />
+            <FaSortNumericUp className="fm-icon" style={{ color: "#14967f" }}/>
             <input
-              type="text"
+              type="number"
               placeholder="Quantity"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
