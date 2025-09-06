@@ -55,10 +55,7 @@ const StockScehma = new mongoose.Schema({
 const Stock = mongoose.model("Stock", StockScehma);
 
 const MedicationSchema = new mongoose.Schema({
-  medication_id: String,
-  name: String,
-  description: String,
-  price: Number,
+  inn: { type: String, required: true },
 });
 const Medicine = mongoose.model("Medicine", MedicationSchema);
 
