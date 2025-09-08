@@ -1,8 +1,8 @@
 
 import { useState } from 'react'
 import './App.css'
-import LoginPage from './components/login_page.jsx'
-import SignupPage from './components/signup_page.jsx'
+import LoginPage from './Components/login_page.jsx'
+import SignupPage from './Components/signup_page.jsx'
 
 function App() {
   const [view, setView] = useState('login')

@@ -44,6 +44,7 @@ function SignupPage({ onSwitchToLogin }) {
                 required
               />
             </div>
+            
 
             <div className="input-group">
               <span className="input-icon input-icon--left" aria-hidden="true">
