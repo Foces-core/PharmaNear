@@ -1,9 +1,9 @@
 
 import { useState } from 'react'
 import './App.css'
-import LoginPage from './Components/login_page.jsx'
-import SignupPage from './Components/signup_page.jsx'
-import FindMedicine from "./Components/FirstPage";
+import LoginPage from './components/login_page.jsx'
+import SignupPage from './components/signup_page.jsx'
+import FindMedicine from "./components/FirstPage.jsx";
 
 function App() {
   const [view, setView] = useState('login')
@@ -16,4 +16,3 @@ function App() {
 }
 
 export default App;
-
