@@ -1,0 +1,272 @@
+
+*
+{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.find-medicine-page 
+{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+  font-family: Arial, sans-serif;
+  background-color: #14967f;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+
+.fm-header 
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 8vh;
+  background-color: #14967f;
+  color: white;
+  padding: 0 20px;
+}
+
+
+.fm-text 
+{
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+
+.fm-location 
+{
+  display: flex;
+  flex-direction: column;      
+  align-items: flex-end;     
+  justify-content: center;     
+  height: 100%;
+  min-width: 140px;
+}
+
+
+.fm-location h6 
+{
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: normal;
+  cursor: pointer;
+  position: relative;
+  text-align: right;
+  width: 100%;
+  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+}
+
+
+.dropdown-arrow 
+{
+  margin-left: 4px;
+  font-size: 0.9rem;
+  color: white;
+}
+
+
+.fm-main 
+{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 100px;
+  background-color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+}
+
+
+.fm-title 
+{
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #333;
+  text-align: center;
+  max-width: 100%;
+}
+
+
+.fm-input-group,
+.fm-input-groups 
+{
+  width: 100%;
+  max-width: 800px;
+  height: 50px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+
+.flexrow 
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+
+.fm-input-groups 
+{
+  flex-grow: 1;
+}
+
+
+.fm-input 
+{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cad4d9;
+  background-color: #f4f5f7;
+  color: #232323;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+
+.fm-input:hover 
+{
+  background-color: #dee8ec;
+  border-color: #14967f;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+
+.fm-input::placeholder 
+{
+  color: #415055;
+}
+
+
+.fm-search-btn 
+{
+  width: 100%;
+  max-width: 800px;
+  padding: 12px 20px;
+  background-color: #14967f;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+
+.fm-search-btn:disabled 
+{
+  cursor: not-allowed;
+}
+
+
+.fm-footer 
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+  flex-wrap: wrap;
+  gap: 200px;
+  padding: 16px;
+  background-color: #14967f;
+  box-sizing: border-box;
+}
+
+
+.fm-footer a 
+{
+  text-decoration: none;
+  color: white;
+  font-size: 0.9rem;
+}
+
+
+.fm-footer a:hover 
+{
+  text-decoration: underline;
+}
+
+
+.relative 
+{
+  position: relative;
+}
+
+
+.fm-icon 
+{
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #415055;
+  font-size: 1.2rem;
+}
+
+
+.with-icon 
+{
+  padding-left: 40px;
+}
+
+
+@media (max-width: 900px) 
+{
+  .flexrow 
+  {
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    gap: 12px;
+  }
+
+  .fm-input-group,
+  .fm-input-groups,
+  .fm-search-btn 
+  {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .fm-main 
+  {
+    padding-top: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .fm-title 
+  {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .fm-footer 
+  {
+    gap: 16px;
+    padding: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+}
