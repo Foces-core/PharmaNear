@@ -5,6 +5,8 @@ Thumbs.db
 # Logs
 *.log
 
+node_modules
+
 # Environment files
 .env
 .env.local
