@@ -1,16 +1,25 @@
 import mongoose from "mongoose";
 
 function StockSchema() {
-    const StockScehma = new mongoose.Schema({
-        pharmacy_id: String,
-        medication: String,
+  const StockSchema = new mongoose.Schema({
+    pharmacy_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Pharmacy",
+    },
+    medications: [
+      {
+        medicine_id: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Medicine",
+        },
         quantity: Number,
         price: Number,
-        medication_id: String,
-        pharmacy_id: String,
-    });
-    const Stock = mongoose.model("Stock", StockScehma);
-    return Stock;
+      },
+    ],
+  });
+
+  const Stock = mongoose.model("Stock", StockSchema);
+  return Stock;
 }
 
 export default StockSchema;
