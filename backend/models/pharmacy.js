@@ -2,15 +2,41 @@ import mongoose from "mongoose";
 
 function PharmacySchema() {
   const PharmacySchema = new mongoose.Schema({
-    pharmacy_id: String,
-    name: String,
-    address: String,
-    city: String,
-    state: String,
-    pincode: String,
-    license_number: String,
-    contact_number: String,
-    email: String,
+    user_name: {
+      type: String,
+      required: true,
+    },
+    owner_name: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    state: {
+      type: String,
+    },
+    pincode: {
+      type: String,
+    },
+    opening_hours: {
+      type: String,
+    },
+    closing_hours: {
+      type: String,
+    },
+    contact_number: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   });
   const Pharmacy = mongoose.model("Pharmacy", PharmacySchema);
   return Pharmacy;

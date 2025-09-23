@@ -1,4 +1,8 @@
 /* General body and container styles */
+html, body, #root {
+    height: 100%;
+    min-height: 100vh;
+}
 body {
     font-family: -apple-system, BlinkMacMacFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     margin: 0;
@@ -11,6 +15,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    height: 100vh;
 }
 
 /* Header styles */
@@ -104,10 +109,11 @@ body {
 
 /* Main content layout */
 .fm-main {
-    flex: 1;
+    flex: 1 1 auto;
     display: flex;
     justify-content: center;
     padding: 20px;
+    min-height: 0;
 }
 
 .content-wrapper {
@@ -115,6 +121,8 @@ body {
     width: 100%;
     max-width: 1200px;
     gap: 20px;
+    height: calc(100vh - 120px);
+    min-height: 0;
 }
 
 .left-panel {
@@ -122,6 +130,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    min-height: 0;
 }
 
 .right-panel {
@@ -130,6 +139,7 @@ body {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-height: 0;
 }
 
 .pharmacy-list {
@@ -137,6 +147,17 @@ body {
     flex-direction: column;
     gap: 15px;
     overflow-y: auto;
+    padding-right: 6px;
+}
+
+/* Hide scrollbar while keeping scroll functionality */
+.pharmacy-list {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}
+.pharmacy-list::-webkit-scrollbar { /* WebKit */
+    width: 0px;
+    height: 0px;
 }
 
 .pharmacy-card {

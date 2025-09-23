@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaSearch, FaCapsules, FaSortNumericUp } from "react-icons/fa";
+import { useState } from "react";
+import { FaCapsules, FaSearch, FaSortNumericUp } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import "./First.css";
 
 function FindMedicine() {
@@ -19,10 +19,10 @@ function FindMedicine() {
     <div className="find-medicine-page">
       {/* Header */}
       <header className="fm-header">
-        <h6 className="fm-text">FindMeds</h6>
+        <h6 className="fm-text">PharmaNear</h6>
         <div className="fm-location">
-          <h6>Current address</h6>
-          <h6>Select location <span className="dropdown-arrow">▼</span></h6>
+          <h6>Current Address</h6>
+          <h6>Select Location <span className="dropdown-arrow"> ▼ </span></h6>
         </div>
       </header>
 
@@ -77,6 +77,10 @@ function FindMedicine() {
         <a href="/">Contact</a>
         <a href="/">Privacy Policy</a>
         <a href="/">Terms of Service</a>
+        <div style={{ marginLeft: 'auto' }}>
+          <span style={{ color: 'white', marginRight: 8 }}>Register medicine?</span>
+          <Link to="/login" style={{ color: 'white', textDecoration: 'underline' }}>Login</Link>
+        </div>
       </footer>
     </div>
   );

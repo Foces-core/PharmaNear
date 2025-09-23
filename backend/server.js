@@ -27,21 +27,20 @@ mongoose
 
 const port = process.env.PORT || 3000;
 
-app.post("/api/user/signup", async (req, res) => {
-  const { role, name, email, password } = req.body;
-
-  if (role !== "user") {
-    return res.status(400).json({ message: "Invalid Entry" });
-  }
-
+app.post("/api/pharmacy/signup", async (req, res) => {
   try {
-    const UserSchema = await import("./models/user.js");
-    const User = UserSchema.default();
+    const PharmacySchema = await import("./models/pharmacy.js");
+    const Pharmacy = PharmacySchema.default();
+    const { user_name, owner_name, city, contact_number, password } = req.body;
+
+    if (!user_name || !owner_name || !city || !contact_number || !password) {
+      return res.status(400).json({ message: "Invalid Entry" });
+    }
 
     // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "Email already registered" });
+    const existingPharmacy = await Pharmacy.findOne({ user_name });
+    if (existingPharmacy) {
+      return res.status(400).json({ message: "User name already registered" });
     }
 
     // Hash password
@@ -49,22 +48,31 @@ app.post("/api/user/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create and save user
-    const user = new User({ name, email, password: hashedPassword, role });
-    await user.save();
+    const pharmacy = new Pharmacy({
+      user_name,
+      owner_name,
+      city,
+      contact_number,
+      password: hashedPassword,
+    });
+    await pharmacy.save();
 
     // Generate JWT
     const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role },
+      { id: pharmacy._id, user_name: pharmacy.user_name, role: pharmacy.role },
       JWT_SECRET,
       { expiresIn: "1h" }
     );
 
     res.json({
-      message: "User registered successfully",
+      message: "Pharmacy registered successfully",
       token,
-      user: {
-        id: user._id,
-        name: user.name,
+      pharmacy: {
+        id: pharmacy._id,
+        user_name: pharmacy.user_name,
+        owner_name: pharmacy.owner_name,
+        city: pharmacy.city,
+        contact_number: pharmacy.contact_number,
         email: user.email,
         role: user.role,
       },

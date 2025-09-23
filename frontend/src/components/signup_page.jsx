@@ -1,12 +1,18 @@
 import { useState } from 'react'
 import './login_page.css'
 
+import { Link, useNavigate } from 'react-router-dom'
+
 function SignupPage({ onSwitchToLogin }) {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
+  const [userName, setUserName] = useState('')
+  const [owner, setOwner] = useState('')
+  const [city, setCity] = useState('')
+  const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+
+  const navigate = useNavigate()
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -17,7 +23,8 @@ function SignupPage({ onSwitchToLogin }) {
     }
     // TODO: hook up real signup later
     // eslint-disable-next-line no-alert
-    alert(`Name: ${name}\nEmail: ${email}`)
+    alert(`Username: ${userName}\nOwner: ${owner}\nCity: ${city}\nPhone: ${phone}`)
+    navigate('/pharmacy')
   }
 
   return (
@@ -37,14 +44,30 @@ function SignupPage({ onSwitchToLogin }) {
               </span>
               <input
                 type="text"
-                name="name"
-                placeholder="Full Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                name="userName"
+                placeholder="Username"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
                 required
               />
             </div>
-            
+
+            <div className="input-group">
+              <span className="input-icon input-icon--left" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="currentColor" strokeWidth="1.7"/>
+                  <path d="M4 22C4 18.134 7.13401 15 11 15H13C16.866 15 20 18.134 20 22" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
+                </svg>
+              </span>
+              <input
+                type="text"
+                name="owner"
+                placeholder="Owner"
+                value={owner}
+                onChange={(e) => setOwner(e.target.value)}
+                required
+              />
+            </div>
 
             <div className="input-group">
               <span className="input-icon input-icon--left" aria-hidden="true">
@@ -54,11 +77,28 @@ function SignupPage({ onSwitchToLogin }) {
                 </svg>
               </span>
               <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                name="city"
+                placeholder="City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="input-group">
+              <span className="input-icon input-icon--left" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 6H20C21.1 6 22 6.9 22 8V16C22 17.1 21.1 18 20 18H4C2.9 18 2 17.1 2 16V8C2 6.9 2.9 6 4 6Z" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M22 8L12 13L2 8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone Number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 required
               />
             </div>
@@ -112,7 +152,7 @@ function SignupPage({ onSwitchToLogin }) {
 
             <p className="signup-row">
               Already have an account?{' '}
-              <button type="button" className="link-btn" onClick={onSwitchToLogin}>Log in</button>
+              <Link to="/login" className="link-btn" style={{ textDecoration: 'none' }}>Log in</Link>
             </p>
           </form>
         </div>

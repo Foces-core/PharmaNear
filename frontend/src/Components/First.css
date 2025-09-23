@@ -7,16 +7,17 @@
 }
 
 
-.find-medicine-page 
+.find-medicine-page
 {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  height: 100vh;
   width: 100vw;
+  max-width: 100vw;
   font-family: Arial, sans-serif;
   background-color: #14967f;
-  max-width: 100%;
-  margin: 0 auto;
+  margin: 0;
 }
 
 
@@ -25,8 +26,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 8vh;
-  background-color: #14967f;
+  height: 10vh;
+  background: url(../../public/Login_page_background.jpg);
   color: white;
   padding: 0 20px;
 }
@@ -39,21 +40,23 @@
 }
 
 
-.fm-location 
+.fm-location
 {
   display: flex;
-  flex-direction: column;      
-  align-items: flex-end;     
-  justify-content: center;     
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
   height: 100%;
   min-width: 140px;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 
-.fm-location h6 
+.fm-location h6
 {
-  margin: 0;
-  font-size: 0.9rem;
+  margin: 5px;
+  font-size: 0.7rem;
   font-weight: normal;
   cursor: pointer;
   position: relative;
@@ -62,6 +65,12 @@
   justify-content: flex-end;
   display: flex;
   align-items: center;
+  text-align: center;
+  border: 1px solid white;
+  padding: 6px 10px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -73,9 +82,9 @@
 }
 
 
-.fm-main 
+.fm-main
 {
-  flex: 1;
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -85,6 +94,7 @@
   padding-left: 10px;
   padding-right: 10px;
   box-sizing: border-box;
+  width: 100%;
 }
 
 
@@ -184,12 +194,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10vh;
+  min-height: 60px;
   flex-wrap: wrap;
-  gap: 200px;
+  gap: 20px;
   padding: 16px;
-  background-color: #14967f;
+  background: url(../../public/Login_page_background.jpg);
   box-sizing: border-box;
+  width: 100%;
 }
 
 
