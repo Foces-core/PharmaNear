@@ -13,6 +13,10 @@ function PharmacySchema() {
     address: {
       type: String,
     },
+    license_number: {
+      type: String,
+      unique: false,
+    },
     city: {
       type: String,
       required: true,
@@ -22,6 +26,12 @@ function PharmacySchema() {
     },
     pincode: {
       type: String,
+    },
+    latitude: {
+      type: Number,
+    },
+    longitude: {
+      type: Number,
     },
     opening_hours: {
       type: String,

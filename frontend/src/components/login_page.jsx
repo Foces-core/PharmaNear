@@ -11,10 +11,13 @@ function LoginPage() {
 
   function handleSubmit(event) {
     event.preventDefault()
-    // TODO: hook up real auth later
-    // eslint-disable-next-line no-alert
-    alert(`Username: ${userName}\nPassword: ${password}`)
-    navigate('/pharmacy')
+    try {
+      localStorage.setItem('pharmacy_user_name', userName)
+      navigate('/pharmacy')
+    } catch (e) {
+      // eslint-disable-next-line no-alert
+      alert('Unable to persist session')
+    }
   }
 
   return (

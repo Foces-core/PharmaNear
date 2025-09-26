@@ -1,6 +1,8 @@
+import bcrypt from "bcryptjs";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import { fetchDrugs } from "./medicine.js";
 
@@ -26,6 +28,7 @@ mongoose
   });
 
 const port = process.env.PORT || 3000;
+const JWT_SECRET = process.env.JWT_SECRET || "dev_secret";
 
 app.post("/api/pharmacy/signup", async (req, res) => {
   try {
@@ -73,8 +76,7 @@ app.post("/api/pharmacy/signup", async (req, res) => {
         owner_name: pharmacy.owner_name,
         city: pharmacy.city,
         contact_number: pharmacy.contact_number,
-        email: user.email,
-        role: user.role,
+        role: pharmacy.role,
       },
     });
   } catch (err) {
@@ -84,41 +86,43 @@ app.post("/api/pharmacy/signup", async (req, res) => {
 });
 
 // LOGIN
-app.post("/api/user/login", async (req, res) => {
-  const { email, password } = req.body;
+app.post("/api/pharmacy/login", async (req, res) => {
+  const { user_name, password } = req.body;
 
-  if (!email || !password) {
+  if (!user_name || !password) {
     return res.status(400).json({ message: "Invalid credentials" });
   }
 
   try {
-    const UserSchema = await import("./models/user.js");
-    const User = UserSchema.default();
+    const PharmacySchema = await import("./models/pharmacy.js");
+    const Pharmacy = PharmacySchema.default();
 
     // Find user by email
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid credentials" });
+    const pharmacy = await Pharmacy.findOne({ user_name });
+    if (!pharmacy) return res.status(400).json({ message: "Invalid credentials" }); 
 
     // Compare password
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, pharmacy.password);
     if (!isMatch)
       return res.status(400).json({ message: "Invalid credentials" });
 
     // Generate JWT
     const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role },
+      { id: pharmacy._id, user_name: pharmacy.user_name, role: pharmacy.role },
       JWT_SECRET,
       { expiresIn: "1h" }
     );
 
     res.json({
-      message: "User logged in successfully",
+      message: "Pharmacy logged in successfully",
       token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
+      pharmacy: {
+        id: pharmacy._id,
+        user_name: pharmacy.user_name,
+        owner_name: pharmacy.owner_name,
+        city: pharmacy.city,
+        contact_number: pharmacy.contact_number,
+        role: pharmacy.role,
       },
     });
   } catch (err) {
@@ -127,13 +131,58 @@ app.post("/api/user/login", async (req, res) => {
   }
 });
 
-app.post("/api/pharmacy", async (req, res) => {
-  const PharmacySchema = await import("./models/pharmacy.js");
-  const Pharmacy = PharmacySchema.default();
-  const pharmacy = new Pharmacy(req.body);
-  await pharmacy.save();
-  res.json({ message: "Pharmacy registered successfully" });
+// Get pharmacy profile by user_name
+app.get("/api/pharmacy/profile", async (req, res) => {
+  try {
+    const { user_name } = req.query;
+    if (!user_name) return res.status(400).json({ message: "user_name is required" });
+    const PharmacySchema = await import("./models/pharmacy.js");
+    const Pharmacy = PharmacySchema.default();
+    const pharmacy = await Pharmacy.findOne({ user_name });
+    if (!pharmacy) return res.status(404).json({ message: "Pharmacy not found" });
+    res.json(pharmacy);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
+
+// Update pharmacy profile by user_name
+app.put("/api/pharmacy/profile", async (req, res) => {
+  try {
+    const { user_name } = req.body;
+    if (!user_name) return res.status(400).json({ message: "user_name is required" });
+
+    const allowed = [
+      "license_number",
+      "address",
+      "city",
+      "state",
+      "pincode",
+      "opening_hours",
+      "closing_hours",
+      "contact_number",
+      "latitude",
+      "longitude",
+    ];
+    const update = {};
+    for (const key of allowed) if (key in req.body) update[key] = req.body[key];
+
+    const PharmacySchema = await import("./models/pharmacy.js");
+    const Pharmacy = PharmacySchema.default();
+    const pharmacy = await Pharmacy.findOneAndUpdate(
+      { user_name },
+      { $set: update },
+      { new: true }
+    );
+    if (!pharmacy) return res.status(404).json({ message: "Pharmacy not found" });
+    res.json({ message: "Profile updated", pharmacy });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 app.post("/api/pharmacy/stock", async (req, res) => {
   const StockSchema = await import("./models/stock.js");

@@ -21,8 +21,8 @@ function FindMedicine() {
       <header className="fm-header">
         <h6 className="fm-text">PharmaNear</h6>
         <div className="fm-location">
-          <h6>Current Address</h6>
-          <h6>Select Location <span className="dropdown-arrow"> ▼ </span></h6>
+          <button className="fm-location-button" >Current Location</button>
+          <span className="dropdown-arrow"> ▼ </span>
         </div>
       </header>
 
