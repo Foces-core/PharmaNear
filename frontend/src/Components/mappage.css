@@ -1,100 +1,110 @@
-/* General body and container styles */
-body {
-    font-family: -apple-system, BlinkMacMacFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+/* ================= General Styles ================= */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
     background-color: #f0f2f5;
 }
 
+/* ================= Page Layout ================= */
 .find-medicine-page {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: #ffffff;
+
 }
 
-/* Header styles */
+/* ================= Header ================= */
 .fm-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
-    background-color: #1b806d; /* The correct dark teal from the image */
+    padding: 10px 35px;
+    background-color: #1b806d;
     color: white;
+    gap: 20px;
 }
 
+/* App Name */
 .fm-text {
     font-size: 1.5rem;
     font-weight: bold;
     flex-shrink: 0;
-    margin-right: 20px;
 }
 
-.search-bar-container {
-    flex-grow: 1;
-    max-width: 500px;
-    position: relative;
+/* ================= SEARCH + SORT (Final Clean Version) ================= */
+.search-sort-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #fff;
+  border-radius: 8px;
+  margin: 15px 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 .search-input {
-    width: 100%;
-    padding: 10px 15px;
-    border-radius: 20px;
-    border: none;
-    background-color: #f0f2f5;
-    color: #333;
-    font-size: 1rem;
-    padding-left: 40px; /* Space for search icon */
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;   /* force white background */
+  color: #333;
+  outline: none;
+  transition: border 0.2s ease-in-out;
 }
 
-.search-input::placeholder {
-    color: #888;
+.search-input:focus {
+  border-color: #4f4f4f;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
 }
 
-.search-bar-container::before {
-    content: "\1F50D"; /* Magnifying glass icon */
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #888;
-    font-size: 1.2rem;
+.sort-wrapper {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
 }
 
-.sort-container {
-    display: flex;
-    align-items: center;
-    margin-left: 20px;
-    gap: 5px;
+.sort-label {
+  font-size: 14px;
+  margin-right: 8px;
+  color: #444;
 }
 
-.sort-text {
-    font-size: 1rem;
-    white-space: nowrap;
-}
-
+/* Sort dropdown only (with arrow) */
 .sort-select {
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: white;
+  padding: 8px 35px 8px 12px; /* space on right for arrow */
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='gray'><path d='M2 4l4 4 4-4z'/></svg>") no-repeat right 10px center;
+  background-size: 12px;
+  cursor: pointer;
+  outline: none;
+  appearance: none; /* hide default arrow */
+  transition: border 0.2s ease-in-out;
+  color: #000000;
 }
 
-.fm-location {
+.sort-select:focus {
+  border-color: #009688;
+  box-shadow: 0 0 4px rgba(0,150,136,0.3);
+}
+
+
+
+/* ========== Location (Icon + Text) ========== */
+.header-leftmost {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-left: 20px;
-}
-
-.location-info {
-    text-align: right;
-    font-size: 0.9rem;
-}
-
-.location-info h6 {
-    margin: 0;
-    font-weight: normal;
+    gap: 10px; /* spacing between icon and text */
 }
 
 .location-icon {
@@ -102,12 +112,30 @@ body {
     height: 25px;
 }
 
-/* Main content layout */
+.fm-location {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.location-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.location-info h6 {
+    font-weight: normal;
+    margin: 0;
+}
+
+/* ================= Main Content ================= */
 .fm-main {
     flex: 1;
     display: flex;
     justify-content: center;
-    padding: 20px;
+    padding: 35px 20px 20px 20px;
 }
 
 .content-wrapper {
@@ -115,41 +143,37 @@ body {
     width: 100%;
     max-width: 1200px;
     gap: 20px;
+    height: calc(100vh - 90px); /* full height minus header/footer */
 }
 
+/* ========== Left Panel (List) ========== */
 .left-panel {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 15px;
-}
-
-.right-panel {
-    flex: 2;
-    background-color: #333;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    height: 100%;
+    padding-right: 5px;
 }
 
 .pharmacy-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    overflow-y: auto;
 }
 
 .pharmacy-card {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
     padding-right: 50px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .pharmacy-info {
@@ -158,27 +182,28 @@ body {
 }
 
 .pharmacy-info h3 {
-    margin: 0;
-    font-size: 1.1em;
+    font-size: 1.1rem;
     color: #333;
+    margin-bottom: 3px;
 }
 
 .pharmacy-info p {
-    margin: 0;
-    font-size: 0.9em;
+    font-size: 0.9rem;
     color: #666;
+    margin: 2px 0;
 }
 
+/* Stock Indicator */
 .stock {
-    font-weight: bold;
-    font-size: 0.9em;
-    text-transform: uppercase;
-    padding: 5px 10px;
-    border-radius: 15px;
-    white-space: nowrap;
     position: absolute;
     top: 15px;
     right: 50px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .in-stock {
@@ -191,6 +216,7 @@ body {
     color: #dc3545;
 }
 
+/* Direction Icon */
 .direction-icon {
     position: absolute;
     right: 15px;
@@ -205,37 +231,67 @@ body {
     filter: invert(50%);
 }
 
-/* Footer styles */
+.no-pharmacies-message {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #666;
+}
+
+/* ========== Right Panel (Map) ========== */
+.right-panel {
+    flex: 2;
+    background-color: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    height: 100%;
+}
+
+.leaflet-container {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    border-radius: 10px;
+}
+
+/* ================= Footer ================= */
 .fm-footer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 30px;
-    background-color: #1b806d; /* The correct dark teal from the image */
+    display: column; /* Use flexbox for simple column stacking */
+    flex-direction: column;
+    align-items: center; /* Centers the content and text horizontally */
+    gap: 10px; /* Adds a gap between the two rows */
+
+    background-color: #1b806d;
     color: white;
 }
 
 .fm-footer-content {
     display: flex;
-    gap: 25px;
+    padding:  5px 30px;
+    gap: 20px;
+    justify-content: space-around; /* Ensures links are centered on smaller screens */
     flex-grow: 1;
+    flex-wrap: wrap; /* Allows links to wrap if the screen is too narrow */
 }
 
 .fm-footer a {
-    text-decoration: none;
     color: white;
+    text-decoration: none;
     font-size: 0.9rem;
     opacity: 0.9;
 }
 
 .fm-footer a:hover {
-    text-decoration: underline;
     opacity: 1;
+    text-decoration: underline;
 }
 
 .fm-footer-text {
-    text-align: right;
-    font-size: 0.8em;
+    flex-direction: row;
+    font-size: 0.8rem;
     opacity: 0.8;
+    text-align: center;
+    background-color: #1b806d;
 }

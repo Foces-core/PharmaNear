@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import "./MapPage.css";
+import "leaflet/dist/leaflet.css";
 
 const pharmacies = [
     { id: 1, name: "Charuka Drug House", address: "Railway Station Rd", closing: "10:30pm", phone: "094187299399", lat: 10.003, lng: 76.321, stock: "in-stock" },
@@ -56,44 +57,65 @@ export default function MapPage() {
         <div className="find-medicine-page">
             <header className="fm-header">
                 <h6 className="fm-text">FindMeds</h6>
-                <div className="search-bar-container">
-                    <input type="text" placeholder="Search for medicines & health products" className="search-input" />
-                </div>
-                <div className="sort-container">
-                    <span className="sort-text">Sort By</span>
-                    <select className="sort-select">
-                        <option>Location</option>
-                        <option>Distance</option>
-                    </select>
+            <div className="header-leftmost">
+                <div className="location-icon">
+                    <img src="https://api.iconify.design/material-symbols/location-on.svg" alt="Location Pin" className="location-icon" />
                 </div>
                 <div className="fm-location">
+                    
                     <div className="location-info">
                         <h6>Current address</h6>
                         <h6>Select location</h6>
                     </div>
-                    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Flocation-pin_684809&psig=AOvVaw2sW2d-nJ2dK8f-w4S6eF9N&ust=1693635235887000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJDj-4D0kIEDFQAAAAAdAAAAABAE" alt="Location Pin" className="location-icon" />
                 </div>
+            </div>
             </header>
+
+            
+            <div className="search-sort-container">
+                <input
+                    type="text"
+                    placeholder="Search for medicines & health products"
+                    className="search-input"
+                />
+            <div className="sort-wrapper">
+                    <select className="sort-select">
+                            <option value="" disabled selected>Sort by</option>
+                            <option value="name">Name</option>
+                            <option value="rating">Rating</option>
+                            <option value="distance">Distance</option>
+                    </select>
+                </div>
+            </div>
+
             <main className="fm-main">
                 <div className="content-wrapper">
                     <div className="left-panel">
                         <div className="pharmacy-list">
-                            {visiblePharmacies.map((pharmacy) => (
-                                <div key={pharmacy.id} className="pharmacy-card">
-                                    <div className="pharmacy-info">
-                                        <h3>{pharmacy.name}</h3>
-                                        <p>{pharmacy.address}</p>
-                                        <p>Closes: {pharmacy.closing}</p>
-                                        <p>{pharmacy.phone}</p>
+                            {/* Conditional Rendering starts here */}
+                            {visiblePharmacies.length > 0 ? (
+                                visiblePharmacies.map((pharmacy) => (
+                                    <div key={pharmacy.id} className="pharmacy-card">
+                                        <div className="pharmacy-info">
+                                            <h3>{pharmacy.name}</h3>
+                                            <p>{pharmacy.address}</p>
+                                            <p>Closes: {pharmacy.closing}</p>
+                                            <p>{pharmacy.phone}</p>
+                                        </div>
+                                        <div className={`stock ${pharmacy.stock}`}>
+                                            {pharmacy.stock === "in-stock" ? "In Stock" : "Out of Stock"}
+                                        </div>
+                                        <div className="direction-icon">
+                                            <img src="https://api.iconify.design/material-symbols/directions-outline.svg" alt="Direction" />
+                                        </div>
                                     </div>
-                                    <div className={`stock ${pharmacy.stock}`}>
-                                        {pharmacy.stock === "in-stock" ? "In Stock" : "Out of Stock"}
-                                    </div>
-                                    <div className="direction-icon">
-                                        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fdirection_547144&psig=AOvVaw0O-b9J_4vW0M_gQh5D0qfF&ust=1693635391307000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCNDm6-D0kIEDFQAAAAAdAAAAABAE" alt="Direction" />
-                                    </div>
+                                ))
+                            ) : (
+                                <div className="no-pharmacies-message">
+                                    No pharmacies available in this area.
                                 </div>
-                            ))}
+                            )}
+                            {/* Conditional Rendering ends here */}
                         </div>
                     </div>
                     <div className="right-panel">
