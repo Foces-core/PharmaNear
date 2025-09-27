@@ -1,30 +1,24 @@
-import { useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginPage from './components/login_page.jsx';
-import SignupPage from './components/signup_page.jsx';
-import FindMedicine from './components/FirstPage.jsx';
-import MapPage from './components/MapPage';
+import FirstPage from './Components/FirstPage.jsx';
+import MapPage from './Components/MapPage.jsx';
+import PharmacyAdmin from './Components/PharmacyAdmin.jsx';
+import PharmacyPage from './Components/PharmacyPage.jsx';
+import LoginPage from './Components/login_page.jsx';
+import SignupPage from './Components/signup_page.jsx';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [showSignup, setShowSignup] = useState(false);
-
-  if (!isAuthenticated) {
-    return showSignup ? (
-      <SignupPage onSwitchToLogin={() => setShowSignup(false)} />
-    ) : (
-      <LoginPage onSwitchToSignup={() => setShowSignup(true)} onLoginSuccess={() => setIsAuthenticated(true)} />
-    );
-  }
-
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<FindMedicine />} />
+        <Route path="/" element={<FirstPage />} />
         <Route path="/mappage" element={<MapPage />} />
+        <Route path="/pharmacy" element={<PharmacyPage />} />
+        <Route path="/pharmacy/admin" element={<PharmacyAdmin />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
