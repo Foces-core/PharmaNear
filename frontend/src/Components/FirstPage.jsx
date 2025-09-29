@@ -68,20 +68,24 @@ function FindMedicine() {
         <button className="fm-search-btn" onClick={handleSearch}>
           Search Nearby
         </button>
+        {/* Register medicine below search button */}
+        <div className="fm-register">
+          <span>Register medicine?</span>
+          <Link to="/login">Login</Link>
+        </div>
       </main>
 
       {/* Footer */}
       <footer className="fm-footer">
-        <a href="/">About Us</a>
-        <a href="/">Services</a>
-        <a href="/">Contact</a>
-        <a href="/">Privacy Policy</a>
-        <a href="/">Terms of Service</a>
-        <div style={{ marginLeft: 'auto' }}>
-          <span style={{ color: 'white', marginRight: 8 }}>Register medicine?</span>
-          <Link to="/login" style={{ color: 'white', textDecoration: 'underline' }}>Login</Link>
+        <div className="fm-footer-links">
+          <a href="/">About Us</a>
+          <a href="/">Services</a>
+          <a href="/">Contact</a>
+          <a href="/">Privacy Policy</a>
+          <a href="/">Terms of Service</a>
         </div>
       </footer>
+
     </div>
   );
 }

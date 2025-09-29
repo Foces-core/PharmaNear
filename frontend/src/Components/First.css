@@ -21,13 +21,12 @@
 }
 
 
-.fm-header 
-{
+.fm-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 10vh;
-  background: url(../../public/Login_page_background.jpg);
+  background-color: #14967f;  
   color: white;
   padding: 0 20px;
 }
@@ -215,35 +214,50 @@
   cursor: not-allowed;
 }
 
+.fm-register {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #415055;
+  text-align: center;
+}
 
-.fm-footer 
-{
+.fm-register a {
+  margin-left: 6px;
+  color: #14967f;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.fm-register a:hover {
+  text-decoration: underline;
+}
+
+.fm-footer {
   display: flex;
-  justify-content: center;
+  justify-content: space-between; 
   align-items: center;
   min-height: 60px;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 16px;
-  background: url(../../public/Login_page_background.jpg);
+  padding: 16px 40px;
+  background-color: #14967f; 
   box-sizing: border-box;
   width: 100%;
 }
 
+.fm-footer-links {
+  display: flex;
+  gap: 30px; 
+  flex-wrap: wrap;
+}
 
-.fm-footer a 
-{
+.fm-footer a {
   text-decoration: none;
   color: white;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
-
-.fm-footer a:hover 
-{
+.fm-footer a:hover {
   text-decoration: underline;
 }
-
 
 .relative 
 {
