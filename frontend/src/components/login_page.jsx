@@ -13,7 +13,7 @@ function LoginPage() {
     event.preventDefault()
     try {
       localStorage.setItem('pharmacy_user_name', userName)
-      navigate('/pharmacy')
+      navigate('/pharmacy/dashboard')
     } catch (e) {
       // eslint-disable-next-line no-alert
       alert('Unable to persist session')
