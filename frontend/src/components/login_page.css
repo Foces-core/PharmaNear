@@ -58,6 +58,10 @@
   border-radius: 8px;
   border: 1px solid #cfe3dc;
   outline: none;
+  font-family: Poppins;
+  background-color: #f9fafa;
+  color: #333 !important; 
+  font-size: 14px;
 }
 
 .input-group input::placeholder {
@@ -271,4 +275,20 @@
   .guest-text {
     font-size: 13px;
   }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #f9fafa inset !important; 
+    -webkit-text-fill-color: #333 !important; 
+    transition: background-color 0s ease-in-out, box-shadow 0s ease-in-out !important;
+}
+input:-webkit-autofill:not(:focus) {
+    -webkit-text-fill-color: #333 !important;
+    color: #333 !important;
+}
+input:-webkit-autofill::first-line {
+    color: #333 !important;
 }
