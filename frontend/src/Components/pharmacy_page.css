@@ -1,0 +1,400 @@
+
+*
+{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.medicine-page
+{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
+  max-width: 100vw;
+  font-family: Arial, sans-serif;
+  background-color: #14967f;
+  margin: 0;
+}
+
+
+.fm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10vh;
+  background-color: #14967f;  
+  color: white;
+  padding: 0 20px;
+}
+
+
+.fm-text 
+{
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+
+.fm-location
+{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100%;
+  min-width: 140px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+
+.fm-location-button {
+  background: transparent;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  border:1px solid #14967f;
+  backdrop-filter: blur(5px);
+  box-shadow: 1px 2px 2px #14967f;
+  font-weight: 500;
+  outline:none;
+  text-decoration: none;
+}
+
+.fm-location-button:hover{
+  scale:1.01;
+  outline:none;
+}
+
+
+.dropdown-arrow 
+{
+  margin-left: 4px;
+  font-size: 0.9rem;
+  color: white;
+}
+
+
+.fm-main
+{
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 100px;
+  background-color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+
+.fm-title 
+{
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #333;
+  text-align: center;
+  max-width: 100%;
+}
+
+/* Admin panel helpers */
+.admin-section
+{
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 32px;
+}
+
+.admin-card
+{
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.admin-actions
+{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.fm-label
+{
+  display: block;
+  font-weight: 600;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+
+.fm-input-group,
+.fm-input-groups 
+{
+  width: 100%;
+  max-width: 800px;
+  height: 50px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+
+.flexrow 
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+
+.fm-input-groups 
+{
+  flex-grow: 1;
+}
+
+
+.fm-input 
+{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cad4d9;
+  background-color: #f4f5f7;
+  color: #232323;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+
+.fm-input:hover 
+{
+  background-color: #dee8ec;
+  border-color: #14967f;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+
+.fm-input::placeholder 
+{
+  color: #415055;
+}
+
+
+.fm-search-btn 
+{
+  width: 100%;
+  max-width: 800px;
+  padding: 12px 20px;
+  background-color: #14967f;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+
+.fm-search-btn:disabled 
+{
+  cursor: not-allowed;
+}
+
+.fm-register {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #415055;
+  text-align: center;
+}
+
+.fm-register a {
+  margin-left: 6px;
+  color: #14967f;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.fm-register a:hover {
+  text-decoration: underline;
+}
+
+.fm-footer {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  min-height: 60px;
+  padding: 16px 40px;
+  background-color: #14967f; 
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.fm-footer-links {
+  display: flex;
+  gap: 30px; 
+  flex-wrap: wrap;
+}
+
+.fm-footer a {
+  text-decoration: none;
+  color: white;
+  font-size: 0.95rem;
+}
+
+.fm-footer a:hover {
+  text-decoration: underline;
+}
+
+.relative 
+{
+  position: relative;
+}
+
+
+.fm-icon 
+{
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #415055;
+  font-size: 1.2rem;
+}
+
+
+.with-icon 
+{
+  padding-left: 40px;
+}
+
+
+@media (max-width: 900px) 
+{
+  .flexrow 
+  {
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    gap: 12px;
+  }
+
+  .fm-input-group,
+  .fm-input-groups,
+  .fm-search-btn 
+  {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .fm-main 
+  {
+    padding-top: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 100px;
+  }
+
+  .fm-title 
+  {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .fm-footer 
+  {
+    gap: 16px;
+    padding: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) 
+{
+  .fm-header 
+  {
+    height: auto;
+    min-height: 10vh;
+    padding: 10px 15px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .fm-text 
+  {
+    font-size: 1.2rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  .fm-title 
+  {
+    font-size: 1.5rem;
+  }
+
+  .admin-card 
+  {
+    padding: 12px;
+  }
+
+  .fm-input 
+  {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .fm-search-btn 
+  {
+    padding: 10px 16px;
+    font-size: 1rem;
+  }
+
+  .fm-footer 
+  {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .fm-footer a 
+  {
+    font-size: 0.8rem;
+  }
+}
+
+/* Fix for content overflow on all screen sizes */
+.fm-main {
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Ensure all form elements are properly contained */
+.fm-input-group,
+.fm-input-groups {
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Prevent text overflow */
+.fm-text,
+.fm-title,
+.fm-footer a {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}

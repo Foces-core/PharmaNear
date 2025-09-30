@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaCapsules, FaDollarSign, FaEdit, FaPlus, FaSave, FaSortNumericUp, FaTrash } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
-import "./First.css";
+import "./pharmacy_page.css";
 
 export default function PharmacyPage() {
   const navigate = useNavigate();
@@ -368,7 +368,7 @@ export default function PharmacyPage() {
   }
 
   return (
-    <div className="find-medicine-page">
+    <div className="medicine-page">
       <header className="fm-header">
         <h6 className="fm-text">FindMeds</h6>
         <div className="fm-location" style={{ marginLeft: 'auto' }}>

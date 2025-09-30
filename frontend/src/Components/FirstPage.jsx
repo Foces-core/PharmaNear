@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaCapsules, FaSearch, FaSortNumericUp } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import "./First.css";
+import "./first_page.css";
 
 function FindMedicine() {
   const [medicine, setMedicine] = useState("");
@@ -72,11 +72,7 @@ function FindMedicine() {
     <div className="find-medicine-page">
       {/* Header */}
       <header className="fm-header">
-        <h6 className="fm-text">PharmaNear</h6>
-        <div className="fm-location">
-          <button className="fm-location-button" onClick={() => getLocation()} >Current Location</button>
-          <span className="dropdown-arrow"> ▼ </span>
-        </div>
+        <h1 className="fm-text">PharmaNear</h1>
       </header>
 
       {/* Main Content */}
@@ -118,7 +114,7 @@ function FindMedicine() {
           </div>
         </div>
 
-        <button className="fm-search-btn" onClick={handleSearch}>
+        <button className="fp-search-btn" onClick={handleSearch}>
           Search Nearby
         </button>
         {/* Register medicine below search button */}
@@ -129,8 +125,8 @@ function FindMedicine() {
       </main>
 
       {/* Footer */}
-      <footer className="fm-footer">
-        <div className="fm-footer-links">
+      <footer className="fp-footer">
+        <div className="fp-footer-links">
           <a href="/">About Us</a>
           <a href="/">Services</a>
           <a href="/">Contact</a>

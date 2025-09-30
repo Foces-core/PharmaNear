@@ -1,0 +1,181 @@
+/* Global reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- Color Palette & Layout Setup --- */
+:root {
+  --teal-color: #1a9e87; 
+  --input-light-color: #e5eaea;
+  --button-color: #129E85; 
+}
+
+/* Page container: Ensures content spans the full height of the white #root area */
+.find-medicine-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #ffffff; /* Allows white background from #root to show */
+  overflow-y: auto;
+  margin: 0; 
+}
+
+/* Header Section - REMOVE HACKS AND HIDE CONTENT */
+.fm-header {
+  display: none; /* Hide header content completely to match image's large white top space */
+}
+
+/* Main Content Section - The Centered White Card Content */
+.fm-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  
+  background-color: transparent; 
+  width: 90%; 
+  max-width: 650px; 
+  margin: 0 auto; 
+  padding: 0 40px 50px; 
+}
+
+/* Page title */
+.fm-title {
+  font-size: 5rem;
+  font-weight: 500; 
+  margin-top: 50px; 
+  margin-bottom: 30px;
+  color: #ffffffff;
+  text-align: center;
+}
+
+/* Input groups setup */
+.fm-input-group,
+.fm-input-groups {
+  display: flex;
+  position: relative;
+  align-items: center;
+  width: 100%;
+  border-radius: 4px; 
+}
+.fm-input-group {
+    margin-bottom: 15px; 
+}
+
+/* Input fields - shared styles */
+.fm-input {
+  background-color: var(--input-light-color); 
+  border: none; 
+  /* Critical change: The Search input has an icon, so it needs padding. */
+  padding: 15px 15px 15px 45px; /* Default for Search input */
+  height: 50px;
+  margin: 0; 
+  box-shadow: none;
+}
+
+/* Search Icon for the first input */
+.fm-input-group > .fm-icon {
+  poposition: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #555; 
+  font-size: 1.1rem;
+  z-index: 10;
+}
+
+/* Row for Dosage/Strength and Quantity */
+.flexrow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 15px;
+  width: 100%;
+  margin-bottom: 25px; 
+}
+
+.flexrow .fm-input-groups {
+    flex: 1; 
+}
+
+.fp-search-btn {
+  width: 100%;
+  max-width: 350px; 
+  padding: 15px 20px;
+  background-color: #129E85; 
+  color: #ffffff;
+  border: none;
+  border-radius: 8px; 
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 15px; 
+  align-self: center; 
+}
+
+.fp-search-btn:hover {
+  background: #1a9e87;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.fm-register {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #555;
+    text-align: center;
+    margin-bottom: 50px; 
+}
+.fm-register a {
+    color: var(--button-color); 
+    text-decoration: none;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+/* Footer Section */
+.fp-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--teal-color); 
+  padding: 15px 30px;
+  width: 100%;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  position: static; 
+  margin-top: auto; 
+}
+
+.fp-footer-links {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 30px; 
+}
+
+.fp-footer a {
+  text-decoration: none;
+  color: white;
+  font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .fm-main {
+        width: 95%; 
+        padding: 0 20px 40px;
+        margin: 0 auto;
+    }
+    .flexrow {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
