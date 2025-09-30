@@ -1,100 +1,92 @@
-
-*
-{
+/* Global reset */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
-.find-medicine-page
-{
+/* Page container */
+.find-medicine-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  height: 100vh;
-  width: 100vw;
-  max-width: 100vw;
+  width: 100%;
   font-family: Arial, sans-serif;
   background-color: #14967f;
-  margin: 0;
+  overflow-y: auto;
+  margin-bottom: 50px;
+  margin-top: 150px;
 }
 
-
+/* Header Section */
 .fm-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 10vh;
-  background-color: #14967f;  
+  padding: 16px 20px;
+  background-color: #14967f;
   color: white;
-  padding: 0 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  flex-shrink: 0; /* Prevent header from shrinking */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  margin-top: -150px;
 }
 
-
-.fm-text 
-{
+.fm-text {
   font-size: 1.5rem;
   font-weight: bold;
 }
 
-
-.fm-location
-{
+.fm-location {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
-  justify-content: center;
-  height: 100%;
-  min-width: 140px;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
 }
-
 
 .fm-location-button {
   background: transparent;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  border:1px solid #14967f;
+  border: 1px solid #14967f;
   backdrop-filter: blur(5px);
   box-shadow: 1px 2px 2px #14967f;
   font-weight: 500;
-  outline:none;
-  text-decoration: none;
-}
-
-.fm-location-button:hover{
-  scale:1.01;
-  outline:none;
-}
-
-
-.dropdown-arrow 
-{
-  margin-left: 4px;
-  font-size: 0.9rem;
+  outline: none;
   color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
 }
 
+.fm-location-button:hover {
+  transform: scale(1.05);
+}
 
-.fm-main
-{
-  flex: 1 1 auto;
+/* Main Content Section */
+.fm-main {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 100px;
+  padding: 40px 20px;
   background-color: white;
-  padding-left: 10px;
-  padding-right: 10px;
-  box-sizing: border-box;
   width: 100%;
+  overflow-y: auto;
+  min-height: 0;
+  margin-bottom: auto; /* Allow flexbox to control height */
 }
 
-
-.fm-title 
-{
+/* Page title */
+.fm-title {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 30px;
@@ -103,70 +95,74 @@
   max-width: 100%;
 }
 
-/* Admin panel helpers */
-.admin-section
-{
+/* Admin section */
+.admin-section {
   width: 100%;
   max-width: 800px;
   margin-bottom: 32px;
 }
 
-.admin-card
-{
+.admin-card {
   background: #fff;
-  padding: 16px;
-  border-radius: 8px;
+  padding: 24px;
+  border-radius: 12px;
   border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.admin-actions
-{
+.admin-actions {
   display: flex;
   gap: 12px;
   align-items: center;
 }
 
-.fm-label
-{
+.fm-label {
   display: block;
   font-weight: 600;
   font-size: 12px;
   margin-bottom: 6px;
 }
 
-
-.fm-input-group,
-.fm-input-groups 
-{
+/* Grid layout */
+.fm-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
   width: 100%;
-  max-width: 800px;
-  height: 50px;
-  margin-bottom: 16px;
-  display: flex;
-  gap: 10px;
+  max-width: 1200px;
+  justify-content: center;
 }
 
+.fm-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
 
-.flexrow 
-{
+/* Form styling */
+.profile-form,
+.fm-input-group,
+.fm-input-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+.profile-form {
+  margin-bottom: 100px;
+}
+
+.flexrow {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  gap: 12px;
   width: 100%;
-  max-width: 800px;
-  gap: 20px;
-  box-sizing: border-box;
+  margin-bottom: 16px;
 }
 
-
-.fm-input-groups 
-{
-  flex-grow: 1;
-}
-
-
-.fm-input 
-{
+.fm-input {
   width: 100%;
   padding: 12px;
   border: 1px solid #cad4d9;
@@ -174,28 +170,46 @@
   color: #232323;
   border-radius: 5px;
   font-size: 1rem;
-  box-sizing: border-box;
+  transition: all 0.2s ease;
+  margin-bottom: 12px;
 }
 
-
-.fm-input:hover 
-{
+.fm-input:hover {
   background-color: #dee8ec;
   border-color: #14967f;
-  transition: background-color 0.2s, border-color 0.2s;
 }
 
-
-.fm-input::placeholder 
-{
-  color: #415055;
+.fm-input:focus {
+  outline: none;
+  border-color: #14967f;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(20, 150, 127, 0.1);
 }
 
+.fm-input::placeholder {
+  color: #94a3b8;
+}
 
-.fm-search-btn 
-{
+.fm-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #f1f5f9;
+}
+
+.fm-input[type="number"]::-webkit-inner-spin-button,
+.fm-input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.fm-input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Buttons */
+.fm-search-btn {
   width: 100%;
-  max-width: 800px;
   padding: 12px 20px;
   background-color: #14967f;
   color: #ffffff;
@@ -204,194 +218,117 @@
   font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 10px;
-  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
 }
 
+.fm-search-btn:hover:not(:disabled) {
+  background-color: #108870;
+  transform: translateY(-1px);
+}
 
-.fm-search-btn:disabled 
-{
+.fm-search-btn:disabled {
   cursor: not-allowed;
+  background-color: #94a3b8;
+  opacity: 0.7;
 }
 
-.fm-register {
-  margin-top: 12px;
-  font-size: 0.9rem;
-  color: #415055;
-  text-align: center;
-}
-
-.fm-register a {
-  margin-left: 6px;
-  color: #14967f;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.fm-register a:hover {
-  text-decoration: underline;
-}
-
+/* Footer Section */
 .fm-footer {
   display: flex;
-  justify-content: space-between; 
+  flex-direction: row;
   align-items: center;
-  min-height: 60px;
-  padding: 16px 40px;
-  background-color: #14967f; 
-  box-sizing: border-box;
+  justify-content: center;
+  background-color: #14967f;
+  padding: 20px;
+  gap: 20px;
   width: 100%;
+  flex-wrap: wrap;
+  flex-shrink: 0; /* Prevent footer from shrinking */
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: 500px;
+  
 }
 
 .fm-footer-links {
   display: flex;
-  gap: 30px; 
   flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
 .fm-footer a {
   text-decoration: none;
   color: white;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .fm-footer a:hover {
   text-decoration: underline;
 }
 
-.relative 
-{
-  position: relative;
-}
-
-
-.fm-icon 
-{
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #415055;
-  font-size: 1.2rem;
-}
-
-
-.with-icon 
-{
-  padding-left: 40px;
-}
-
-
-@media (max-width: 900px) 
-{
-  .flexrow 
-  {
+/* Responsive */
+@media (max-width: 900px) {
+  .flexrow {
     flex-direction: column;
-    width: 100%;
-    max-width: 100%;
     gap: 12px;
   }
-
-  .fm-input-group,
-  .fm-input-groups,
-  .fm-search-btn 
-  {
-    width: 100%;
-    max-width: 100%;
+  .fm-main {
+    padding: 30px 15px;
   }
-
-  .fm-main 
-  {
-    padding-top: 50px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 100px;
-  }
-
-  .fm-title 
-  {
+  .fm-title {
     font-size: 1.8rem;
-    margin-bottom: 20px;
   }
-
-  .fm-footer 
-  {
-    gap: 16px;
-    padding: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
+  .fm-header {
+    padding: 12px 15px;
+  }
+  .fm-footer {
+    padding: 15px;
+    gap: 15px;
   }
 }
 
-@media (max-width: 600px) 
-{
-  .fm-header 
-  {
-    height: auto;
-    min-height: 10vh;
-    padding: 10px 15px;
+@media (max-width: 600px) {
+  .fm-header {
     flex-direction: column;
+    align-items: center;
     gap: 10px;
+    padding: 10px 15px;
   }
-
-  .fm-text 
-  {
+  .fm-text {
     font-size: 1.2rem;
     text-align: center;
-    width: 100%;
   }
-
-  .fm-title 
-  {
+  .fm-title {
     font-size: 1.5rem;
   }
-
-  .admin-card 
-  {
-    padding: 12px;
-  }
-
-  .fm-input 
-  {
+  .fm-input {
     padding: 10px;
     font-size: 0.9rem;
   }
-
-  .fm-search-btn 
-  {
+  .fm-search-btn {
     padding: 10px 16px;
     font-size: 1rem;
   }
-
-  .fm-footer 
-  {
+  .fm-footer {
     flex-direction: column;
-    gap: 8px;
-    padding: 10px;
-    text-align: center;
+    gap: 10px;
+    padding: 15px;
   }
-
-  .fm-footer a 
-  {
-    font-size: 0.8rem;
+  .fm-main {
+    padding: 20px 10px;
   }
 }
 
-/* Fix for content overflow on all screen sizes */
-.fm-main {
-  box-sizing: border-box;
-  overflow-x: hidden;
-}
-
-/* Ensure all form elements are properly contained */
-.fm-input-group,
-.fm-input-groups {
-  box-sizing: border-box;
-  overflow-x: hidden;
-}
-
-/* Prevent text overflow */
+/* Text wrapping and overflow fixes */
 .fm-text,
 .fm-title,
 .fm-footer a {

@@ -7,16 +7,53 @@ function LoginPage() {
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
   const navigate = useNavigate()
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
+    setIsLoading(true)
+    setError('')
+
     try {
-      localStorage.setItem('pharmacy_user_name', userName)
+      const response = await fetch('http://localhost:3001/api/pharmacy/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_name: userName,
+          password: password,
+        }),
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorMessage = 'Login failed';
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+          errorMessage = errorText || errorMessage;
+        }
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json()
+
+      // Store authentication data
+      localStorage.setItem('pharmacy_user_name', data.pharmacy.user_name)
+      localStorage.setItem('pharmacy_token', data.token)
+      localStorage.setItem('pharmacy_id', data.pharmacy.id)
+
+      // Navigate to pharmacy dashboard
       navigate('/pharmacy')
-    } catch (e) {
-      // eslint-disable-next-line no-alert
-      alert('Unable to persist session')
+    } catch (error) {
+      setError(error.message)
+      console.error('Login error:', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -89,10 +126,27 @@ function LoginPage() {
               <a className="muted-link" href="#">Forgot Password ?</a>
             </div>
 
-            <button className="btn-primary" type="submit">Log in</button>
+            {error && (
+              <div className="error-message" style={{ 
+                color: '#dc3545', 
+                fontSize: '0.9rem', 
+                textAlign: 'center', 
+                marginBottom: '10px',
+                padding: '8px',
+                backgroundColor: '#f8d7da',
+                border: '1px solid #f5c6cb',
+                borderRadius: '4px'
+              }}>
+                {error}
+              </div>
+            )}
+
+            <button className="btn-primary" type="submit" disabled={isLoading}>
+              {isLoading ? 'Logging in...' : 'Log in'}
+            </button>
 
             <p className="signup-row">
-              Don’t have an account?{' '}
+              Don't have an account?{' '}
               <Link to="/signup" className="link-btn" style={{ textDecoration: 'none' }}>Sign up</Link>
             </p>
 
@@ -102,22 +156,17 @@ function LoginPage() {
               <span />
             </div>
 
-            <div className="social-row">
-              <button type="button" aria-label="Continue with Google" className="social-btn">
-                <svg width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path fill="#EA4335" d="M12 10.2v3.7h5.2c-.2 1.2-1.4 3.5-5.2 3.5-3.1 0-5.6-2.6-5.6-5.8S8.9 5.8 12 5.8c1.8 0 3 .8 3.7 1.5l2.5-2.4C16.9 3.4 14.7 2.5 12 2.5 6.9 2.5 2.7 6.7 2.7 11.9S6.9 21.2 12 21.2c7 0 9.3-4.9 8.6-7.9H12z"/>
-                </svg>
-              </button>
-              <button type="button" aria-label="Continue with Facebook" className="social-btn">
-                <svg width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path fill="#1877F2" d="M22 12.07C22 6.48 17.52 2 11.93 2 6.35 2 1.87 6.48 1.87 12.07c0 4.97 3.63 9.09 8.38 9.93v-7.02H7.9v-2.9h2.35V9.41c0-2.33 1.38-3.62 3.5-3.62.99 0 2.03.18 2.03.18v2.23h-1.14c-1.12 0-1.47.7-1.47 1.41v1.69h2.5l-.4 2.9h-2.1v7.02c4.75-.84 8.38-4.96 8.38-9.93z"/>
-                </svg>
-              </button>
-              <button type="button" aria-label="Continue with X" className="social-btn">
-                <svg width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path fill="#000" d="M18.244 2H21L14.33 9.62 22 22h-6.244l-4.44-6.91L5.91 22H3.15l7.17-7.97L2 2h6.38l4.03 6.35L18.244 2Zm-2.19 18h2.16L8.04 4H5.8l10.254 16Z"/>
-                </svg>
-              </button>
+            <div className="guest-access">
+              <p className="guest-text">
+                Just looking for medicines?{' '}
+                <Link to="/" className="link-btn" style={{ 
+                  textDecoration: 'none', 
+                  color: '#14967f',
+                  fontWeight: '500'
+                }}>
+                  Browse as Guest
+                </Link>
+              </p>
             </div>
           </form>
         </div>

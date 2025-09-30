@@ -144,10 +144,16 @@
   transform: translateX(-200%);
   transition: transform 0.7s ease;
 }
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   background-position: 100% 50%;
   transform: translateY(-1px);
   box-shadow: 0 10px 20px rgba(8, 86, 72, 0.45);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
 }
 
 
@@ -216,6 +222,34 @@
   box-shadow: 0 6px 16px rgba(0,0,0,0.1);
 }
 
+/* Guest Access Section */
+.guest-access {
+  text-align: center;
+  margin-top: 20px;
+  padding: 16px;
+  background: rgba(20, 150, 127, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(20, 150, 127, 0.1);
+}
+
+.guest-text {
+  color: #6a7b75;
+  font-size: 14px;
+  margin: 0;
+}
+
+.guest-access .link-btn {
+  color: #14967f;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.guest-access .link-btn:hover {
+  color: #108870;
+  text-decoration: underline;
+}
+
 @media (max-width: 900px) {
   .login-layout {
     grid-template-columns: 1fr;
@@ -230,5 +264,11 @@
     width: 55%;
     padding: 9px 9px;
   }
-
+  .guest-access {
+    margin-top: 16px;
+    padding: 12px;
+  }
+  .guest-text {
+    font-size: 13px;
+  }
 }
