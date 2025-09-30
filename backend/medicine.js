@@ -74,6 +74,5 @@ async function fetchDrugs() {
   }
 }
 
-// Export the function to be called from index.js
 export { fetchDrugs };
 

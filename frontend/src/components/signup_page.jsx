@@ -11,20 +11,58 @@ function SignupPage({ onSwitchToLogin }) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const navigate = useNavigate()
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    if (password !== confirmPassword) {
-      // eslint-disable-next-line no-alert
-      alert('Passwords do not match')
-      return
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const response = await fetch('http://localhost:3001/api/pharmacy/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_name: userName,
+          owner_name: owner,
+          city: city,
+          phone_number: phone,
+          password: password,
+        }),
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorMessage = 'Signup failed';
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+          errorMessage = errorText || errorMessage;
+        }
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json()
+
+      // Store authentication data
+      localStorage.setItem('pharmacy_user_name', data.pharmacy.user_name)
+      localStorage.setItem('pharmacy_token', data.token)
+      localStorage.setItem('pharmacy_id', data.pharmacy.id)
+
+      // Navigate to pharmacy dashboard
+      navigate('/pharmacy')
+    } catch (error) {
+      setError(error.message)
+      console.error('Signup error:', error)
+    } finally {
+      setIsLoading(false)
     }
-    // TODO: hook up real signup later
-    // eslint-disable-next-line no-alert
-    alert(`Username: ${userName}\nOwner: ${owner}\nCity: ${city}\nPhone: ${phone}`)
-    navigate('/pharmacy')
   }
 
   return (
@@ -148,7 +186,9 @@ function SignupPage({ onSwitchToLogin }) {
               />
             </div>
 
-            <button className="btn-primary" type="submit">Create account</button>
+            <button className="btn-primary" type="submit" disabled={isLoading}>
+              {isLoading ? 'Creating account...' : 'Create account'}
+            </button>
 
             <p className="signup-row">
               Already have an account?{' '}

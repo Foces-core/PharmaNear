@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 import { FaArrowLeft, FaMapPin } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import "./First.css";
-import "./login_page.css";
+import "./PharmacyAdmin.css";
 
 export default function PharmacyAdmin() {
   const navigate = useNavigate();
@@ -16,17 +15,30 @@ export default function PharmacyAdmin() {
     latitude: "",
     longitude: "",
   });
+  
+  // Prevent mouse wheel from changing input values
+  useEffect(() => {
+    const handleWheel = (e) => {
+      if (e.target.tagName === 'INPUT') {
+        e.preventDefault();
+      }
+    };
+    
+    // Add event listeners to prevent wheel on all inputs
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+      input.classList.add('no-wheel-input');
+      input.addEventListener('wheel', handleWheel, { passive: false });
+    });
+    
+    // Clean up event listeners on component unmount
+    return () => {
+      inputs.forEach(input => {
+        input.removeEventListener('wheel', handleWheel);
+      });
+    };
+  }, []);
 
-  // Stock management states
-  const [stockItems, setStockItems] = useState([]);
-  const [loadingStock, setLoadingStock] = useState(false);
-  const [addingStock, setAddingStock] = useState(false);
-  const [editingItem, setEditingItem] = useState(null);
-  const [newItem, setNewItem] = useState({
-    name: "",
-    quantity: "",
-    price: "",
-  });
 
   // Loading states
   const [loadingProfile, setLoadingProfile] = useState(false);
@@ -34,20 +46,31 @@ export default function PharmacyAdmin() {
 
   useEffect(() => {
     const userName = localStorage.getItem("pharmacy_user_name") || "";
-    if (!userName) return;
+    const token = localStorage.getItem("pharmacy_token") || "";
+    
+    if (!userName || !token) {
+      navigate('/login');
+      return;
+    }
+    
     setProfile((p) => ({ ...p, user_name: userName }));
     fetchProfile();
-    fetchStockItems();
-  }, []);
+  }, [navigate]);
 
   async function fetchProfile() {
     const controller = new AbortController();
     try {
       setLoadingProfile(true);
       const userName = localStorage.getItem("pharmacy_user_name") || "";
+      const token = localStorage.getItem("pharmacy_token") || "";
       const res = await fetch(
-        `/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`,
-        { signal: controller.signal }
+        `http://localhost:3001/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`,
+        { 
+          signal: controller.signal,
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        }
       );
       if (!res.ok) throw new Error("Failed to load profile");
       const data = await res.json();
@@ -64,38 +87,22 @@ export default function PharmacyAdmin() {
       }));
     } catch (e) {
       console.error("Failed to load profile:", e);
+      if (e.message.includes('401') || e.message.includes('403')) {
+        localStorage.clear();
+        navigate('/login');
+      }
     } finally {
       setLoadingProfile(false);
     }
     return () => controller.abort();
   }
 
-  async function fetchStockItems() {
-    try {
-      setLoadingStock(true);
-      const userName = localStorage.getItem("pharmacy_user_name") || "";
-      const res = await fetch(
-        `/api/pharmacy/stock?user_name=${encodeURIComponent(userName)}`
-      );
-      if (!res.ok) throw new Error("Failed to load stock");
-      const data = await res.json();
-      setStockItems(data.stock || []);
-    } catch (e) {
-      console.error("Failed to load stock:", e);
-      // Fallback demo data
-      setStockItems([
-        { id: 1, name: "Paracetamol 500mg", quantity: 100, price: 10.5 },
-        { id: 2, name: "Amoxicillin 250mg", quantity: 50, price: 35.75 },
-        { id: 3, name: "Ibuprofen 400mg", quantity: 75, price: 18.25 },
-      ]);
-    } finally {
-      setLoadingStock(false);
-    }
-  }
+  
 
   async function saveProfile() {
     try {
       setSavingProfile(true);
+      const token = localStorage.getItem("pharmacy_token") || "";
       const payload = {
         ...profile,
         latitude:
@@ -103,9 +110,12 @@ export default function PharmacyAdmin() {
         longitude:
           profile.longitude === "" ? undefined : Number(profile.longitude),
       };
-      const res = await fetch("/api/pharmacy/profile", {
+      const res = await fetch("http://localhost:3001/api/pharmacy/profile", {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`,
+        },
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error("Failed to save");
@@ -144,176 +154,165 @@ export default function PharmacyAdmin() {
   return (
     <div className="find-medicine-page">
       {/* Header */}
-      <header className="fm-header" style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        padding: '10px 20px',
-        minHeight: '10vh',
-        height: 'auto'
-      }}>
-        <div className="fm-text" style={{ minWidth: '200px' }}>Pharmacy Admin Panel</div>
-        <div className="fm-location" style={{ order: 3, width: '100%', textAlign: 'center', padding: '5px 0', margin: '5px 0' }}>
+      <header className="fm-header">
+        <div className="fm-text">Pharmacy Admin Panel</div>
+        <div className="fm-location">
           <h6>Welcome, {profile.user_name}</h6>
         </div>
         <button
           type="button"
           className="fm-search-btn back-btn"
           onClick={() => navigate("/pharmacy")}
-          style={{ minWidth: '150px', maxWidth: '200px' }}
         >
-          <FaArrowLeft style={{ marginRight: '8px' }} /> Back to Dashboard
+          <FaArrowLeft /> Back to Dashboard
         </button>
       </header>
 
       {/* Main Content */}
-      <main className="fm-main" style={{
-        paddingTop: '50px',
-        paddingBottom: '100px',
-        marginLeft: 'auto',
-        marginRight: 'auto'
-      }}>
+      <main className="fm-main">
         <h2 className="fm-title">Pharmacy Management</h2>
 
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          width: '100%'
-        }}>
-          {/* Profile Settings Section */}
-          <div className="admin-section">
-            <h3 style={{ marginBottom: '16px', fontSize: '1.3rem', color: '#333' }}>Pharmacy Profile</h3>
-            <div className="admin-card" style={{ minWidth: '300px', width: '100%', maxWidth: '600px' }}>
-              <form
-                className="profile-form"
-                autoComplete="on"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  saveProfile();
-                }}
-                style={{ padding: '16px', width: '100%' }}
-              >
-                <div className="fm-input-groups">
-                  <input
-                    type="text"
-                    className="fm-input"
-                    placeholder="License Number"
-                    value={profile.license_number}
-                    onChange={(e) =>
-                      setProfile((p) => ({
-                        ...p,
-                        license_number: e.target.value,
-                      }))
-                    }
-                    required
-                  />
-                </div>
-
-                <div className="fm-input-groups">
-                  <input
-                    type="text"
-                    className="fm-input"
-                    placeholder="Address"
-                    value={profile.address}
-                    onChange={(e) =>
-                      setProfile((p) => ({ ...p, address: e.target.value }))
-                    }
-                  />
-                </div>
-
-                <div className="flexrow">
+        <div className="fm-grid">
+          {/* Left Column - Profile Settings */}
+          <div className="fm-col">
+            <div className="admin-section">
+              <h3>Pharmacy Profile</h3>
+              <div className="admin-card">
+                <form
+                  className="profile-form"
+                  autoComplete="on"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    saveProfile();
+                  }}
+                >
                   <div className="fm-input-groups">
+                    <label htmlFor="license_number">License Number *</label>
                     <input
+                      id="license_number"
                       type="text"
                       className="fm-input"
-                      placeholder="City"
-                      value={profile.city}
-                      onChange={(e) =>
-                        setProfile((p) => ({ ...p, city: e.target.value }))
-                      }
-                    />
-                  </div>
-                  <div className="fm-input-groups">
-                    <input
-                      type="text"
-                      className="fm-input"
-                      placeholder="State"
-                      value={profile.state}
-                      onChange={(e) =>
-                        setProfile((p) => ({ ...p, state: e.target.value }))
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="flexrow">
-                  <div className="fm-input-groups">
-                    <input
-                      type="text"
-                      className="fm-input"
-                      placeholder="Pincode"
-                      value={profile.pincode}
-                      onChange={(e) =>
-                        setProfile((p) => ({ ...p, pincode: e.target.value }))
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="flexrow">
-                  <div className="fm-input-groups">
-                    <input
-                      type="number"
-                      className="fm-input"
-                      placeholder="Latitude"
-                      value={profile.latitude}
-                      onChange={(e) =>
-                        setProfile((p) => ({ ...p, latitude: e.target.value }))
-                      }
-                    />
-                  </div>
-                  <div className="fm-input-groups">
-                    <input
-                      type="number"
-                      className="fm-input"
-                      placeholder="Longitude"
-                      value={profile.longitude}
+                      placeholder="Enter your pharmacy license number"
+                      value={profile.license_number}
                       onChange={(e) =>
                         setProfile((p) => ({
                           ...p,
-                          longitude: e.target.value,
+                          license_number: e.target.value,
                         }))
+                      }
+                      required
+                    />
+                  </div>
+
+                  <div className="fm-input-groups">
+                    <label htmlFor="address">Address</label>
+                    <input
+                      id="address"
+                      type="text"
+                      className="fm-input"
+                      placeholder="Enter full address"
+                      value={profile.address}
+                      onChange={(e) =>
+                        setProfile((p) => ({ ...p, address: e.target.value }))
                       }
                     />
                   </div>
-                </div>
 
-                <button
-                  className="fm-search-btn"
-                  type="submit"
-                  disabled={savingProfile}
-                >
-                  {savingProfile ? "Saving..." : "Save Profile"}
-                </button>
+                  <div className="flexrow">
+                    <div className="fm-input-groups">
+                      <label htmlFor="city">City</label>
+                      <input
+                        id="city"
+                        type="text"
+                        className="fm-input"
+                        placeholder="Enter city"
+                        value={profile.city}
+                        onChange={(e) =>
+                          setProfile((p) => ({ ...p, city: e.target.value }))
+                        }
+                      />
+                    </div>
+                    <div className="fm-input-groups">
+                      <label htmlFor="state">State</label>
+                      <input
+                        id="state"
+                        type="text"
+                        className="fm-input"
+                        placeholder="Enter state"
+                        value={profile.state}
+                        onChange={(e) =>
+                          setProfile((p) => ({ ...p, state: e.target.value }))
+                        }
+                      />
+                    </div>
+                    <div className="fm-input-groups">
+                      <label htmlFor="pincode">Pincode</label>
+                      <input
+                        id="pincode"
+                        type="text"
+                        className="fm-input"
+                        placeholder="Enter postal code"
+                        value={profile.pincode}
+                        onChange={(e) =>
+                          setProfile((p) => ({ ...p, pincode: e.target.value }))
+                        }
+                      />
+                    </div>
+                  </div>
 
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  marginTop: '16px',
-                  marginBottom: '8px'
-                }}>
+                  <div className="flexrow">
+                    <div className="fm-input-groups">
+                      <label htmlFor="latitude">Latitude</label>
+                      <input
+                        id="latitude"
+                        type="number"
+                        step="0.000001"
+                        className="fm-input"
+                        placeholder="GPS latitude"
+                        value={profile.latitude}
+                        onChange={(e) =>
+                          setProfile((p) => ({ ...p, latitude: e.target.value }))
+                        }
+                      />
+                    </div>
+                    <div className="fm-input-groups">
+                      <label htmlFor="longitude">Longitude</label>
+                      <input
+                        id="longitude"
+                        type="number"
+                        step="0.000001"
+                        className="fm-input"
+                        placeholder="GPS longitude"
+                        value={profile.longitude}
+                        onChange={(e) =>
+                          setProfile((p) => ({
+                            ...p,
+                            longitude: e.target.value,
+                          }))
+                        }
+                      />
+                    </div>
+                  </div>
+
                   <button
-                    type="button"
                     className="fm-search-btn"
-                    onClick={fetchCurrentLocation}
-                    style={{ maxWidth: '250px' }}
+                    type="submit"
+                    disabled={savingProfile}
                   >
-                    <FaMapPin style={{ marginRight: '8px' }} /> Use current location
+                    {savingProfile ? "Saving..." : "Save Profile"}
                   </button>
-                </div>
-              </form>
+
+                  <div className="location-btn-wrapper">
+                    <button
+                      type="button"
+                      className="fm-search-btn"
+                      onClick={fetchCurrentLocation}
+                    >
+                      <FaMapPin /> Use current location
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>

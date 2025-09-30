@@ -20,24 +20,35 @@ body {
     flex-direction: column;
     min-height: 100vh;
     background-color: #ffffff;
-    height: 100vh;
 }
 
 /* ================= Header ================= */
 .fm-header {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 35px;
+    padding: 8px 20px;
     background-color: #1b806d;
     color: white;
-    gap: 20px;
+    gap: 15px;
+    flex-wrap: wrap;
+    overflow: hidden; /* Prevent content from overflowing */
+    min-height: 50px;
 }
 
 /* App Name */
 .fm-text {
     font-size: 1.5rem;
     font-weight: bold;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+/* Ensure location is always on the right */
+.fm-header .fm-location {
+    margin-left: auto;
+    white-space: nowrap;
     flex-shrink: 0;
 }
 
@@ -141,33 +152,51 @@ body {
     justify-content: center;
     padding: 20px;
     min-height: 0;
+    overflow: hidden;
+    height: calc(100vh - 140px); /* Calculate height excluding header and footer */
 }
 
 .content-wrapper {
     display: flex;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
     gap: 20px;
-    height: calc(100vh - 120px);
-    min-height: 0;
+    height: 100%;
 }
 
 /* ========== Left Panel (List) ========== */
 .left-panel {
     flex: 1;
+    min-width: 300px;
     display: flex;
     flex-direction: column;
     gap: 15px;
-    min-height: 0;
+    height: 100%;
 }
 
 .right-panel {
     flex: 2;
+    min-width: 400px;
     background-color: #333;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    min-height: 0;
+    height: 100%;
+}
+
+/* Make the search-sort-container responsive */
+.search-sort-container {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    min-width: 300px;
+    margin: 0 10px;
 }
 
 .pharmacy-list {
@@ -256,6 +285,35 @@ body {
     filter: invert(50%);
 }
 
+/* Google Maps Button */
+.google-maps-btn {
+    background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(66, 133, 244, 0.3);
+}
+
+.google-maps-btn:hover {
+    background: linear-gradient(135deg, #3367d6 0%, #2d8f47 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(66, 133, 244, 0.4);
+}
+
+.google-maps-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(66, 133, 244, 0.3);
+}
+
 .no-pharmacies-message {
     text-align: center;
     padding: 20px;
@@ -272,6 +330,7 @@ body {
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     height: 100%;
+    min-height: 400px; /* Ensure minimum height for map visibility */
 }
 
 .leaflet-container {
@@ -283,28 +342,29 @@ body {
 
 /* ================= Footer ================= */
 .fm-footer {
-    display: column; /* Use flexbox for simple column stacking */
+    display: flex;
     flex-direction: column;
-    align-items: center; /* Centers the content and text horizontally */
-    gap: 10px; /* Adds a gap between the two rows */
-
+    align-items: center;
+    gap: 2px;
+    z-index: 1000;
     background-color: #1b806d;
     color: white;
+    min-height: 30px;
+    padding: 6px 20px;
 }
 
 .fm-footer-content {
     display: flex;
-    padding:  5px 30px;
+    padding: 0;
     gap: 20px;
-    justify-content: space-around; /* Ensures links are centered on smaller screens */
-    flex-grow: 1;
-    flex-wrap: wrap; /* Allows links to wrap if the screen is too narrow */
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .fm-footer a {
     color: white;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     opacity: 0.9;
 }
 
@@ -319,4 +379,34 @@ body {
     opacity: 0.8;
     text-align: center;
     background-color: #1b806d;
+}
+
+/* Responsive Design for Google Maps Button */
+@media (max-width: 768px) {
+    .google-maps-btn {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+        margin-top: 8px;
+    }
+    
+    .pharmacy-card {
+        padding: 12px;
+        padding-right: 40px;
+    }
+    
+    .stock {
+        right: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .google-maps-btn {
+        font-size: 0.75rem;
+        padding: 5px 8px;
+        margin-top: 6px;
+    }
+    
+    .google-maps-btn span {
+        display: none; /* Hide emoji on very small screens if needed */
+    }
 }

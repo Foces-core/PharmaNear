@@ -6,7 +6,8 @@ const MedicationSchema = new mongoose.Schema({
   routes: [String],
 });
 
-const Medicine = mongoose.model("Medicine", MedicationSchema);
+// Prevent OverwriteModelError if this file is imported multiple times
+const Medicine =
+  mongoose.models.Medicine || mongoose.model("Medicine", MedicationSchema);
 
 export default Medicine;
-export { MedicationSchema };

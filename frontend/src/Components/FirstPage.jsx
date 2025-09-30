@@ -10,9 +10,62 @@ function FindMedicine() {
 
   const navigate = useNavigate();
 
-  const handleSearch = () => {
-    // Navigate to the map page
-    navigate("/mappage");
+  const [location, setLocation] = useState("");
+  const [error, setError] = useState("");
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocation(`${latitude}, ${longitude}`);
+          setError("");
+        },
+        (error) => {
+          setError("Error: " + error.message);
+        }
+      );
+    } else {
+      setError("Geolocation is not supported by this browser.");
+    }
+  };
+
+  const handleSearch = async () => {
+    if (!medicine) {
+      setError("Please enter a medicine name");
+      return;
+    }
+    
+    try {
+      // Get geolocation if not already set
+      if (!location) {
+        getLocation();
+      }
+      
+      // Fetch pharmacies with the medicine in stock
+      const response = await fetch(`http://localhost:3001/api/drugs?name=${encodeURIComponent(medicine)}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      
+      const data = await response.json();
+      
+      // Navigate to map page with the data
+      navigate("/mappage", { 
+        state: { 
+          medicineData: data,
+          medicine: medicine,
+          dosage: dosage,
+          quantity: quantity,
+          userLocation: location
+        } 
+      });
+    } catch (error) {
+      console.error("Error fetching medicine data:", error);
+      setError("Failed to fetch medicine data. Please try again.");
+    }
   };
 
   return (
@@ -21,7 +74,7 @@ function FindMedicine() {
       <header className="fm-header">
         <h6 className="fm-text">PharmaNear</h6>
         <div className="fm-location">
-          <button className="fm-location-button" >Current Location</button>
+          <button className="fm-location-button" onClick={() => getLocation()} >Current Location</button>
           <span className="dropdown-arrow"> ▼ </span>
         </div>
       </header>
