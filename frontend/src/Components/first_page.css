@@ -25,9 +25,14 @@
 }
 
 /* Header Section - REMOVE HACKS AND HIDE CONTENT */
-.fm-header {
-  display: none; /* Hide header content completely to match image's large white top space */
+ .fm-main .fm-header {
+  display: none;
+  margin-bottom: -30px;
+  /* Hide header content completely to match image's large white top space */
 }
+
+
+
 
 /* Main Content Section - The Centered White Card Content */
 .fm-main {
@@ -36,7 +41,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  
   background-color: transparent; 
   width: 90%; 
   max-width: 650px; 
@@ -61,7 +65,7 @@
   position: relative;
   align-items: center;
   width: 100%;
-  border-radius: 4px; 
+  border-radius: 4px;
 }
 .fm-input-group {
     margin-bottom: 15px; 

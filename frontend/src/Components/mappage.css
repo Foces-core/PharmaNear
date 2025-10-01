@@ -343,20 +343,23 @@ body {
 /* ================= Footer ================= */
 .fm-footer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 2px;
-    z-index: 1000;
-    background-color: #1b806d;
-    color: white;
-    min-height: 30px;
-    padding: 6px 20px;
+    justify-content: center;
+    background-color: var(--teal-color); 
+    padding: 15px 30px;
+    width: 100%;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    position: static; 
+    margin-top: auto; 
 }
 
 .fm-footer-content {
-    display: flex;
+    display: none;
     padding: 0;
-    gap: 20px;
+    gap: 40px;
+    align-items: center;
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -366,6 +369,9 @@ body {
     text-decoration: none;
     font-size: 0.85rem;
     opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .fm-footer a:hover {
@@ -379,6 +385,9 @@ body {
     opacity: 0.8;
     text-align: center;
     background-color: #1b806d;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 /* Responsive Design for Google Maps Button */
@@ -408,5 +417,8 @@ body {
     
     .google-maps-btn span {
         display: none; /* Hide emoji on very small screens if needed */
+    }
+    .fm-footer-content {
+        gap: 120px;
     }
 }

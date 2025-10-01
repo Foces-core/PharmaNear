@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./pharmacy_dashboard.css";
 
 const initialMedicines = [
@@ -38,7 +38,7 @@ const SearchIcon = () => (
 // Header component 
 const Header = () => (
   <header className="header">
-    <h1 className="logo">PharmaStock </h1>
+    <h1 className="logo">FindMeds</h1>
     <button className="logout">Logout</button>
   </header>
 );

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaCapsules, FaDollarSign, FaEdit, FaPlus, FaSave, FaSortNumericUp, FaTrash } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import "./pharmacy_page.css";
 
 export default function PharmacyPage() {
@@ -371,36 +371,19 @@ export default function PharmacyPage() {
     <div className="medicine-page">
       <header className="fm-header">
         <h6 className="fm-text">FindMeds</h6>
-        <div className="fm-location" style={{ marginLeft: 'auto' }}>
-          <h6>Welcome, {profile.user_name}</h6>
-        </div>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-          <button type="button" className="back-btn" onClick={goToAdmin}>
+        <div className="fm-location">
+          <button type="button" className="back-btn" onClick={goToAdmin} style={{ backgroundColor: '#008060 ', color: '#ffffff', marginBottom: '20px',marginRight: '10px'}}>
             Go to Admin Panel
           </button>
-          <button type="button" className="back-btn" onClick={handleLogout} style={{ backgroundColor: '#dc3545' }}>
+          <button type="button" className="back-btn" onClick={handleLogout} style={{ backgroundColor: '#008060', color: '#ffffff', marginBottom: '20px',marginRight: '-10px' }}>
             Logout
           </button>
         </div>
       </header>
 
       <main className="fm-main">
-        <h2 className="fm-title">Pharmacy Stock</h2>
+        <h2 className="fm-title" style={{ color: '#00664c', fontWeight: 'bold', fontSize: '2.5rem', marginBottom: '30px', textAlign: 'center', maxWidth: '100%', fontFamily:'system-ui, Avenir, Helvetica, Arial, sans-serif', marginTop: '10px' }}>Welcome {profile.user_name}</h2>
         
-        {/* Error message display */}
-        {error && (
-          <div style={{
-            backgroundColor: '#fee2e2',
-            border: '1px solid #fca5a5',
-            borderRadius: '6px',
-            padding: '12px 16px',
-            marginBottom: '20px',
-            color: '#dc2626',
-            maxWidth: '800px'
-          }}>
-            {error}
-          </div>
-        )}
 
         {/* Forms container - responsive side by side layout */}
         <div style={{ 
@@ -422,7 +405,7 @@ export default function PharmacyPage() {
               border: "1px solid #bae6fd",
               height: "fit-content"
             }}>
-              <h3 style={{ marginTop: 0, color: "#0369a1", marginBottom: "15px" }}>Add New Medicine</h3>
+              <h3 style={{ marginTop: 0, color: "#0369a1", marginBottom: "15px", textAlign: 'center', display: 'block' }}>Add New Medicine</h3>
               <form onSubmit={async (e) => {
                 e.preventDefault();
                 try {
@@ -451,7 +434,7 @@ export default function PharmacyPage() {
                   const data = await response.json();
                   setError("");
                   setShowAddMedicineForm(false);
-                  alert('Medicine added successfully! You can now add it to your stock.');
+          
                   
                   // Keep the medicine name in the main form
                   setMedicineName(newMedicineName);
@@ -518,16 +501,17 @@ export default function PharmacyPage() {
           <div style={{ 
             flex: showAddMedicineForm ? "1" : "auto",
             minWidth: "350px",
+            maxWidth: "100%",
             padding: "20px",
             backgroundColor: "#f0fff4",
             borderRadius: "8px",
             border: "1px solid #c6f6d5",
             height: "fit-content",
-            marginTop: "100px"
+            marginTop: "20px"
           }}>
-            <h3 style={{ marginTop: 0, color: "#14967f", marginBottom: "15px" }}>Add To Stock</h3>
-            <form onSubmit={handleAdd} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-              <div className="fm-input-groups relative">
+            <h3 style={{ marginTop: 0, color: "#14967f", marginBottom: "15px", textAlign: 'center', fontSize: '1.5rem' }}>Add Medicine To Stock</h3>
+            <form onSubmit={handleAdd} style={{ display: "flex", flexDirection: "column", gap: "15px", alignItems: "center" }}>
+              <div className="fm-input-groups relative" style={{ width: '100%' }}>
                 <FaCapsules className="fm-icon" style={{ color: "#14967f" }} />
                 <input
                   type="text"
@@ -536,39 +520,41 @@ export default function PharmacyPage() {
                   onChange={(e) => setMedicineName(e.target.value)}
                   className="fm-input with-icon"
                   required
+                  style={{ width: '100%' }}
                 />
               </div>
 
-              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                <div className="fm-input-groups relative" style={{ flex: 1, minWidth: "120px" }}>
-                  <FaSortNumericUp className="fm-icon" style={{ color: "#14967f" }} />
-                  <input
-                    type="number"
-                    placeholder="Quantity"
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                    className="fm-input with-icon"
-                    min="0"
-                    required
-                  />
-                </div>
+              {/* Separated Quantity and Price to ensure consistent 100% width */} 
+              <div className="fm-input-groups relative" style={{ width: '100%' }}>
+                <FaSortNumericUp className="fm-icon" style={{ color: "#14967f" }} />
+                <input
+                  type="number"
+                  placeholder="Quantity"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  className="fm-input with-icon"
+                  min="0"
+                  required
+                  style={{ width: "100%" }}
+                />
+              </div>
 
-                <div className="fm-input-groups relative" style={{ flex: 1, minWidth: "120px" }}>
-                  <FaDollarSign className="fm-icon" style={{ color: "#14967f" }} />
-                  <input
-                    type="number"
-                    step="0.01"
-                    placeholder="Price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    className="fm-input with-icon"
-                    min="0"
-                    required
-                  />
-                </div>
+              <div className="fm-input-groups relative" style={{ width: '100%' }}>
+                <FaDollarSign className="fm-icon" style={{ color: "#14967f" }} />
+                <input
+                  type="number"
+                  step="0.01"
+                  placeholder="Price"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  className="fm-input with-icon"
+                  min="0"
+                  required
+                  style={{ width: "100%" }}
+                />
               </div>
               
-              <div className="fm-input-groups relative">
+              <div className="fm-input-groups relative" style={{ width: '100%' }}>
                 <FaCapsules className="fm-icon" style={{ color: "#14967f" }} />
                 <input
                   type="text"
@@ -576,10 +562,19 @@ export default function PharmacyPage() {
                   value={strength}
                   onChange={(e) => setStrength(e.target.value)}
                   className="fm-input with-icon"
+                  style={{ width: '100%' }}
                 />
               </div>
 
-              <button className="fm-search-btn" type="submit" style={{ width: "100%" }}>
+              <button className="fm-search-btn" type="submit" style={{ 
+                width: "100%", 
+                backgroundColor: "#008050", 
+                color: "#ffffff",
+                padding: "12px 20px",
+                borderRadius: "6px",
+                fontWeight: "600",
+                marginTop: "10px"
+              }}>
                 <FaPlus style={{ marginRight: 8 }} /> Add To Stock
               </button>
             </form>
@@ -600,7 +595,7 @@ export default function PharmacyPage() {
             marginBottom: "25px" 
           }}>
             <div style={{
-              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              background: "#008060",
               color: "white",
               padding: "20px",
               borderRadius: "12px",
@@ -616,7 +611,7 @@ export default function PharmacyPage() {
             </div>
             
             <div style={{
-              background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+              background: "#008060",
               color: "white",
               padding: "20px",
               borderRadius: "12px",
@@ -632,7 +627,7 @@ export default function PharmacyPage() {
             </div>
             
             <div style={{
-              background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+              background: "#008060",
               color: "white",
               padding: "20px",
               borderRadius: "12px",
@@ -1011,15 +1006,24 @@ export default function PharmacyPage() {
         `}</style>
       </main>
 
-      <footer className="fm-footer">
+      <footer className="fm-footer" style={{
+        backgroundColor: '#00664c',
+        color: '#ffffff',
+        padding: '20px 0',
+        textAlign: 'center',
+        width: '100%',
+        marginTop: 'auto',
+        display: 'flex',
+        justifyContent: 'space-between',
+        // gap: '15px', // Removed gap as justifyContent handles spacing
+        textDecoration: 'none',
+        color: '#ffffff'
+      }}>
         <a href="/">About Us</a>
         <a href="/">Services</a>
         <a href="/">Contact</a>
         <a href="/">Privacy Policy</a>
         <a href="/">Terms of Service</a>
-        <div style={{ marginLeft: 'auto' }}>
-          <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>← Back to Home</Link>
-        </div>
       </footer>
     </div>
   );
