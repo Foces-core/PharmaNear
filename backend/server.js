@@ -141,7 +141,9 @@ app.post("/api/pharmacy/login", async (req, res) => {
 
     if (!pharmacy) {
       console.log("Pharmacy not found");
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res
+        .status(400)
+        .json({ message: "Pharmacy is not registered. Please sign up." });
     }
 
     // Compare password
@@ -150,7 +152,7 @@ app.post("/api/pharmacy/login", async (req, res) => {
 
     if (!isMatch) {
       console.log("Password mismatch");
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: "Password is incorrect" });
     }
 
     // Generate JWT
@@ -265,7 +267,7 @@ app.put("/api/pharmacy/profile", AuthMiddleware, async (req, res) => {
       { new: true }
     );
     if (!pharmacy)
-      return res.status(404).json({ message: "Pharmacy not found" });
+      return res.status(404).json({ message: "Pharmacy profile not found" });
     res.json({ message: "Profile updated", pharmacy });
   } catch (err) {
     console.error(err);
@@ -311,8 +313,17 @@ app.post("/api/medicines", AuthMiddleware, async (req, res) => {
 app.post("/api/pharmacy/stock", AuthMiddleware, async (req, res) => {
   try {
     const { pharmacy_id, medicine_name, quantity, price, strength } = req.body;
-    if (!pharmacy_id || !medicine_name || !quantity || !price) {
-      return res.status(400).json({ message: "Invalid stock data" });
+    if (!pharmacy_id) {
+      return res.status(400).json({ message: "Pharmacy ID is required" });
+    }
+    if (!medicine_name) {
+      return res.status(400).json({ message: "Medicine name is required" });
+    }
+    if (!quantity || quantity <= 0) {
+      return res.status(400).json({ message: "Valid quantity is required" });
+    }
+    if (!price || price <= 0) {
+      return res.status(400).json({ message: "Valid price is required" });
     }
 
     // Find the medicine by name to get its ObjectId

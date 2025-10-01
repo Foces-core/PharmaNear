@@ -126,9 +126,9 @@ export default function PharmacyAdmin() {
         latitude: data.pharmacy.latitude ?? "",
         longitude: data.pharmacy.longitude ?? "",
       }));
-      alert("Profile saved");
+      console.log("Profile saved:", data);
     } catch (e) {
-      alert("Unable to save profile");
+      console.error("Unable to save profile:", e);
     } finally {
       setSavingProfile(false);
     }
@@ -136,7 +136,7 @@ export default function PharmacyAdmin() {
 
   function fetchCurrentLocation() {
     if (!navigator.geolocation) {
-      alert("Geolocation is not supported");
+      console.error("Geolocation is not supported");
       return;
     }
     navigator.geolocation.getCurrentPosition(
@@ -145,7 +145,7 @@ export default function PharmacyAdmin() {
         setProfile((p) => ({ ...p, latitude, longitude }));
       },
       () => {
-        alert("Unable to fetch location");
+        console.error("Unable to fetch location");
       },
       { enableHighAccuracy: true, timeout: 10000 }
     );
@@ -157,20 +157,23 @@ export default function PharmacyAdmin() {
       <header className="fm-header">
         <div className="fm-text">Pharmacy Admin Panel</div>
         <div className="fm-location">
-          <h6>Welcome, {profile.user_name}</h6>
+          <h6 style={{ color: 'white', fontSize: '1rem', fontWeight: 'bold', marginBottom: '22px' }}>Welcome, {profile.user_name}</h6>
         </div>
+      </header>
+      <div className="back-to-dashboard-container">
         <button
           type="button"
           className="fm-search-btn back-btn"
           onClick={() => navigate("/pharmacy")}
+          style={{ backgroundColor: '#008060', width: '200px', marginLeft: '-15px' }}
         >
           <FaArrowLeft /> Back to Dashboard
         </button>
-      </header>
+      </div>
 
       {/* Main Content */}
       <main className="fm-main">
-        <h2 className="fm-title">Pharmacy Management</h2>
+        <h2 className="fm-title" style={{ marginBottom: '20px', marginTop:'-95px' }}>Pharmacy Management</h2>
 
         <div className="fm-grid">
           {/* Left Column - Profile Settings */}
@@ -218,7 +221,7 @@ export default function PharmacyAdmin() {
                     />
                   </div>
 
-                  <div className="flexrow">
+                  <div className="flexrow" style={{ marginBottom: '40px' }}>
                     <div className="fm-input-groups">
                       <label htmlFor="city">City</label>
                       <input
@@ -232,7 +235,7 @@ export default function PharmacyAdmin() {
                         }
                       />
                     </div>
-                    <div className="fm-input-groups">
+                    <div className="fm-input-groups" style={{ marginLeft: '20px' }}>
                       <label htmlFor="state">State</label>
                       <input
                         id="state"
@@ -245,7 +248,7 @@ export default function PharmacyAdmin() {
                         }
                       />
                     </div>
-                    <div className="fm-input-groups">
+                    <div className="fm-input-groups" style={{ marginLeft: '20px' }}>
                       <label htmlFor="pincode">Pincode</label>
                       <input
                         id="pincode"
@@ -267,12 +270,13 @@ export default function PharmacyAdmin() {
                         id="latitude"
                         type="number"
                         step="0.000001"
-                        className="fm-input"
+                        className="fm-input no-spinner"
                         placeholder="GPS latitude"
                         value={profile.latitude}
                         onChange={(e) =>
                           setProfile((p) => ({ ...p, latitude: e.target.value }))
                         }
+                        style={{ overflow: 'hidden' }}
                       />
                     </div>
                     <div className="fm-input-groups">
@@ -281,7 +285,7 @@ export default function PharmacyAdmin() {
                         id="longitude"
                         type="number"
                         step="0.000001"
-                        className="fm-input"
+                        className="fm-input no-spinner"
                         placeholder="GPS longitude"
                         value={profile.longitude}
                         onChange={(e) =>
@@ -290,6 +294,7 @@ export default function PharmacyAdmin() {
                             longitude: e.target.value,
                           }))
                         }
+                        style={{ overflow: 'hidden' }}
                       />
                     </div>
                   </div>

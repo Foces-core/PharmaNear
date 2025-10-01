@@ -205,13 +205,23 @@ html::-webkit-scrollbar {
   font-family: inherit;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  resize: none;
+  height: 44px;
+  line-height: 1.5;
   /* Disable scrollbars in input fields */
   scrollbar-width: none; /* Firefox */
   /* Prevent touch-based scrolling */
   touch-action: manipulation;
 }
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-spinner {
+  -moz-appearance: textfield;
+}
+
 
 /* Disable scrollbars for Chrome, Edge, and Safari */
 .fm-input::-webkit-scrollbar {
@@ -274,17 +284,21 @@ html::-webkit-scrollbar {
 }
 
 .fm-input-groups label {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  margin-bottom: 2px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.back-to-dashboard-container {
+  text-align: left;
+  padding: 10px 20px; /* Adjust padding as needed */
 }
 
 /* Flex row container for inputs */
 .flexrow {
   display: flex;
   gap: var(--spacing-md);
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   margin-bottom: var(--spacing-md);
   flex-wrap: wrap;
