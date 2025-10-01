@@ -64,7 +64,7 @@ export default function PharmacyAdmin() {
       const userName = localStorage.getItem("pharmacy_user_name") || "";
       const token = localStorage.getItem("pharmacy_token") || "";
       const res = await fetch(
-        `http://localhost:3001/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`,
+        `http://localhost:5000/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`,
         { 
           signal: controller.signal,
           headers: {
@@ -110,7 +110,7 @@ export default function PharmacyAdmin() {
         longitude:
           profile.longitude === "" ? undefined : Number(profile.longitude),
       };
-      const res = await fetch("http://localhost:3001/api/pharmacy/profile", {
+      const res = await fetch("http://localhost:5000/api/pharmacy/profile", {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json",

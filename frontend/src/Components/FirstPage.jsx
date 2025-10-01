@@ -43,7 +43,7 @@ function FindMedicine() {
       }
       
       // Fetch pharmacies with the medicine in stock
-      const response = await fetch(`http://localhost:3001/api/drugs?name=${encodeURIComponent(medicine)}`, {
+      const response = await fetch(`http://localhost:5000/api/drugs?name=${encodeURIComponent(medicine)}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

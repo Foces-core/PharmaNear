@@ -112,7 +112,7 @@ export default function MapPage() {
                         medicineData.stocks.map(async (item) => {
                             try {
                                 const response = await fetch(
-                                    `http://localhost:3001/api/pharmacy/details?pharmacy_id=${item.pharmacy_id}`
+                                    `http://localhost:5000/api/pharmacy/details?pharmacy_id=${item.pharmacy_id}`
                                 );
                                 const pharmacy = await response.json();
 

@@ -46,7 +46,7 @@ export default function PharmacyPage() {
         throw new Error('No token provided');
       }
       
-      const response = await fetch('http://localhost:3001/api/pharmacy/stock', {
+      const response = await fetch('http://localhost:5000/api/pharmacy/stock', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ export default function PharmacyPage() {
         throw new Error('No token provided');
       }
       
-      const response = await fetch('http://localhost:3001/api/pharmacy/stock', {
+      const response = await fetch('http://localhost:5000/api/pharmacy/stock', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -174,7 +174,7 @@ export default function PharmacyPage() {
           return;
         }
         
-        const response = await fetch('http://localhost:3001/api/pharmacy/stock', {
+        const response = await fetch('http://localhost:5000/api/pharmacy/stock', {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -257,7 +257,7 @@ export default function PharmacyPage() {
     async function fetchProfile() {
       try {
         setLoadingProfile(true);
-        const res = await fetch(`http://localhost:3001/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`, {
+        const res = await fetch(`http://localhost:5000/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`, {
           signal: controller.signal,
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -295,7 +295,7 @@ export default function PharmacyPage() {
     async function fetchStock() {
       try {
         setLoading(true);
-        const res = await fetch(`http://localhost:3001/api/pharmacy/stock?pharmacy_id=${encodeURIComponent(pharmacyId)}`,
+        const res = await fetch(`http://localhost:5000/api/pharmacy/stock?pharmacy_id=${encodeURIComponent(pharmacyId)}`,
         {
             method: 'GET',
             signal: controller.signal,
@@ -431,7 +431,7 @@ export default function PharmacyPage() {
                     throw new Error('No token provided');
                   }
                   
-                  const response = await fetch('http://localhost:3001/api/medicines', {
+                  const response = await fetch('http://localhost:5000/api/medicines', {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
