@@ -22,10 +22,14 @@ app.use(
 
 app.use(express.json());
 mongoose
-  .connect(process.env.MONGO_URL || "mongodb://localhost:27017/PharmaNear", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    process.env.MONGO_URL ||
+      "mongodb+srv://spiny881_db_user:8p4g7wmqEZSFiTUI@pharmanear.2sd5gh7.mongodb.net/?retryWrites=true&w=majority&appName=PharmaNear",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log("✅ Connected to MongoDB");
     // Fetch drugs after successful connection
@@ -207,7 +211,7 @@ app.get("/api/pharmacy/details", async (req, res) => {
     const pharmacy = await Pharmacy.findById(pharmacy_id);
     if (!pharmacy)
       return res.status(404).json({ message: "Pharmacy not found" });
-    
+
     // Return only necessary fields for map display
     res.json({
       _id: pharmacy._id,
@@ -220,7 +224,7 @@ app.get("/api/pharmacy/details", async (req, res) => {
       longitude: pharmacy.longitude,
       opening_hours: pharmacy.opening_hours,
       closing_hours: pharmacy.closing_hours,
-      phone_number: pharmacy.phone_number
+      phone_number: pharmacy.phone_number,
     });
   } catch (err) {
     console.error(err);
@@ -411,7 +415,7 @@ app.get("/api/pharmacy/stock", AuthMiddleware, async (req, res) => {
 
 app.get("/api/drugs", async (req, res) => {
   const medicine_name = req.query.name;
-  
+
   if (!medicine_name) {
     return res.status(400).json({ message: "Medicine name is required" });
   }
