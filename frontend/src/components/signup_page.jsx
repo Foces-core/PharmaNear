@@ -22,7 +22,7 @@ function SignupPage({ onSwitchToLogin }) {
     setError('')
 
     try {
-      const response = await fetch('http://localhost:3001/api/pharmacy/signup', {
+      const response = await fetch('http://localhost:5000/api/pharmacy/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
