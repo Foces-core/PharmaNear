@@ -2,7 +2,7 @@
 /* Layout */
 .login-layout {
   display: grid;
-  grid-template-columns: 3fr 7fr;
+  grid-template-columns: 2fr 5fr;
   min-height: 100vh;
   border:none;
   border-radius: 10px;
@@ -17,16 +17,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 48px 24px;
+  padding: 40px 20px;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6));
   border:none;
+  min-height: 100vh;
+  box-sizing: border-box;
   border-radius: 0 16px 16px 0;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .login-card {
   width: 100%;
   max-width: 520px;
+  
 }
 
 .login-title {
@@ -34,7 +37,7 @@
   line-height: 1.1;
   letter-spacing: 2px;
   text-align: center;
-  margin: 0 0 28px 0;
+  margin: 0 0 2px 0;
   font-family: Poppins;
   font-weight: 600;
   color: #2f7c6f;
@@ -50,6 +53,7 @@
 .input-group {
   position: relative;
   margin-top: 1.5rem;
+  margin-bottom: 0.25px;
 }
 
 .input-group input {

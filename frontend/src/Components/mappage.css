@@ -18,6 +18,7 @@ body {
 .find-medicine-page {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     min-height: 100vh;
     background-color: #ffffff;
 }
@@ -29,7 +30,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 8px 20px;
-    background-color: #1b806d;
+    background-color: #1a9e87;
     color: white;
     gap: 15px;
     flex-wrap: wrap;
@@ -183,6 +184,12 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     height: 100%;
 }
+.pharmacy-list-scroll {
+  flex-grow: 1;
+  overflow-y: auto; /* Scroll only this box */
+  padding-right: 6px; /* Optional scrollbar padding */
+  max-height: 100%;
+}
 
 /* Make the search-sort-container responsive */
 .search-sort-container {
@@ -250,8 +257,8 @@ body {
 /* Stock Indicator */
 .stock {
     position: absolute;
-    top: 15px;
-    right: 50px;
+    top: 10px;
+    right: 10px;
     padding: 5px 10px;
     border-radius: 15px;
     text-transform: uppercase;
@@ -346,7 +353,7 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: var(--teal-color); 
+    background-color: #1a9e87; 
     padding: 15px 30px;
     width: 100%;
     flex-wrap: nowrap;
@@ -356,7 +363,7 @@ body {
 }
 
 .fm-footer-content {
-    display: none;
+    display:flex;
     padding: 0;
     gap: 40px;
     align-items: center;

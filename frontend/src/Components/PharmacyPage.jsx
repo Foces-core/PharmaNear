@@ -27,7 +27,6 @@ export default function PharmacyPage() {
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  
   const [error, setError] = useState("");
 
   async function handleAdd(e) {
@@ -63,20 +62,16 @@ export default function PharmacyPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        
-        // Check if medicine not found and show add medicine form
         if (errorData.medicineNotFound) {
           setError(`Medicine "${errorData.medicineName}" not found. Please add it first.`);
           setNewMedicineName(errorData.medicineName);
           setShowAddMedicineForm(true);
           return;
         }
-        
         throw new Error(errorData.message || 'Add medicine failed');
       }
 
       const data = await response.json()
-      console.log(data)
       setStockItems((prev) => [newItem, ...prev]);
       setMedicineName("");
       setQuantity("");
@@ -85,8 +80,6 @@ export default function PharmacyPage() {
       setError("");
     } catch (error) {
       setError(error.message)
-      console.error('Add medicine error:', error)
-      // If no token, redirect to login
       if (error.message === 'No token provided') {
         alert('You must be logged in to add medicines');
         navigate('/login');
@@ -96,7 +89,6 @@ export default function PharmacyPage() {
 
   function startEditing(item) {
     setEditingItem({ ...item });
-    
   }
 
   function cancelEditing() {
@@ -137,9 +129,6 @@ export default function PharmacyPage() {
       }
 
       const data = await response.json()
-      console.log('Update success:', data)
-      
-      // Update local state with the latest data
       const updatedStock = stockItems.map(item => 
         item.name === editingItem.name ? { ...item, quantity: editingItem.quantity, price: editingItem.price } : item
       );
@@ -148,8 +137,6 @@ export default function PharmacyPage() {
       alert('Medicine updated successfully');
     } catch (error) {
       setError(error.message)
-      console.error('Update medicine error:', error)
-      // If no token, redirect to login
       if (error.message === 'No token provided') {
         alert('You must be logged in to update medicines');
         navigate('/login');
@@ -199,16 +186,11 @@ export default function PharmacyPage() {
         }
 
         const data = await response.json()
-        console.log('Delete success:', data)
-        
-        // Update local state
         const updatedStock = stockItems.filter(item => item.id !== id);
         setStockItems(updatedStock);
         alert('Medicine removed from stock successfully');
       } catch (error) {
         setError(error.message)
-        console.error('Delete medicine error:', error)
-        // If no token, redirect to login
         if (error.message === 'No token provided') {
           alert('You must be logged in to delete medicines');
           navigate('/login');
@@ -233,27 +215,22 @@ export default function PharmacyPage() {
   }
 
   useEffect(() => {
-    // Handle responsive design
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
-    handleResize(); // Initial check
+    handleResize();
     window.addEventListener('resize', handleResize);
-    
+
     const userName = localStorage.getItem('pharmacy_user_name') || '';
     const token = localStorage.getItem('pharmacy_token') || '';
     const pharmacyId = localStorage.getItem('pharmacy_id') || '';
-    
     if (!userName || !token || !pharmacyId) {
       navigate('/login');
       return;
     }
-    
     setProfile((p) => ({ ...p, user_name: userName }));
     const controller = new AbortController();
-    
-    // Fetch profile data
+
     async function fetchProfile() {
       try {
         setLoadingProfile(true);
@@ -277,10 +254,7 @@ export default function PharmacyPage() {
           longitude: data.longitude ?? "",
         }));
       } catch (e) {
-        // Ignore AbortError which happens when component unmounts
         if (e.name !== 'AbortError') {
-          console.error('Failed to load profile:', e);
-          // If unauthorized, redirect to login
           if (e.message.includes('401') || e.message.includes('403')) {
             localStorage.clear();
             navigate('/login');
@@ -290,8 +264,7 @@ export default function PharmacyPage() {
         setLoadingProfile(false);
       }
     }
-    
-    // Fetch stock data
+
     async function fetchStock() {
       try {
         setLoading(true);
@@ -310,8 +283,6 @@ export default function PharmacyPage() {
           throw new Error(errorData.message || 'Failed to load stock data');
         }
         const data = await res.json();
-        
-        // Format the stock data to match the frontend expectations
         if (data.medications && Array.isArray(data.medications)) {
           const formattedStockItems = data.medications.map((med, index) => ({
             id: `med-${index}-${Date.now()}`,
@@ -322,11 +293,8 @@ export default function PharmacyPage() {
           setStockItems(formattedStockItems);
         }
       } catch (e) {
-        // Ignore AbortError which happens when component unmounts
         if (e.name !== 'AbortError') {
-          console.error('Failed to load stock:', e);
           setError(e.message || 'Failed to load stock data');
-          // If unauthorized, redirect to login
           if (e.message.includes('401') || e.message.includes('403')) {
             localStorage.clear();
             navigate('/login');
@@ -336,41 +304,18 @@ export default function PharmacyPage() {
         setLoading(false);
       }
     }
-    
-    // Run both fetches in parallel
+
     Promise.all([fetchProfile(), fetchStock()]);
-    
     return () => {
       controller.abort();
       window.removeEventListener('resize', handleResize);
     };
   }, [navigate]);
 
-  
-
-  function fetchCurrentLocation() {
-    if (!navigator.geolocation) {
-      // eslint-disable-next-line no-alert
-      alert('Geolocation is not supported');
-      return;
-    }
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const { latitude, longitude } = pos.coords;
-        setProfile((p) => ({ ...p, latitude, longitude }));
-      },
-      () => {
-        // eslint-disable-next-line no-alert
-        alert('Unable to fetch location');
-      },
-      { enableHighAccuracy: true, timeout: 10000 }
-    );
-  }
-
   return (
     <div className="medicine-page">
       <header className="fm-header">
-        <h6 className="fm-text">FindMeds</h6>
+        <h6 className="fm-text">PharmaNear</h6>
         <div className="fm-location">
           <button type="button" className="back-btn" onClick={goToAdmin} style={{ backgroundColor: '#008060 ', color: '#ffffff', marginBottom: '20px',marginRight: '10px'}}>
             Go to Admin Panel
@@ -381,137 +326,29 @@ export default function PharmacyPage() {
         </div>
       </header>
 
-      <main className="fm-main">
-        <h2 className="fm-title" style={{ color: '#00664c', fontWeight: 'bold', fontSize: '2.5rem', marginBottom: '30px', textAlign: 'center', maxWidth: '100%', fontFamily:'system-ui, Avenir, Helvetica, Arial, sans-serif', marginTop: '10px' }}>Welcome {profile.user_name}</h2>
-        
-
-        {/* Forms container - responsive side by side layout */}
-        <div style={{ 
-          display: "flex", 
-          flexDirection: isMobile ? "column" : "row", 
-          gap: "20px", 
-          width: "100%", 
-          maxWidth: "1200px",
-          flexWrap: "wrap"
-        }}>
-          {/* Add New Medicine Form */}
-          {showAddMedicineForm && (
-            <div style={{ 
-              flex: "1",
-              minWidth: "350px",
-              padding: "20px", 
-              backgroundColor: "#f0f9ff", 
-              borderRadius: "8px", 
-              border: "1px solid #bae6fd",
-              height: "fit-content"
-            }}>
-              <h3 style={{ marginTop: 0, color: "#0369a1", marginBottom: "15px", textAlign: 'center', display: 'block' }}>Add New Medicine</h3>
-              <form onSubmit={async (e) => {
-                e.preventDefault();
-                try {
-                  const token = localStorage.getItem('pharmacy_token');
-                  if (!token) {
-                    throw new Error('No token provided');
-                  }
-                  
-                  const response = await fetch('http://localhost:5000/api/medicines', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                      name: newMedicineName,
-                      strength: newMedicineStrength
-                    }),
-                  });
-                  
-                  if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to add new medicine');
-                  }
-                  
-                  const data = await response.json();
-                  setError("");
-                  setShowAddMedicineForm(false);
-          
-                  
-                  // Keep the medicine name in the main form
-                  setMedicineName(newMedicineName);
-                  setStrength(newMedicineStrength);
-                  
-                  // Reset new medicine form
-                  setNewMedicineName("");
-                  setNewMedicineStrength("");
-                } catch (error) {
-                  setError(error.message);
-                  console.error('Add new medicine error:', error);
-                }
-              }} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-                <div className="fm-input-groups relative">
-                  <FaCapsules className="fm-icon" style={{ color: "#0369a1" }} />
-                  <input
-                    type="text"
-                    placeholder="Medicine Name"
-                    value={newMedicineName}
-                    onChange={(e) => setNewMedicineName(e.target.value)}
-                    className="fm-input with-icon"
-                    required
-                  />
-                </div>
-                
-                <div className="fm-input-groups relative">
-                  <FaCapsules className="fm-icon" style={{ color: "#0369a1" }} />
-                  <input
-                    type="text"
-                    placeholder="Strength (e.g., 500mg, 10mg/ml)"
-                    value={newMedicineStrength}
-                    onChange={(e) => setNewMedicineStrength(e.target.value)}
-                    className="fm-input with-icon"
-                  />
-                </div>
-                
-                <div style={{ display: "flex", gap: "10px" }}>
-                  <button className="fm-search-btn" type="submit" style={{ backgroundColor: "#0369a1", flex: 1 }}>
-                    <FaPlus style={{ marginRight: 8 }} /> Add Medicine
-                  </button>
-                  <button 
-                    type="button" 
-                    onClick={() => {
-                      setShowAddMedicineForm(false);
-                      setError("");
-                    }}
-                    style={{ 
-                      padding: "10px 20px", 
-                      borderRadius: "4px", 
-                      border: "1px solid #cbd5e1",
-                      backgroundColor: "#f8fafc",
-                      cursor: "pointer",
-                      flex: 1
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
+      <main className="pharmacy-main">
+        <div className="pharmacy-main-top">
+          {/* Left: Summary Cards */}
+          <div className="pharmacy-summary-cards">
+            <div className="pharmacy-summary-card">
+              <div className="summary-value">{stockItems.length}</div>
+              <div className="summary-label">Total Medicines</div>
             </div>
-          )}
-
-          {/* Add To Stock Form */}
-          <div style={{ 
-            flex: showAddMedicineForm ? "1" : "auto",
-            minWidth: "350px",
-            maxWidth: "100%",
-            padding: "20px",
-            backgroundColor: "#f0fff4",
-            borderRadius: "8px",
-            border: "1px solid #c6f6d5",
-            height: "fit-content",
-            marginTop: "20px"
-          }}>
-            <h3 style={{ marginTop: 0, color: "#14967f", marginBottom: "15px", textAlign: 'center', fontSize: '1.5rem' }}>Add Medicine To Stock</h3>
-            <form onSubmit={handleAdd} style={{ display: "flex", flexDirection: "column", gap: "15px", alignItems: "center" }}>
-              <div className="fm-input-groups relative" style={{ width: '100%' }}>
+            <div className="pharmacy-summary-card">
+              <div className="summary-value">{totalItems()}</div>
+              <div className="summary-label">Total Quantity</div>
+            </div>
+            <div className="pharmacy-summary-card">
+              <div className="summary-value">₹{stockItems.reduce((sum, item) => sum + (item.quantity * item.price), 0).toFixed(2)}</div>
+              <div className="summary-label">Total Value</div>
+            </div>
+          </div>
+          {/* Right: Welcome + Add Medicine Card */}
+          <div className="pharmacy-add-card">
+            <h2 className="pharmacy-welcome">Welcome {profile.user_name}</h2>
+            <h3 className="pharmacy-add-title">Add Medicine To Stock</h3>
+            <form onSubmit={handleAdd} className="pharmacy-add-form">
+              <div className="fm-input-groups relative">
                 <FaCapsules className="fm-icon" style={{ color: "#14967f" }} />
                 <input
                   type="text"
@@ -520,12 +357,9 @@ export default function PharmacyPage() {
                   onChange={(e) => setMedicineName(e.target.value)}
                   className="fm-input with-icon"
                   required
-                  style={{ width: '100%' }}
                 />
               </div>
-
-              {/* Separated Quantity and Price to ensure consistent 100% width */} 
-              <div className="fm-input-groups relative" style={{ width: '100%' }}>
+              <div className="fm-input-groups relative">
                 <FaSortNumericUp className="fm-icon" style={{ color: "#14967f" }} />
                 <input
                   type="number"
@@ -535,11 +369,9 @@ export default function PharmacyPage() {
                   className="fm-input with-icon"
                   min="0"
                   required
-                  style={{ width: "100%" }}
                 />
               </div>
-
-              <div className="fm-input-groups relative" style={{ width: '100%' }}>
+              <div className="fm-input-groups relative">
                 <FaDollarSign className="fm-icon" style={{ color: "#14967f" }} />
                 <input
                   type="number"
@@ -550,11 +382,9 @@ export default function PharmacyPage() {
                   className="fm-input with-icon"
                   min="0"
                   required
-                  style={{ width: "100%" }}
                 />
               </div>
-              
-              <div className="fm-input-groups relative" style={{ width: '100%' }}>
+              <div className="fm-input-groups relative">
                 <FaCapsules className="fm-icon" style={{ color: "#14967f" }} />
                 <input
                   type="text"
@@ -562,88 +392,17 @@ export default function PharmacyPage() {
                   value={strength}
                   onChange={(e) => setStrength(e.target.value)}
                   className="fm-input with-icon"
-                  style={{ width: '100%' }}
                 />
               </div>
-
-              <button className="fm-search-btn" type="submit" style={{ 
-                width: "100%", 
-                backgroundColor: "#008050", 
-                color: "#ffffff",
-                padding: "12px 20px",
-                borderRadius: "6px",
-                fontWeight: "600",
-                marginTop: "10px"
-              }}>
+              <button className="fm-search-btn" type="submit">
                 <FaPlus style={{ marginRight: 8 }} /> Add To Stock
               </button>
             </form>
+            {error && <div className="pharmacy-error">{error}</div>}
           </div>
         </div>
-
-        {/* Enhanced Stock Items Section */}
-        <div style={{ 
-          width: "100%", 
-          maxWidth: "1200px", 
-          marginTop: "30px"
-        }}>
-          {/* Stock Summary Cards */}
-          <div style={{ 
-            display: "grid", 
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", 
-            gap: "20px", 
-            marginBottom: "25px" 
-          }}>
-            <div style={{
-              background: "#008060",
-              color: "white",
-              padding: "20px",
-              borderRadius: "12px",
-              textAlign: "center",
-              boxShadow: "0 4px 15px rgba(102, 126, 234, 0.3)"
-            }}>
-              <div style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "5px" }}>
-                {stockItems.length}
-              </div>
-              <div style={{ fontSize: "0.9rem", opacity: 0.9 }}>
-                Total Medicines
-              </div>
-            </div>
-            
-            <div style={{
-              background: "#008060",
-              color: "white",
-              padding: "20px",
-              borderRadius: "12px",
-              textAlign: "center",
-              boxShadow: "0 4px 15px rgba(240, 147, 251, 0.3)"
-            }}>
-              <div style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "5px" }}>
-                {totalItems()}
-              </div>
-              <div style={{ fontSize: "0.9rem", opacity: 0.9 }}>
-                Total Quantity
-              </div>
-            </div>
-            
-            <div style={{
-              background: "#008060",
-              color: "white",
-              padding: "20px",
-              borderRadius: "12px",
-              textAlign: "center",
-              boxShadow: "0 4px 15px rgba(79, 172, 254, 0.3)"
-            }}>
-              <div style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "5px" }}>
-                ₹{stockItems.reduce((sum, item) => sum + (item.quantity * item.price), 0).toFixed(2)}
-              </div>
-              <div style={{ fontSize: "0.9rem", opacity: 0.9 }}>
-                Total Value
-              </div>
-            </div>
-          </div>
-
-          {/* Stock Items Table */}
+        {/* Table below both sections */}
+        <div className="pharmacy-table-section">
           <div style={{ 
             background: "#fff", 
             borderRadius: "12px", 
@@ -651,7 +410,6 @@ export default function PharmacyPage() {
             border: "1px solid #e2e8f0",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.05)",
             marginBottom: "200px"
-
           }}>
             {/* Table Header */}
             <div style={{ 
@@ -665,20 +423,19 @@ export default function PharmacyPage() {
               borderBottom: "2px solid #e2e8f0"
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <FaCapsules style={{ color: "#667eea" }} />
+                <FaCapsules style={{ color: "#00664c" }} />
                 Medicine Name
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <FaSortNumericUp style={{ color: "#f093fb" }} />
+                <FaSortNumericUp style={{ color: "#00664c" }} />
                 Quantity
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <FaDollarSign style={{ color: "#4facfe" }} />
+                <FaDollarSign style={{ color: "#00664c" }} />
                 Price (₹)
               </div>
               <div style={{ textAlign: 'right' }}>Actions</div>
             </div>
-
             {/* Table Body */}
             {loading ? (
               <div style={{ 
@@ -725,14 +482,13 @@ export default function PharmacyPage() {
                   marginBottom: isMobile ? "8px" : "0"
                 }}>
                   {editingItem?.id === item.id ? (
-                    // Editing mode
                     <>
                       <div style={{ gridColumn: '1' }}>
-                      <input
-                        type="text"
-                        className="fm-input"
-                        value={editingItem.name}
-                        onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
+                        <input
+                          type="text"
+                          className="fm-input"
+                          value={editingItem.name}
+                          onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
                           style={{ 
                             margin: 0, 
                             fontSize: "0.9rem",
@@ -742,35 +498,35 @@ export default function PharmacyPage() {
                         />
                       </div>
                       <div style={{ gridColumn: '2' }}>
-                      <input
-                        type="number"
-                        className="fm-input"
-                        value={editingItem.quantity}
-                        onChange={(e) => setEditingItem({ ...editingItem, quantity: parseInt(e.target.value, 10) })}
+                        <input
+                          type="number"
+                          className="fm-input"
+                          value={editingItem.quantity}
+                          onChange={(e) => setEditingItem({ ...editingItem, quantity: parseInt(e.target.value, 10) })}
                           style={{ 
                             margin: 0, 
                             fontSize: "0.9rem",
                             border: "2px solid #10b981",
                             boxShadow: "0 0 0 3px rgba(16, 185, 129, 0.1)"
                           }}
-                        min="1"
-                      />
+                          min="1"
+                        />
                       </div>
                       <div style={{ gridColumn: '3' }}>
-                      <input
-                        type="number"
-                        className="fm-input"
-                        value={editingItem.price}
-                        onChange={(e) => setEditingItem({ ...editingItem, price: parseFloat(e.target.value) })}
+                        <input
+                          type="number"
+                          className="fm-input"
+                          value={editingItem.price}
+                          onChange={(e) => setEditingItem({ ...editingItem, price: parseFloat(e.target.value) })}
                           style={{ 
                             margin: 0, 
                             fontSize: "0.9rem",
                             border: "2px solid #10b981",
                             boxShadow: "0 0 0 3px rgba(16, 185, 129, 0.1)"
                           }}
-                        min="0"
-                        step="0.01"
-                      />
+                          min="0"
+                          step="0.01"
+                        />
                       </div>
                       <div style={{ 
                         display: 'flex', 
@@ -811,14 +567,12 @@ export default function PharmacyPage() {
                       </div>
                     </>
                   ) : (
-                    // View mode
                     <>
                       {isMobile ? (
-                        // Mobile layout - card style
                         <div>
                           <div style={{ 
                             fontWeight: "600", 
-                            color: "#1f2937",
+                            color: "#00664c",
                             fontSize: "1rem",
                             marginBottom: "8px",
                             display: "flex",
@@ -835,7 +589,7 @@ export default function PharmacyPage() {
                             marginBottom: "12px"
                           }}>
                             <div style={{ 
-                              color: "#f093fb", 
+                              color: "#00664c", 
                               fontWeight: "600",
                               fontSize: "0.9rem",
                               display: "flex",
@@ -846,7 +600,7 @@ export default function PharmacyPage() {
                               {item.quantity} units
                             </div>
                             <div style={{ 
-                              color: "#4facfe", 
+                              color: "#00664c", 
                               fontWeight: "600",
                               fontSize: "0.9rem",
                               display: "flex",
@@ -905,25 +659,24 @@ export default function PharmacyPage() {
                           </div>
                         </div>
                       ) : (
-                        // Desktop layout - grid style
                         <>
                           <div style={{ 
-                            fontWeight: "500", 
-                            color: "#1f2937",
+                            fontWeight: "600", 
+                            color: "#00664c",
                             fontSize: "0.95rem",
                             wordBreak: "break-word"
                           }}>
                             {item.name}
                           </div>
                           <div style={{ 
-                            color: "#f093fb", 
+                            color: "#00664c", 
                             fontWeight: "600",
                             fontSize: "0.95rem"
                           }}>
                             {item.quantity} units
                           </div>
                           <div style={{ 
-                            color: "#4facfe", 
+                            color: "#00664c", 
                             fontWeight: "600",
                             fontSize: "0.95rem"
                           }}>
@@ -939,9 +692,9 @@ export default function PharmacyPage() {
                               onClick={() => startEditing(item)}
                               style={{ 
                                 padding: "8px 12px",
-                                backgroundColor: "#dbeafe",
-                                color: "#1d4ed8",
-                                border: "1px solid #bfdbfe",
+                                backgroundColor: "#dbeeeaff",
+                                color: "#1a9e87",
+                                border: "1px solid #a1e7d6ff",
                                 borderRadius: "6px",
                                 cursor: "pointer",
                                 fontSize: "0.8rem",
@@ -996,8 +749,6 @@ export default function PharmacyPage() {
             )}
           </div>
         </div>
-
-        {/* Add CSS animation for loading spinner */}
         <style jsx>{`
           @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -1006,27 +757,15 @@ export default function PharmacyPage() {
         `}</style>
       </main>
 
-      <footer className="fm-footer" style={{
-        backgroundColor: '#00664c',
-        color: '#ffffff',
-        padding: '20px 0',
-        textAlign: 'center',
-        width: '100%',
-        marginTop: 'auto',
-        display: 'flex',
-        justifyContent: 'space-between',
-        // gap: '15px', // Removed gap as justifyContent handles spacing
-        textDecoration: 'none',
-        color: '#ffffff'
-      }}>
-        <a href="/">About Us</a>
-        <a href="/">Services</a>
-        <a href="/">Contact</a>
-        <a href="/">Privacy Policy</a>
-        <a href="/">Terms of Service</a>
+      <footer className="fm-footer">
+        <div className="fm-footer-links">
+          <a href="/">About Us</a>
+          <a href="/">Services</a>
+          <a href="/">Contact</a>
+          <a href="/">Privacy Policy</a>
+          <a href="/">Terms of Service</a>
+        </div>
       </footer>
     </div>
   );
 }
-
-

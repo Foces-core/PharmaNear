@@ -38,7 +38,7 @@ const SearchIcon = () => (
 // Header component 
 const Header = () => (
   <header className="header">
-    <h1 className="logo">FindMeds</h1>
+    <h1 className="logo">PharmaNear</h1>
     <button className="logout">Logout</button>
   </header>
 );
@@ -172,6 +172,14 @@ export default function PharmacyDashboard() {
       </main>
 
       <MedicineModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSave={handleSave} medicine={editingMedicine} />
+        <footer className="fm-footer">
+  <a href="#">About Us</a>
+  <a href="#">Services</a>
+  <a href="#">Contact</a>
+  <a href="#">Privacy Policy</a>
+  <a href="#">Terms of Service</a>
+</footer>
+
     </div>
   );
 }
