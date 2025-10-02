@@ -21,7 +21,6 @@
   box-sizing: border-box;
 }
 
-
 .medicine-page
 {
   display: flex;
@@ -35,25 +34,23 @@
   margin: 0;
 }
 
-
 .fm-header {
+  flex-shrink: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 10vh;
-  background-color: #14967f;  
+  height: 60px;
+  background-color: #1a9e87;  
   color: white;
   padding: 0 20px;
 }
-
 
 .fm-header .fm-text 
 {
   font-size: 1.5rem;
   font-weight: bold;
-  margin-top: 17px;
+  margin-top: 2px;
 }
-
 
 .fm-location
 {
@@ -76,7 +73,6 @@
   background-color: var(--primary-hover-color) !important;
 }
 
-
 .fm-location-button {
   background: transparent;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -93,7 +89,6 @@
   outline:none;
 }
 
-
 .dropdown-arrow 
 {
   margin-left: 4px;
@@ -101,65 +96,162 @@
   color: white;
 }
 
-
-.fm-main
-{
+.pharmacy-main {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 100px;
-  background-color: white;
-  padding-left: 10px;
-  padding-right: 10px;
+  align-items: stretch;
+  padding: 32px 16px 0 16px;
   box-sizing: border-box;
-  width: 100%;
 }
 
-
-.fm-title 
-{
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 30px;
-  color: #333;
-  text-align: center;
-  max-width: 100%;
-}
-
-/* Admin panel helpers */
-.admin-section
-{
-  width: 100%;
-  max-width: 800px;
-  margin-bottom: 32px;
-}
-
-.admin-card
-{
-  background: #fff;
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-}
-
-.admin-actions
-{
+.pharmacy-main-top {
   display: flex;
-  gap: 12px;
+  flex-direction: row;
+  gap: 32px;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+
+.pharmacy-summary-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 220px;
+  flex: 0 0 220px;
+}
+
+.pharmacy-summary-card {
+  background: var(--primary-color);
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  padding: 28px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
-.fm-label
-{
-  display: block;
-  font-weight: 600;
-  font-size: 12px;
+.summary-value {
+  font-size: 2.2rem;
+  font-weight: bold;
   margin-bottom: 6px;
 }
 
+.summary-label {
+  font-size: 1rem;
+  opacity: 0.92;
+}
 
+.pharmacy-add-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+  padding: 32px 28px 28px 28px;
+  min-width: 340px;
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.pharmacy-welcome {
+  color: #00664c;
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 18px;
+  text-align: center;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.pharmacy-add-title {
+  color: #14967f;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.pharmacy-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pharmacy-error {
+  color: #dc2626;
+  background: #fee2e2;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-top: 12px;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.pharmacy-table-section {
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 40px;
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .pharmacy-main-top {
+    flex-direction: column;
+    gap: 24px;
+    align-items: stretch;
+  }
+  .pharmacy-summary-cards {
+    flex-direction: row;
+    gap: 16px;
+    min-width: unset;
+    justify-content: center;
+  }
+  .pharmacy-summary-card {
+    min-width: 120px;
+    padding: 18px 10px;
+    font-size: 1rem;
+  }
+  .pharmacy-add-card {
+    min-width: unset;
+    max-width: 100%;
+    padding: 20px 10px 18px 10px;
+  }
+  .pharmacy-table-section {
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .pharmacy-main {
+    padding: 16px 2px 0 2px;
+  }
+  .pharmacy-add-card {
+    padding: 12px 4px 10px 4px;
+  }
+  .pharmacy-welcome {
+    font-size: 1.2rem;
+  }
+  .pharmacy-add-title {
+    font-size: 1rem;
+  }
+  .pharmacy-summary-cards {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .pharmacy-summary-card {
+    padding: 10px 4px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Existing styles for inputs, buttons, footer, etc. */
 .fm-input-group,
 .fm-input-groups 
 {
@@ -171,24 +263,10 @@
   gap: 10px;
 }
 
-
-.flexrow 
-{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 800px;
-  gap: 20px;
-  box-sizing: border-box;
-}
-
-
 .fm-input-groups 
 {
   flex-grow: 1;
 }
-
 
 .fm-input 
 {
@@ -202,7 +280,6 @@
   box-sizing: border-box;
 }
 
-
 .fm-input:hover 
 {
   background-color: #dee8ec;
@@ -210,12 +287,10 @@
   transition: background-color 0.2s, border-color 0.2s;
 }
 
-
 .fm-input::placeholder 
 {
   color: #415055;
 }
-
 
 .fm-search-btn 
 {
@@ -233,37 +308,19 @@
   box-sizing: border-box;
 }
 
-
 .fm-search-btn:disabled 
 {
   cursor: not-allowed;
 }
 
-.fm-register {
-  margin-top: 12px;
-  font-size: 0.9rem;
-  color: #415055;
-  text-align: center;
-}
-
-.fm-register a {
-  margin-left: 6px;
-  color: #14967f;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.fm-register a:hover {
-  text-decoration: underline;
-}
-
 .fm-footer {
+  flex-shrink: 0;
   display: flex;
-  justify-content: space-between; 
+  justify-content: center; 
   align-items: center;
   min-height: 60px;
   padding: 16px 40px;
-  background-color: #14967f; 
+  background-color: #1a9e87; 
   box-sizing: border-box;
   width: 100%;
 }
@@ -289,7 +346,6 @@
   position: relative;
 }
 
-
 .fm-icon 
 {
   position: absolute;
@@ -300,45 +356,13 @@
   font-size: 1.2rem;
 }
 
-
 .with-icon 
 {
   padding-left: 40px;
 }
 
-
 @media (max-width: 900px) 
 {
-  .flexrow 
-  {
-    flex-direction: column;
-    width: 100%;
-    max-width: 100%;
-    gap: 12px;
-  }
-
-  .fm-input-group,
-  .fm-input-groups,
-  .fm-search-btn 
-  {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .fm-main 
-  {
-    padding-top: 50px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 100px;
-  }
-
-  .fm-title 
-  {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-  }
-
   .fm-footer 
   {
     gap: 16px;
@@ -351,44 +375,6 @@
 
 @media (max-width: 600px) 
 {
-  .fm-header 
-  {
-    height: auto;
-    min-height: 10vh;
-    padding: 10px 15px;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .fm-text 
-  {
-    font-size: 1.2rem;
-    text-align: center;
-    width: 100%;
-  }
-
-  .fm-title 
-  {
-    font-size: 1.5rem;
-  }
-
-  .admin-card 
-  {
-    padding: 12px;
-  }
-
-  .fm-input 
-  {
-    padding: 10px;
-    font-size: 0.9rem;
-  }
-
-  .fm-search-btn 
-  {
-    padding: 10px 16px;
-    font-size: 1rem;
-  }
-
   .fm-footer 
   {
     flex-direction: column;
@@ -409,14 +395,12 @@
   overflow-x: hidden;
 }
 
-/* Ensure all form elements are properly contained */
 .fm-input-group,
 .fm-input-groups {
   box-sizing: border-box;
   overflow-x: hidden;
 }
 
-/* Prevent text overflow */
 .fm-text,
 .fm-title,
 .fm-footer a {

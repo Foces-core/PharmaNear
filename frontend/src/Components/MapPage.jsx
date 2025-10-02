@@ -181,45 +181,56 @@ export default function MapPage() {
             <header className="fm-header">
                 <h6 className="fm-text">PharmaNear</h6>
             </header>
-
             {/* Main Content */}
-            <main className="fm-main">
-                <div className="content-wrapper">
-                    {/* Left Panel */}
-                    <div className="left-panel">
-                        {medicine && <h2 className="medicine-title">Showing results for: {medicine} {dosage && `(${dosage})`}</h2>}
+<main className="fm-main">
+  <div className="content-wrapper">
+    {/* Left Panel */}
+    <div className="left-panel">
+      {medicine && (
+        <h3 className="medicine-title">
+          Showing results for: {medicine} {dosage && `(${dosage})`}
+        </h3>
+      )}
 
-                        {visiblePharmacies.length > 0 ? (
-                            visiblePharmacies.map((pharmacy) => (
-                                <div key={pharmacy.id} className="pharmacy-card">
-                                    <div className="pharmacy-info">
-                                        <h3>{pharmacy.name}</h3>
-                                        <p>{pharmacy.address}</p>
-                                        <p>Closes: {pharmacy.closing}</p>
-                                        <p>{pharmacy.phone}</p>
-                                        {pharmacy.price > 0 && <p>Price: ₹{pharmacy.price}</p>}
-                                        {pharmacy.quantity > 0 && <p>Available: {pharmacy.quantity} units</p>}
-                                        
-                                        {/* Google Maps Button */}
-                                        <button 
-                                            className="google-maps-btn"
-                                            onClick={() => window.open(`https://www.google.com/maps?q=${pharmacy.lat},${pharmacy.lng}`, '_blank')}
-                                            title="Open in Google Maps"
-                                        >
-                                            📍 Open in Google Maps
-                                        </button>
-                                    </div>
-                                    <div className={`stock ${pharmacy.stock}`}>
-                                        {pharmacy.stock === "in-stock" ? "In Stock" : "Out of Stock"}
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <div className="no-pharmacies-message">
-                                No pharmacies available in this area.
-                            </div>
-                        )}
-                    </div>
+      {/* Scrollable container for pharmacy cards */}
+      <div className="pharmacy-list-scroll">
+        {visiblePharmacies.length > 0 ? (
+          visiblePharmacies.map((pharmacy) => (
+            <div key={pharmacy.id} className="pharmacy-card">
+              <div className="pharmacy-info">
+                <h3>{pharmacy.name}</h3>
+                <p>{pharmacy.address}</p>
+                <p>Closes: {pharmacy.closing}</p>
+                <p>{pharmacy.phone}</p>
+                {pharmacy.price > 0 && <p>Price: ₹{pharmacy.price}</p>}
+                {pharmacy.quantity > 0 && <p>Available: {pharmacy.quantity} units</p>}
+
+                <button
+                  className="google-maps-btn"
+                  onClick={() =>
+                    window.open(
+                      `https://www.google.com/maps?q=${pharmacy.lat},${pharmacy.lng}`,
+                      '_blank'
+                    )
+                  }
+                  title="Open in Google Maps"
+                >
+                  📍 Open in Google Maps
+                </button>
+              </div>
+              <div className={`stock ${pharmacy.stock}`}>
+                {pharmacy.stock === "in-stock" ? "In Stock" : "Out of Stock"}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="no-pharmacies-message">
+            No pharmacies available in this area.
+          </div>
+        )}
+      </div>
+    </div>
+
 
                     {/* Right Panel - Map */}
                     <div className="right-panel">

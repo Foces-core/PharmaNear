@@ -15,7 +15,7 @@ export default function PharmacyAdmin() {
     latitude: "",
     longitude: "",
   });
-  
+
   // Prevent mouse wheel from changing input values
   useEffect(() => {
     const handleWheel = (e) => {
@@ -23,15 +23,11 @@ export default function PharmacyAdmin() {
         e.preventDefault();
       }
     };
-    
-    // Add event listeners to prevent wheel on all inputs
     const inputs = document.querySelectorAll('input');
     inputs.forEach(input => {
       input.classList.add('no-wheel-input');
       input.addEventListener('wheel', handleWheel, { passive: false });
     });
-    
-    // Clean up event listeners on component unmount
     return () => {
       inputs.forEach(input => {
         input.removeEventListener('wheel', handleWheel);
@@ -39,20 +35,16 @@ export default function PharmacyAdmin() {
     };
   }, []);
 
-
-  // Loading states
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [savingProfile, setSavingProfile] = useState(false);
 
   useEffect(() => {
     const userName = localStorage.getItem("pharmacy_user_name") || "";
     const token = localStorage.getItem("pharmacy_token") || "";
-    
     if (!userName || !token) {
       navigate('/login');
       return;
     }
-    
     setProfile((p) => ({ ...p, user_name: userName }));
     fetchProfile();
   }, [navigate]);
@@ -64,8 +56,7 @@ export default function PharmacyAdmin() {
       const userName = localStorage.getItem("pharmacy_user_name") || "";
       const token = localStorage.getItem("pharmacy_token") || "";
       const res = await fetch(
-        `http://localhost:5000/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`,
-        { 
+        `http://localhost:5000/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`, {
           signal: controller.signal,
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -96,8 +87,6 @@ export default function PharmacyAdmin() {
     }
     return () => controller.abort();
   }
-
-  
 
   async function saveProfile() {
     try {
@@ -155,41 +144,46 @@ export default function PharmacyAdmin() {
     <div className="find-medicine-page">
       {/* Header */}
       <header className="fm-header">
-        <div className="fm-text">Pharmacy Admin Panel</div>
+        <div className="fm-text">PharmaNear</div>
         <div className="fm-location">
-          <h6 style={{ color: 'white', fontSize: '1rem', fontWeight: 'bold', marginBottom: '22px' }}>Welcome, {profile.user_name}</h6>
+          <h6 style={{ color: 'white', fontSize: '1.5rem', fontWeight: 'bold', marginBottom: 22 }}>
+            Welcome, {profile.user_name}
+          </h6>
         </div>
       </header>
+
       <div className="back-to-dashboard-container">
         <button
           type="button"
           className="fm-search-btn back-btn"
           onClick={() => navigate("/pharmacy")}
-          style={{ backgroundColor: '#008060', width: '200px', marginLeft: '-15px' }}
+          style={{ backgroundColor: "white", width: 200, marginLeft: -15, color: '#1a9e87' }}
         >
-          <FaArrowLeft /> Back to Dashboard
+          <FaArrowLeft />Back to Dashboard
         </button>
       </div>
 
       {/* Main Content */}
       <main className="fm-main">
-        <h2 className="fm-title" style={{ marginBottom: '20px', marginTop:'-95px' }}>Pharmacy Management</h2>
+        <h2 className="fm-title" style={{ marginBottom: 20, marginTop: -95 }}>
+          Pharmacy Management
+        </h2>
 
         <div className="fm-grid">
-          {/* Left Column - Profile Settings */}
           <div className="fm-col">
             <div className="admin-section">
               <h3>Pharmacy Profile</h3>
-              <div className="admin-card">
-                <form
-                  className="profile-form"
-                  autoComplete="on"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    saveProfile();
-                  }}
-                >
-                  <div className="fm-input-groups">
+              <form
+                className="profile-form"
+                autoComplete="on"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  saveProfile();
+                }}
+              >
+                <div className="admin-cards-wrapper">
+                  {/* First Card - License Number and Address */}
+                  <div className="admin-card profile-card license-address-card">
                     <label htmlFor="license_number">License Number *</label>
                     <input
                       id="license_number"
@@ -205,9 +199,6 @@ export default function PharmacyAdmin() {
                       }
                       required
                     />
-                  </div>
-
-                  <div className="fm-input-groups">
                     <label htmlFor="address">Address</label>
                     <input
                       id="address"
@@ -218,106 +209,93 @@ export default function PharmacyAdmin() {
                       onChange={(e) =>
                         setProfile((p) => ({ ...p, address: e.target.value }))
                       }
+                      style={{ minHeight: '3.5em' }} // Larger input box
                     />
                   </div>
 
-                  <div className="flexrow" style={{ marginBottom: '40px' }}>
-                    <div className="fm-input-groups">
-                      <label htmlFor="city">City</label>
-                      <input
-                        id="city"
-                        type="text"
-                        className="fm-input"
-                        placeholder="Enter city"
-                        value={profile.city}
-                        onChange={(e) =>
-                          setProfile((p) => ({ ...p, city: e.target.value }))
-                        }
-                      />
-                    </div>
-                    <div className="fm-input-groups" style={{ marginLeft: '20px' }}>
-                      <label htmlFor="state">State</label>
-                      <input
-                        id="state"
-                        type="text"
-                        className="fm-input"
-                        placeholder="Enter state"
-                        value={profile.state}
-                        onChange={(e) =>
-                          setProfile((p) => ({ ...p, state: e.target.value }))
-                        }
-                      />
-                    </div>
-                    <div className="fm-input-groups" style={{ marginLeft: '20px' }}>
-                      <label htmlFor="pincode">Pincode</label>
-                      <input
-                        id="pincode"
-                        type="text"
-                        className="fm-input"
-                        placeholder="Enter postal code"
-                        value={profile.pincode}
-                        onChange={(e) =>
-                          setProfile((p) => ({ ...p, pincode: e.target.value }))
-                        }
-                      />
-                    </div>
+                  {/* Second Card - City, State, Pincode */}
+                  <div className="admin-card profile-card city-state-card">
+                    <label htmlFor="city">City</label>
+                    <input
+                      id="city"
+                      type="text"
+                      className="fm-input"
+                      placeholder="Enter city"
+                      value={profile.city}
+                      onChange={(e) =>
+                        setProfile((p) => ({ ...p, city: e.target.value }))
+                      }
+                    />
+                    <label htmlFor="state">State</label>
+                    <input
+                      id="state"
+                      type="text"
+                      className="fm-input"
+                      placeholder="Enter state"
+                      value={profile.state}
+                      onChange={(e) =>
+                        setProfile((p) => ({ ...p, state: e.target.value }))
+                      }
+                    />
+                    <label htmlFor="pincode">Pincode</label>
+                    <input
+                      id="pincode"
+                      type="text"
+                      className="fm-input"
+                      placeholder="Enter postal code"
+                      value={profile.pincode}
+                      onChange={(e) =>
+                        setProfile((p) => ({ ...p, pincode: e.target.value }))
+                      }
+                    />
                   </div>
 
-                  <div className="flexrow">
-                    <div className="fm-input-groups">
-                      <label htmlFor="latitude">Latitude</label>
-                      <input
-                        id="latitude"
-                        type="number"
-                        step="0.000001"
-                        className="fm-input no-spinner"
-                        placeholder="GPS latitude"
-                        value={profile.latitude}
-                        onChange={(e) =>
-                          setProfile((p) => ({ ...p, latitude: e.target.value }))
-                        }
-                        style={{ overflow: 'hidden' }}
-                      />
-                    </div>
-                    <div className="fm-input-groups">
-                      <label htmlFor="longitude">Longitude</label>
-                      <input
-                        id="longitude"
-                        type="number"
-                        step="0.000001"
-                        className="fm-input no-spinner"
-                        placeholder="GPS longitude"
-                        value={profile.longitude}
-                        onChange={(e) =>
-                          setProfile((p) => ({
-                            ...p,
-                            longitude: e.target.value,
-                          }))
-                        }
-                        style={{ overflow: 'hidden' }}
-                      />
-                    </div>
-                  </div>
-
-                  <button
-                    className="fm-search-btn"
-                    type="submit"
-                    disabled={savingProfile}
-                  >
-                    {savingProfile ? "Saving..." : "Save Profile"}
-                  </button>
-
-                  <div className="location-btn-wrapper">
+                  {/* Third Card - Latitude, Longitude, Use Current Location Button */}
+                  <div className="admin-card profile-card coordinates-card">
+                    <label htmlFor="latitude">Latitude</label>
+                    <input
+                      id="latitude"
+                      type="number"
+                      step="0.000001"
+                      className="fm-input no-spinner"
+                      placeholder="GPS latitude"
+                      value={profile.latitude}
+                      onChange={(e) =>
+                        setProfile((p) => ({ ...p, latitude: e.target.value }))
+                      }
+                      style={{ overflow: 'hidden' }}
+                    />
+                    <label htmlFor="longitude">Longitude</label>
+                    <input
+                      id="longitude"
+                      type="number"
+                      step="0.000001"
+                      className="fm-input no-spinner"
+                      placeholder="GPS longitude"
+                      value={profile.longitude}
+                      onChange={(e) =>
+                        setProfile((p) => ({ ...p, longitude: e.target.value }))
+                      }
+                      style={{ overflow: 'hidden' }}
+                    />
                     <button
                       type="button"
-                      className="fm-search-btn"
+                      className="fm-search-btn location-btn"
                       onClick={fetchCurrentLocation}
                     >
                       <FaMapPin /> Use current location
                     </button>
                   </div>
-                </form>
-              </div>
+                </div>
+
+                <button
+                  className="fm-search-btn save-btn"
+                  type="submit"
+                  disabled={savingProfile}
+                >
+                  {savingProfile ? "Saving..." : "Save Profile"}
+                </button>
+              </form>
             </div>
           </div>
         </div>

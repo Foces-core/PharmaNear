@@ -70,7 +70,6 @@
 .fm-input-group {
     margin-bottom: 15px; 
 }
-
 /* Input fields - shared styles */
 .fm-input {
   background-color: var(--input-light-color); 
@@ -84,7 +83,7 @@
 
 /* Search Icon for the first input */
 .fm-input-group > .fm-icon {
-  poposition: absolute;
+  position: absolute;
   left: 15px;
   top: 50%;
   transform: translateY(-50%);
