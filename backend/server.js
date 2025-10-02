@@ -39,7 +39,7 @@ mongoose
     console.log("❌ Error connecting to MongoDB", err);
   });
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || "dev_secret";
 
 // Test endpoint
@@ -275,71 +275,24 @@ app.put("/api/pharmacy/profile", AuthMiddleware, async (req, res) => {
   }
 });
 
-// Add new medicine
-app.post("/api/medicines", AuthMiddleware, async (req, res) => {
-  try {
-    const { name, strength } = req.body;
-
-    if (!name) {
-      return res.status(400).json({ message: "Medicine name is required" });
-    }
-
-    // Check if medicine already exists
-    const existingMedicine = await Medicine.findOne({
-      name: new RegExp(`^${name}$`, "i"),
-    });
-
-    if (existingMedicine) {
-      return res.status(400).json({ message: "Medicine already exists" });
-    }
-
-    // Create new medicine
-    const newMedicine = new Medicine({
-      name,
-      strengths: strength ? [strength] : [],
-      routes: [],
-    });
-
-    await newMedicine.save();
-    res
-      .status(201)
-      .json({ message: "Medicine added successfully", medicine: newMedicine });
-  } catch (error) {
-    console.error("Error adding medicine:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
 app.post("/api/pharmacy/stock", AuthMiddleware, async (req, res) => {
   try {
     const { pharmacy_id, medicine_name, quantity, price, strength } = req.body;
-    if (!pharmacy_id) {
+
+    // Validation
+    if (!pharmacy_id)
       return res.status(400).json({ message: "Pharmacy ID is required" });
-    }
-    if (!medicine_name) {
+    if (!medicine_name)
       return res.status(400).json({ message: "Medicine name is required" });
-    }
-    if (!quantity || quantity <= 0) {
+    if (!quantity || quantity <= 0)
       return res.status(400).json({ message: "Valid quantity is required" });
-    }
-    if (!price || price <= 0) {
+    if (!price || price <= 0)
       return res.status(400).json({ message: "Valid price is required" });
-    }
 
-    // Find the medicine by name to get its ObjectId
-
-    const medicine = await Medicine.find({
+    // Find medicine by name (case-insensitive exact match)
+    let medicine = await Medicine.find({
       name: new RegExp(`^${medicine_name}$`, "i"),
     });
-
-    if (!medicine || medicine.length === 0) {
-      console.log("Medicine not found");
-      return res.status(404).json({
-        message: "Medicine not found",
-        medicineNotFound: true,
-        medicineName: medicine_name,
-      });
-    }
 
     if (medicine.length > 1) {
       return res
@@ -347,39 +300,48 @@ app.post("/api/pharmacy/stock", AuthMiddleware, async (req, res) => {
         .json({ message: "Multiple medicines found with the same name" });
     }
 
-    const medicine_id = medicine[0]._id;
+    let medicineDoc;
+    if (medicine.length === 0) {
+      // Create new medicine
+      medicineDoc = new Medicine({
+        name: medicine_name,
+        strengths: strength ? [strength] : [],
+        routes: [],
+      });
+      await medicineDoc.save();
+    } else {
+      medicineDoc = medicine[0];
+    }
 
-    // Check if stock already exists for this pharmacy
+    const medicine_id = medicineDoc._id;
 
+    // Find stock for pharmacy
     let stock = await Stock.findOne({ pharmacy_id });
 
     if (stock) {
-      // If stock exists, add new medication or update existing
+      // Update or insert medication
       const existingMedication = stock.medications.find(
         (med) => med.medicine_id.toString() === medicine_id.toString()
       );
 
       if (existingMedication) {
-        // Update existing medication quantity
         existingMedication.quantity += parseInt(quantity);
-        existingMedication.price = price;
+        existingMedication.price = parseFloat(price);
       } else {
-        // Add new medication
         stock.medications.push({
-          medicine_id: medicine_id,
+          medicine_id,
           quantity: parseInt(quantity),
           price: parseFloat(price),
         });
       }
-
       await stock.save();
     } else {
-      // Create new stock if it doesn't exist
+      // Create new stock document
       stock = new Stock({
         pharmacy_id,
         medications: [
           {
-            medicine_id: medicine_id,
+            medicine_id,
             quantity: parseInt(quantity),
             price: parseFloat(price),
           },

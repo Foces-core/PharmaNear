@@ -72,10 +72,6 @@
   margin-top: 15px;
 }
 
-.fm-header .fm-location .back-btn:hover {
-  background-color: var(--primary-hover-color) !important;
-}
-
 
 .fm-location-button {
   background: transparent;
@@ -118,7 +114,7 @@
 }
 
 
-.fm-title 
+.fm-title
 {
   font-size: 2.5rem;
   font-weight: bold;
