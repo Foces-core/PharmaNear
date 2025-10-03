@@ -60,12 +60,49 @@ function PharmacyFilter({ pharmacies, setVisiblePharmacies }) {
     });
     return null;
 }
+function Routing({ userLocation, selectedPharmacy }) {
+  const map = useMapEvents({});
+
+  useEffect(() => {
+    if (!map || !selectedPharmacy) return;
+
+    // Remove old route
+    map.eachLayer((layer) => {
+      if (layer instanceof L.Routing.Control) {
+        map.removeControl(layer);
+      }
+    });
+
+    // Add new route
+    const routingControl = L.Routing.control({
+      waypoints: [
+        L.latLng(userLocation.lat, userLocation.lng),
+        L.latLng(selectedPharmacy.lat, selectedPharmacy.lng),
+      ],
+      routeWhileDragging: true,
+      showAlternatives: false,
+      lineOptions: {
+        styles: [{ color: "blue", weight: 5 }],
+      },
+      createMarker: () => null, // hide duplicate markers
+    }).addTo(map);
+
+    return () => {
+      map.removeControl(routingControl);
+    };
+  }, [map, userLocation, selectedPharmacy]);
+
+  return null;
+}
+
 
 // ---------------------
 // Main Component
 // ---------------------
 export default function MapPage() {
     const location = useLocation();
+    const [selectedPharmacy, setSelectedPharmacy] = useState(null);
+
     
     // Try to get data from location state first, then from sessionStorage as fallback
     const locationState = location.state || {};
@@ -239,35 +276,56 @@ export default function MapPage() {
                             zoom={15}
                             scrollWheelZoom={true}
                             style={{ height: "100%", width: "100%", borderRadius: "10px" }}
-                        >
+                            >
+                            {/* ✅ OpenStreetMap Tiles */}
                             <TileLayer
-                                url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-                                attribution="&copy; OpenStreetMap &copy; CARTO"
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             />
+
+                            {/* ✅ User Location Marker */}
                             <Marker position={[userLocation.lat, userLocation.lng]} icon={userIcon}>
                                 <Popup>Your Location</Popup>
                             </Marker>
+
+                            {/* ✅ Pharmacy Markers */}
                             {pharmacies.map((p) => (
                                 <Marker key={p.id} position={[p.lat, p.lng]} icon={pharmacyIcon}>
-                                    <Popup>
-                                        <b>{p.name}</b>
+                                <Popup>
+                                    <b>{p.name}</b>
+                                    <br />
+                                    {p.address}
+                                    <br />
+                                    <span
+                                    className={p.stock === "in-stock" ? "in-stock-text" : "out-of-stock-text"}
+                                    >
+                                    {p.stock === "in-stock" ? "In Stock" : "Out of Stock"}
+                                    </span>
+                                    {p.price > 0 && (
+                                    <>
                                         <br />
-                                        {p.address}
-                                        <br />
-                                        <span className={p.stock === 'in-stock' ? 'in-stock-text' : 'out-of-stock-text'}>
-                                            {p.stock === "in-stock" ? "In Stock" : "Out of Stock"}
-                                        </span>
-                                        {p.price > 0 && (
-                                            <>
-                                                <br />
-                                                Price: ₹{p.price}
-                                            </>
-                                        )}
-                                    </Popup>
+                                        Price: ₹{p.price}
+                                    </>
+                                    )}
+                                    <br />
+                                    {/* ✅ Route Button */}
+                                    <button
+                                    className="osm-btn"
+                                    onClick={() => setSelectedPharmacy(p)}
+                                    >
+                                    🗺️ Show Route
+                                    </button>
+                                </Popup>
                                 </Marker>
                             ))}
+
+                            {/* ✅ Pharmacy Filter */}
                             <PharmacyFilter pharmacies={pharmacies} setVisiblePharmacies={setVisiblePharmacies} />
+
+                            {/* ✅ Routing Component */}
+                            <Routing userLocation={userLocation} selectedPharmacy={selectedPharmacy} />
                         </MapContainer>
+
                     </div>
                 </div>
             </main>
