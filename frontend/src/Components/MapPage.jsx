@@ -308,13 +308,7 @@ export default function MapPage() {
                                     </>
                                     )}
                                     <br />
-                                    {/* ✅ Route Button */}
-                                    <button
-                                    className="osm-btn"
-                                    onClick={() => setSelectedPharmacy(p)}
-                                    >
-                                    🗺️ Show Route
-                                    </button>
+                                    
                                 </Popup>
                                 </Marker>
                             ))}
