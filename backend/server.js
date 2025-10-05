@@ -23,7 +23,7 @@ app.use(
 app.use(express.json());
 mongoose
   .connect(
-    process.env.MONGO_URL ||
+    process.env.MONGO_URL
       "",
     {
       useNewUrlParser: true,
