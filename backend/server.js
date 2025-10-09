@@ -23,7 +23,8 @@ app.use(
 app.use(express.json());
 mongoose
   .connect(
-    process.env.MONGO_URL,
+    process.env.MONGO_URL ||
+      "mongodb+srv://spiny881_db_user:8p4g7wmqEZSFiTUI@pharmanear.2sd5gh7.mongodb.net/?retryWrites=true&w=majority&appName=PharmaNear",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
