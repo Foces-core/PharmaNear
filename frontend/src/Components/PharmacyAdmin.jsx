@@ -165,10 +165,6 @@ export default function PharmacyAdmin() {
 
       {/* Main Content */}
       <main className="fm-main">
-        <h2 className="fm-title" style={{ marginBottom: 20, marginTop: -95 }}>
-          Pharmacy Management
-        </h2>
-
         <div className="fm-grid">
           <div className="fm-col">
             <div className="admin-section">
@@ -280,7 +276,7 @@ export default function PharmacyAdmin() {
                     />
                     <button
                       type="button"
-                      className="fm-search-btn location-btn"
+                      className="fm-search-btn save-btn"
                       onClick={fetchCurrentLocation}
                     >
                       <FaMapPin /> Use current location
