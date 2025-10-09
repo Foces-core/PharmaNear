@@ -147,7 +147,6 @@ export default function PharmacyPage() {
   }
 
   async function deleteItem(id) {
-    if (window.confirm('Are you sure you want to remove this medicine from stock?')) {
       try {
         const item = stockItems.find(item => item.id === id);
         if (!item) {
@@ -198,7 +197,6 @@ export default function PharmacyPage() {
           
         }
       }
-    }
   }
 
   function totalItems() {
