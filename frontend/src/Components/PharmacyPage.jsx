@@ -81,7 +81,7 @@ export default function PharmacyPage() {
     } catch (error) {
       setError(error.message)
       if (error.message === 'No token provided') {
-        alert('You must be logged in to add medicines');
+        
         navigate('/login');
       }
     }
@@ -134,14 +134,14 @@ export default function PharmacyPage() {
       );
       setStockItems(updatedStock);
       setEditingItem(null);
-      alert('Medicine updated successfully');
+      
     } catch (error) {
       setError(error.message)
       if (error.message === 'No token provided') {
-        alert('You must be logged in to update medicines');
+      
         navigate('/login');
       } else {
-        alert(`Failed to update medicine: ${error.message}`);
+        
       }
     }
   }
@@ -188,14 +188,14 @@ export default function PharmacyPage() {
         const data = await response.json()
         const updatedStock = stockItems.filter(item => item.id !== id);
         setStockItems(updatedStock);
-        alert('Medicine removed from stock successfully');
+        
       } catch (error) {
         setError(error.message)
         if (error.message === 'No token provided') {
-          alert('You must be logged in to delete medicines');
+          
           navigate('/login');
         } else {
-          alert(`Failed to remove medicine: ${error.message}`);
+          
         }
       }
     }
