@@ -81,7 +81,7 @@ export default function PharmacyPage() {
     } catch (error) {
       setError(error.message)
       if (error.message === 'No token provided') {
-        alert('You must be logged in to add medicines');
+        
         navigate('/login');
       }
     }
@@ -134,20 +134,19 @@ export default function PharmacyPage() {
       );
       setStockItems(updatedStock);
       setEditingItem(null);
-      alert('Medicine updated successfully');
+      
     } catch (error) {
       setError(error.message)
       if (error.message === 'No token provided') {
-        alert('You must be logged in to update medicines');
+      
         navigate('/login');
       } else {
-        alert(`Failed to update medicine: ${error.message}`);
+        
       }
     }
   }
 
   async function deleteItem(id) {
-    if (window.confirm('Are you sure you want to remove this medicine from stock?')) {
       try {
         const item = stockItems.find(item => item.id === id);
         if (!item) {
@@ -188,17 +187,16 @@ export default function PharmacyPage() {
         const data = await response.json()
         const updatedStock = stockItems.filter(item => item.id !== id);
         setStockItems(updatedStock);
-        alert('Medicine removed from stock successfully');
+        
       } catch (error) {
         setError(error.message)
         if (error.message === 'No token provided') {
-          alert('You must be logged in to delete medicines');
+          
           navigate('/login');
         } else {
-          alert(`Failed to remove medicine: ${error.message}`);
+          
         }
       }
-    }
   }
 
   function totalItems() {
@@ -317,10 +315,10 @@ export default function PharmacyPage() {
       <header className="fm-header">
         <h6 className="fm-text">PharmaNear</h6>
         <div className="fm-location">
-          <button type="button" className="back-btn" onClick={goToAdmin} style={{ backgroundColor: '#008060 ', color: '#ffffff', marginBottom: '20px',marginRight: '10px'}}>
+          <button type="button" className="back-btn" onClick={goToAdmin} style={{ backgroundColor: '#14967f ', color: '#ffffff', marginBottom: '10px',marginRight: '10px', width: '100%', boxShadow: '0 4px 16px rgba(0,0,0,0.10)',fontWeight: '600' }}>
             Go to Admin Panel
           </button>
-          <button type="button" className="back-btn" onClick={handleLogout} style={{ backgroundColor: '#008060', color: '#ffffff', marginBottom: '20px',marginRight: '-10px' }}>
+          <button type="button" className="back-btn" onClick={handleLogout} style={{ backgroundColor: '#149671', color: '#ffffff', marginBottom: '10px',marginRight: '-10px', width: '100%', boxShadow: '0 4px 16px rgba(0,0,0,0.10)',fontWeight: '600' }}>
             Logout
           </button>
         </div>

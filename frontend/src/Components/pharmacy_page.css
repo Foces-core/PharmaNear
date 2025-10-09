@@ -185,7 +185,7 @@
 }
 
 .pharmacy-error {
-  color: #dc2626;
+  color: #633737;
   background: #fee2e2;
   border-radius: 6px;
   padding: 8px 12px;
@@ -306,6 +306,12 @@
   cursor: pointer;
   margin-top: 10px;
   box-sizing: border-box;
+}
+
+.fm-search-btn:hover {
+  background-color: #1a9e87;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 .fm-search-btn:disabled 
