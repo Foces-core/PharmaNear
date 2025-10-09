@@ -144,9 +144,9 @@ export default function PharmacyAdmin() {
     <div className="find-medicine-page">
       {/* Header */}
       <header className="fm-header">
-        <div className="fm-text">PharmaNear</div>
+        <div className="fm-text" style={{ color: '#ffffff', marginTop: 1, fontWeight: 'bold', textShadow: '0 2px 4px rgba(0, 0, 0, 0.33)' }}>PharmaNear</div>
         <div className="fm-location">
-          <h6 style={{ color: 'white', fontSize: '1.5rem', fontWeight: 'bold', marginBottom: 22 }}>
+          <h6 style={{ color: 'white', fontSize: '1.2rem', fontWeight: 'bold', marginBottom: 15, textShadow: '0 2px 4px rgba(0, 0, 0, 0.33)' }}>
             Welcome, {profile.user_name}
           </h6>
         </div>
@@ -157,7 +157,7 @@ export default function PharmacyAdmin() {
           type="button"
           className="fm-search-btn back-btn"
           onClick={() => navigate("/pharmacy")}
-          style={{ backgroundColor: "white", width: 200, marginLeft: -15, color: '#1a9e87' }}
+          style={{ backgroundColor: "#14967f", width: 200, marginLeft: -15, color: '#ffffff', boxShadow: '0 4px 16px rgba(0,0,0,0.10)',fontWeight: '600' }}
         >
           <FaArrowLeft />Back to Dashboard
         </button>

@@ -122,9 +122,6 @@ function LoginPage() {
               </button>
             </div>
 
-            <div className="form-row form-row--between">
-              <a className="muted-link" href="#">Forgot Password ?</a>
-            </div>
 
             {error && (
               <div className="error-message" style={{ 
