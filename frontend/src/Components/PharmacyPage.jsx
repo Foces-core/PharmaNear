@@ -317,10 +317,10 @@ export default function PharmacyPage() {
       <header className="fm-header">
         <h6 className="fm-text">PharmaNear</h6>
         <div className="fm-location">
-          <button type="button" className="back-btn" onClick={goToAdmin} style={{ backgroundColor: '#008060 ', color: '#ffffff', marginBottom: '20px',marginRight: '10px'}}>
+          <button type="button" className="back-btn" onClick={goToAdmin} style={{ backgroundColor: '#14967f ', color: '#ffffff', marginBottom: '10px',marginRight: '10px', width: '100%', boxShadow: '0 4px 16px rgba(0,0,0,0.10)',fontWeight: '600' }}>
             Go to Admin Panel
           </button>
-          <button type="button" className="back-btn" onClick={handleLogout} style={{ backgroundColor: '#008060', color: '#ffffff', marginBottom: '20px',marginRight: '-10px' }}>
+          <button type="button" className="back-btn" onClick={handleLogout} style={{ backgroundColor: '#149671', color: '#ffffff', marginBottom: '10px',marginRight: '-10px', width: '100%', boxShadow: '0 4px 16px rgba(0,0,0,0.10)',fontWeight: '600' }}>
             Logout
           </button>
         </div>
