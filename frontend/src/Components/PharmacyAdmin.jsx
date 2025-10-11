@@ -3,6 +3,8 @@ import { FaArrowLeft, FaMapPin } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
 import "./PharmacyAdmin.css";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 export default function PharmacyAdmin() {
   const navigate = useNavigate();
   const [profile, setProfile] = useState({
@@ -55,7 +57,7 @@ export default function PharmacyAdmin() {
       const userName = localStorage.getItem("pharmacy_user_name") || "";
       const token = localStorage.getItem("pharmacy_token") || "";
       const res = await fetch(
-        `http://localhost:5000/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`, {
+        `${BACKEND_URL}/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`, {
           signal: controller.signal,
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -98,7 +100,7 @@ export default function PharmacyAdmin() {
         longitude:
           profile.longitude === "" ? undefined : Number(profile.longitude),
       };
-      const res = await fetch("http://localhost:5000/api/pharmacy/profile", {
+      const res = await fetch(`${BACKEND_URL}/api/pharmacy/profile`, {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json",

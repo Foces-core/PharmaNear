@@ -3,6 +3,8 @@ import { FaCapsules, FaDollarSign, FaEdit, FaPlus, FaSave, FaSortNumericUp, FaTr
 import { useNavigate, Link } from 'react-router-dom';
 import "./pharmacy_page.css";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 export default function PharmacyPage() {
   const navigate = useNavigate();
   const [medicineName, setMedicineName] = useState("");
@@ -45,7 +47,7 @@ export default function PharmacyPage() {
         throw new Error('No token provided');
       }
       
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pharmacy/stock`, {
+      const response = await fetch(`${BACKEND_URL}/api/pharmacy/stock`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -102,7 +104,7 @@ export default function PharmacyPage() {
         throw new Error('No token provided');
       }
       
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pharmacy/stock`, {
+      const response = await fetch(`${BACKEND_URL}/api/pharmacy/stock`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -160,7 +162,7 @@ export default function PharmacyPage() {
           return;
         }
         
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pharmacy/stock`, {
+        const response = await fetch(`${BACKEND_URL}/api/pharmacy/stock`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -232,7 +234,7 @@ export default function PharmacyPage() {
     async function fetchProfile() {
       try {
         setLoadingProfile(true);
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`, {
+        const res = await fetch(`${BACKEND_URL}/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`, {
           signal: controller.signal,
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -266,8 +268,9 @@ export default function PharmacyPage() {
     async function fetchStock() {
       try {
         setLoading(true);
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pharmacy/stock?pharmacy_id=${encodeURIComponent(pharmacyId)}`,
-        {
+        const res = await fetch(
+          `${BACKEND_URL}/api/pharmacy/stock?pharmacy_id=${encodeURIComponent(pharmacyId)}`,
+          {
             method: 'GET',
             signal: controller.signal,
             headers: {

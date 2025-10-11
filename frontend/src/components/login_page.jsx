@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import './login_page.css'
-
 import { Link, useNavigate } from 'react-router-dom'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 function LoginPage() {
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
@@ -17,7 +17,7 @@ function LoginPage() {
     setError('')
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pharmacy/login`, {
+      const response = await fetch(`${BACKEND_URL}/api/pharmacy/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

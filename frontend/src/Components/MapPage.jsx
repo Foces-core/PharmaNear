@@ -5,6 +5,8 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from "re
 import { useLocation, Link } from "react-router-dom";
 import "./MapPage.css";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 const fallbackPharmacies = [
   {
     id: "68db6260929396828f54d0f0",
@@ -132,11 +134,9 @@ export default function MapPage() {
                         medicineData.stocks.map(async (item) => {
                             try {
                                 const response = await fetch(
-                                    `${import.meta.env.VITE_BACKEND_URL}/api/pharmacy/details?pharmacy_id=${item.pharmacy_id}`
+                                    `${BACKEND_URL}/api/pharmacy/details?pharmacy_id=${item.pharmacy_id}`
                                 );
                                 const pharmacy = await response.json();
-
-                                // Construct address from available fields
                                 const addressParts = [];
                                 if (pharmacy?.address) addressParts.push(pharmacy.address);
                                 if (pharmacy?.city) addressParts.push(pharmacy.city);

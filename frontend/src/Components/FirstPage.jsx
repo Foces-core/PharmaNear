@@ -3,6 +3,8 @@ import { FaCapsules, FaSearch, FaSortNumericUp } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import "./first_page.css";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 function FindMedicine() {
   const [medicine, setMedicine] = useState("");
   const [dosage, setDosage] = useState("");
@@ -38,7 +40,7 @@ function FindMedicine() {
         getLocation();
       }
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/drugs?name=${encodeURIComponent(medicine)}`,
+        `${BACKEND_URL}/api/drugs?name=${encodeURIComponent(medicine)}`,
         {
           method: "GET",
           headers: {

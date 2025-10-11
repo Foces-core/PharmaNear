@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import "./pharmacy_dashboard.css";
 
 const initialMedicines = [
@@ -173,12 +174,14 @@ export default function PharmacyDashboard() {
 
       <MedicineModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSave={handleSave} medicine={editingMedicine} />
         <footer className="fm-footer">
-  <a href="#">About Us</a>
-  <a href="#">Services</a>
-  <a href="#">Contact</a>
-  <a href="#">Privacy Policy</a>
-  <a href="#">Terms of Service</a>
-</footer>
+          <div className="fm-footer-links">
+            <Link to="/">About Us</Link>
+            <Link to="/">Services</Link>
+            <Link to="/">Contact</Link>
+            <Link to="/">Privacy Policy</Link>
+            <Link to="/">Terms of Service</Link>
+          </div>
+        </footer>
 
     </div>
   );

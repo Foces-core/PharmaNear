@@ -2,6 +2,8 @@ import { useState } from 'react'
 import './login_page.css'
 import { Link, useNavigate } from 'react-router-dom'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
 function SignupPage({ onSwitchToLogin }) {
   const [userName, setUserName] = useState('')
   const [owner, setOwner] = useState('')
@@ -12,7 +14,7 @@ function SignupPage({ onSwitchToLogin }) {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
-
+  
   const navigate = useNavigate()
 
   async function handleSubmit(event) {
@@ -21,7 +23,7 @@ function SignupPage({ onSwitchToLogin }) {
     setError('')
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pharmacy/signup`, {
+      const response = await fetch(`${BACKEND_URL}/api/pharmacy/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
