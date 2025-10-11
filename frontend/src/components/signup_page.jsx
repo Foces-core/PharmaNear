@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './login_page.css'
+import '../components/login_page.css'
 import { Link, useNavigate } from 'react-router-dom'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
