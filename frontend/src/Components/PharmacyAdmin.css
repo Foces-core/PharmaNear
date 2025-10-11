@@ -89,7 +89,7 @@ html::-webkit-scrollbar {
   justify-content: space-between;
   gap: 20px;
   margin-bottom: 30px;
-  flex-wrap: nowrap; /* Make responsive if needed */
+  flex-wrap: wrap; /* Allow cards to wrap */
 }
 
 .profile-card {
@@ -379,26 +379,7 @@ html::-webkit-scrollbar {
   }
 
   .profile-card {
-    min-width: 100%; /* Full width cards */
-  }
-}
-
-  .fm-text {
-    font-size: 1.3rem;
-  }
-  
-  .back-btn {
-    width: 100%;
-    max-width: 200px;
-  }
-  
-  .fm-location {
-    margin: 0;
-    order: 3;
-  }
-  
-  .fm-main {
-    padding: var(--spacing-lg) var(--spacing-md);
+    min-width: 100%; /* Ensure cards take full width */
   }
   
   .fm-title {

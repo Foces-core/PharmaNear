@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { FaCapsules, FaDollarSign, FaEdit, FaPlus, FaSave, FaSortNumericUp, FaTrash } from "react-icons/fa";
+import { useEffect, useState, useRef } from "react";
+import { FaCapsules, FaDollarSign, FaEdit, FaPlus, FaSave, FaSortNumericUp, FaTrash, FaUserCircle } from "react-icons/fa";
 import { useNavigate, Link } from 'react-router-dom';
 import "./pharmacy_page.css";
 
@@ -16,6 +16,7 @@ export default function PharmacyPage() {
   const [showAddMedicineForm, setShowAddMedicineForm] = useState(false);
   const [newMedicineName, setNewMedicineName] = useState("");
   const [newMedicineStrength, setNewMedicineStrength] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [profile, setProfile] = useState({
     user_name: "",
     license_number: "",
@@ -318,12 +319,19 @@ export default function PharmacyPage() {
       <header className="fm-header">
         <h6 className="fm-text">PharmaNear</h6>
         <div className="fm-location">
-          <button type="button" className="back-btn" onClick={goToAdmin} style={{ backgroundColor: '#00664c ', color: '#ffffff', marginBottom: '10px',marginRight: '10px', width: '100%', boxShadow: '0 4px 16px rgba(0,0,0,0.10)',fontWeight: '600' }}>
-            Go to Admin Panel
+          <button onClick={() => setIsMenuOpen(o => !o)} className="menu-button">
+            <FaUserCircle size={22} />
           </button>
-          <button type="button" className="back-btn" onClick={handleLogout} style={{ backgroundColor: '#00664c ', color: '#ffffff', marginBottom: '10px',marginRight: '-10px', width: '100%', boxShadow: '0 4px 16px rgba(0,0,0,0.10)',fontWeight: '600' }}>
-            Logout
-          </button>
+          {isMenuOpen && (
+            <div className="dropdown-menu">
+              <button onClick={goToAdmin} className="dropdown-item">
+                Go to Admin Panel
+              </button>
+              <button onClick={handleLogout} className="dropdown-item">
+                Logout
+              </button>
+            </div>
+          )}
         </div>
       </header>
 
@@ -483,7 +491,7 @@ export default function PharmacyPage() {
                   marginBottom: isMobile ? "8px" : "0"
                 }}>
                   {editingItem?.id === item.id ? (
-                    <>
+                    <div className="edit-form-container" style={{ gridColumn: '1 / -1', display: 'contents' }}>
                       <div style={{ gridColumn: '1' }}>
                         <input
                           type="text"
@@ -534,7 +542,7 @@ export default function PharmacyPage() {
                         gap: '10px', 
                         justifyContent: 'flex-end', 
                         alignItems: 'center', 
-                        gridColumn: '4' 
+                        gridColumn: '4'
                       }}>
                         <button 
                           type="button" 
@@ -544,7 +552,8 @@ export default function PharmacyPage() {
                             padding: "8px 16px",
                             fontSize: "0.8rem",
                             backgroundColor: '#10b981',
-                            minHeight: "auto"
+                            minHeight: "auto",
+                            width: isMobile ? '100%' : 'auto'
                           }}
                         >
                           <FaSave size={14} />
@@ -560,13 +569,14 @@ export default function PharmacyPage() {
                             color: "#6b7280",
                             border: "1px solid #d1d5db",
                             borderRadius: "6px",
-                            cursor: "pointer"
+                            cursor: "pointer",
+                            width: isMobile ? '100%' : 'auto'
                           }}
                         >
                           Cancel
                         </button>
                       </div>
-                    </>
+                    </div>
                   ) : (
                     <>
                       {isMobile ? (
