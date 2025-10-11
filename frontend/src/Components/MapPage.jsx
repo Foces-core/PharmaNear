@@ -5,9 +5,6 @@ import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaf
 import { useLocation } from "react-router-dom";
 import "./MapPage.css";
 
-// ---------------------
-// Fallback data
-// ---------------------
 const fallbackPharmacies = [
   {
     id: "68db6260929396828f54d0f0",
@@ -23,9 +20,6 @@ const fallbackPharmacies = [
   },
 ];
 
-// ---------------------
-// Marker Icons
-// ---------------------
 const shadowUrl = "https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-shadow.png";
 
 const userIcon = new L.Icon({
@@ -46,9 +40,6 @@ const pharmacyIcon = new L.Icon({
     shadowSize: [41, 41],
 });
 
-// ---------------------
-// Filter Pharmacies on map bounds
-// ---------------------
 function PharmacyFilter({ pharmacies, setVisiblePharmacies }) {
     useMapEvents({
         moveend: (e) => {
@@ -104,17 +95,13 @@ export default function MapPage() {
     const [selectedPharmacy, setSelectedPharmacy] = useState(null);
 
     
-    // Try to get data from location state first, then from sessionStorage as fallback
     const locationState = location.state || {};
     const storedData = JSON.parse(sessionStorage.getItem('mapPageData') || '{}');
-    
-    // Use data from location state or fallback to sessionStorage
     const medicineData = locationState.medicineData || storedData.medicineData;
     const medicine = locationState.medicine || storedData.medicine;
     const dosage = locationState.dosage || storedData.dosage;
     const passedLocation = locationState.userLocation || storedData.userLocation;
     
-    // Store data in sessionStorage when it comes from location state
     useEffect(() => {
         if (location.state) {
             sessionStorage.setItem('mapPageData', JSON.stringify({
@@ -126,7 +113,6 @@ export default function MapPage() {
         }
     }, [location.state, medicineData, medicine, dosage, passedLocation]);
 
-    // Initial coordinates
     const initialLocation = passedLocation
         ? {
             lat: parseFloat(passedLocation.split(',')[0]) || 10.001,
@@ -138,9 +124,6 @@ export default function MapPage() {
     const [pharmacies, setPharmacies] = useState([]);
     const [visiblePharmacies, setVisiblePharmacies] = useState([]);
 
-    // ---------------------
-    // Process medicine data
-    // ---------------------
     useEffect(() => {
         if (medicineData?.stocks?.length > 0) {
             const fetchPharmacyDetails = async () => {
@@ -149,7 +132,7 @@ export default function MapPage() {
                         medicineData.stocks.map(async (item) => {
                             try {
                                 const response = await fetch(
-                                    `http://localhost:5000/api/pharmacy/details?pharmacy_id=${item.pharmacy_id}`
+                                    `${import.meta.env.VITE_BACKEND_URL}/api/pharmacy/details?pharmacy_id=${item.pharmacy_id}`
                                 );
                                 const pharmacy = await response.json();
 
@@ -197,9 +180,6 @@ export default function MapPage() {
         }
     }, [medicineData, userLocation.lat, userLocation.lng]);
 
-    // ---------------------
-    // Get user geolocation
-    // ---------------------
     useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
