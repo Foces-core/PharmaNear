@@ -11,10 +11,10 @@ import Stock from "./models/stock.js";
 dotenv.config();
 
 const app = express();
-
+const allowedOrigin = process.env.CORS_ORIGIN || "http://localhost:5173";
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: allowedOrigin,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     credentials: true,
   })
