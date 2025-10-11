@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import './login_page.css'
-
 import { Link, useNavigate } from 'react-router-dom'
 
 function SignupPage({ onSwitchToLogin }) {
@@ -22,7 +21,7 @@ function SignupPage({ onSwitchToLogin }) {
     setError('')
 
     try {
-      const response = await fetch('http://localhost:5000/api/pharmacy/signup', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pharmacy/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,12 +49,10 @@ function SignupPage({ onSwitchToLogin }) {
 
       const data = await response.json()
 
-      // Store authentication data
       localStorage.setItem('pharmacy_user_name', data.pharmacy.user_name)
       localStorage.setItem('pharmacy_token', data.token)
       localStorage.setItem('pharmacy_id', data.pharmacy.id)
 
-      // Navigate to pharmacy dashboard
       navigate('/pharmacy')
     } catch (error) {
       setError(error.message)
@@ -71,7 +68,6 @@ function SignupPage({ onSwitchToLogin }) {
       <div className="login-layout__right">
         <div className="login-card">
           <h1 className="login-title">SIGN UP</h1>
-
           <form onSubmit={handleSubmit} className="login-form" autoComplete="on">
             <div className="input-group">
               <span className="input-icon input-icon--left" aria-hidden="true">
