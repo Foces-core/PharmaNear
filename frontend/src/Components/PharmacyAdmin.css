@@ -357,37 +357,7 @@ html::-webkit-scrollbar {
   flex-wrap: wrap;
 }
 
-/* Footer Section */
-.fm-footer {
-  background: var(--primary-color);
-  color: white;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: var(--spacing-md);
-  padding: var(--spacing-lg);
-  flex-wrap: wrap;
-  flex-shrink: 0; /* Prevent footer from shrinking */
-  width: 100%;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.fm-footer a {
-  display: flex;
-  align-items: center;
-  color: white;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-  padding: 4px 8px;
-  border-radius: 4px;
-}
-
-.fm-footer a:hover {
-  opacity: 0.9;
-  background-color: rgba(255,255,255,0.1);
-}
+/* Footer Section - REMOVED */
 
 /* Location button wrapper */
 .location-btn-wrapper {
@@ -444,10 +414,7 @@ html::-webkit-scrollbar {
     padding: var(--spacing-md);
   }
   
-  .fm-footer {
-    gap: var(--spacing-md);
-    padding: var(--spacing-md);
-  }
+  /* REMOVED Footer media query */
 }
 
 /* Loading states */

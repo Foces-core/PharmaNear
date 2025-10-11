@@ -319,34 +319,6 @@
   cursor: not-allowed;
 }
 
-.fm-footer {
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center; 
-  align-items: center;
-  min-height: 60px;
-  padding: 16px 40px;
-  background-color: #1a9e87; 
-  box-sizing: border-box;
-  width: 100%;
-}
-
-.fm-footer-links {
-  display: flex;
-  gap: 30px; 
-  flex-wrap: wrap;
-}
-
-.fm-footer a {
-  text-decoration: none;
-  color: white;
-  font-size: 0.95rem;
-}
-
-.fm-footer a:hover {
-  text-decoration: underline;
-}
-
 .relative 
 {
   position: relative;
@@ -365,34 +337,6 @@
 .with-icon 
 {
   padding-left: 40px;
-}
-
-@media (max-width: 900px) 
-{
-  .fm-footer 
-  {
-    gap: 16px;
-    padding: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-  }
-}
-
-@media (max-width: 600px) 
-{
-  .fm-footer 
-  {
-    flex-direction: column;
-    gap: 8px;
-    padding: 10px;
-    text-align: center;
-  }
-
-  .fm-footer a 
-  {
-    font-size: 0.8rem;
-  }
 }
 
 /* Fix for content overflow on all screen sizes */

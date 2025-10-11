@@ -154,7 +154,7 @@ body {
     padding: 20px;
     min-height: 0;
     overflow: hidden;
-    height: calc(100vh - 140px); /* Calculate height excluding header and footer */
+    height: calc(100vh - 120px); /* Adjusted height for header/footer */
 }
 
 .content-wrapper {
@@ -235,6 +235,7 @@ body {
     padding: 15px;
     padding-right: 50px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px; 
 }
 
 .pharmacy-info {
@@ -347,55 +348,39 @@ body {
     border-radius: 10px;
 }
 
-/* ================= Footer ================= */
-.fm-footer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background-color: #1a9e87; 
-    padding: 15px 30px;
-    width: 100%;
-    flex-wrap: nowrap;
-    flex-shrink: 0;
-    position: static; 
-    margin-top: auto; 
+/* ================= Responsive Design ================= */
+
+@media (max-width: 800px) {
+    .fm-main {
+        padding: 10px;
+        height: calc(100vh - 100px); /* Adjust height for mobile */
+    }
+
+    .content-wrapper {
+        flex-direction: column; /* Stack list and map vertically */
+        gap: 10px;
+    }
+
+    .left-panel {
+        flex: 1; /* Take up part of the space */
+        min-width: 100%;
+        max-height: 40%; /* List takes 40% of the vertical space */
+    }
+
+    .right-panel {
+        flex: 1.5; /* Map takes the remaining space */
+        min-width: 100%;
+        min-height: 50%; /* Ensure map is visible */
+    }
+
+    .fm-header {
+        padding: 8px 15px;
+    }
 }
 
-.fm-footer-content {
-    display:flex;
-    padding: 0;
-    gap: 40px;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
+/* Remove or ignore the old .fm-footer-text class if it's not used */
+/* .fm-footer-text { ... } */
 
-.fm-footer a {
-    color: white;
-    text-decoration: none;
-    font-size: 0.85rem;
-    opacity: 0.9;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.fm-footer a:hover {
-    opacity: 1;
-    text-decoration: underline;
-}
-
-.fm-footer-text {
-    flex-direction: row;
-    font-size: 0.8rem;
-    opacity: 0.8;
-    text-align: center;
-    background-color: #1b806d;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
 
 /* Responsive Design for Google Maps Button */
 @media (max-width: 768px) {
@@ -425,7 +410,7 @@ body {
     .google-maps-btn span {
         display: none; /* Hide emoji on very small screens if needed */
     }
-    .fm-footer-content {
-        gap: 120px;
+    .fm-footer-links {
+        gap: 10px 15px; /* Reduce gap on very small screens */
     }
 }

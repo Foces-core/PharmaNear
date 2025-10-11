@@ -142,33 +142,6 @@
     font-weight: bold;
 }
 
-/* Footer Section */
-.fp-footer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--teal-color); 
-  padding: 15px 30px;
-  width: 100%;
-  flex-wrap: nowrap;
-  flex-shrink: 0;
-  position: static; 
-  margin-top: auto; 
-}
-
-.fp-footer-links {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    gap: 30px; 
-}
-
-.fp-footer a {
-  text-decoration: none;
-  color: white;
-  font-size: 0.85rem;
-}
 
 /* Responsive */
 @media (max-width: 768px) {
