@@ -5,8 +5,8 @@ import MapPage from './Components/MapPage.jsx';
 import PharmacyAdmin from './Components/PharmacyAdmin.jsx';
 import PharmacyPage from './Components/PharmacyPage.jsx';
 import PharmacyDashboard from './Components/pharmacy_dashboard.jsx';
-import LoginPage from './Components/login_page.jsx';
-import SignupPage from './Components/signup_page.jsx';
+import LoginPage from './components/login_page.jsx';
+import SignupPage from './components/signup_page.jsx';
 
 function App() {
   return (
