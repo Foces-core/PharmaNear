@@ -53,8 +53,8 @@ function FindMedicine() {
           medicine: medicine,
           dosage: dosage,
           quantity: quantity,
-          userLocation: location,
-        },
+          userLocation: location
+        } 
       });
     } catch (error) {
       console.error("Error fetching medicine data:", error);
@@ -81,12 +81,20 @@ function FindMedicine() {
             value={medicine}
             onChange={(e) => setMedicine(e.target.value)}
             className="fm-input with-icon"
-            style={{ width: "800px", maxWidth: "100%" }}
           />
         </div>
 
-        <div className="flexrow">
-          <div className="fm-input-groups relative">
+        <div className="flexrow"
+        style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "800px",
+            maxWidth: "100%",
+            gap: "20px",
+            marginBottom: "10px"
+          }}
+        >
+          <div className="fm-input-groups relative"  style={{ position: "relative", flex: 1 }}>
             <FaCapsules className="fm-icon" style={{ color: "#14967f" }}/>
             <input
               type="text"
@@ -94,10 +102,14 @@ function FindMedicine() {
               value={dosage}
               onChange={(e) => setDosage(e.target.value)}
               className="fm-input with-icon"
+              style={{
+                width: "100%",
+                boxSizing: "border-box"
+              }}
             />
           </div>
 
-          <div className="fm-input-groups relative">
+          <div className="fm-input-groups relative"  style={{ position: "relative", flex: 1 }}>
             <FaSortNumericUp className="fm-icon" style={{ color: "#14967f" }}/>
             <input
               type="number"
@@ -105,6 +117,10 @@ function FindMedicine() {
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
               className="fm-input with-icon"
+              style={{
+                width: "100%",
+                boxSizing: "border-box"
+              }}
             />
           </div>
         </div>
