@@ -38,7 +38,7 @@ function FindMedicine() {
         getLocation();
       }
       const response = await fetch(
-        `http://localhost:5000/api/drugs?name=${encodeURIComponent(medicine)}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/drugs?name=${encodeURIComponent(medicine)}`,
         {
           method: "GET",
           headers: {
@@ -85,18 +85,8 @@ function FindMedicine() {
           />
         </div>
 
-        <div 
-          className="flexrow"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "800px",
-            maxWidth: "100%",
-            gap: "20px",
-            marginBottom: "10px"
-          }}
-        >
-          <div className="fm-input-groups relative" style={{ position: "relative", flex: 1 }}>
+        <div className="flexrow">
+          <div className="fm-input-groups relative">
             <FaCapsules className="fm-icon" style={{ color: "#14967f" }}/>
             <input
               type="text"
@@ -104,13 +94,10 @@ function FindMedicine() {
               value={dosage}
               onChange={(e) => setDosage(e.target.value)}
               className="fm-input with-icon"
-              style={{
-                width: "100%",
-                boxSizing: "border-box"
-              }}
             />
           </div>
-          <div className="fm-input-groups relative" style={{ position: "relative", flex: 1 }}>
+
+          <div className="fm-input-groups relative">
             <FaSortNumericUp className="fm-icon" style={{ color: "#14967f" }}/>
             <input
               type="number"
@@ -118,10 +105,6 @@ function FindMedicine() {
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
               className="fm-input with-icon"
-              style={{
-                width: "100%",
-                boxSizing: "border-box"
-              }}
             />
           </div>
         </div>
