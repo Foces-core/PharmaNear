@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaArrowLeft, FaMapPin } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./PharmacyAdmin.css";
 
 export default function PharmacyAdmin() {
@@ -16,7 +16,6 @@ export default function PharmacyAdmin() {
     longitude: "",
   });
 
-  // Prevent mouse wheel from changing input values
   useEffect(() => {
     const handleWheel = (e) => {
       if (e.target.tagName === 'INPUT') {
@@ -56,7 +55,7 @@ export default function PharmacyAdmin() {
       const userName = localStorage.getItem("pharmacy_user_name") || "";
       const token = localStorage.getItem("pharmacy_token") || "";
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`, {
+        `http://localhost:5000/api/pharmacy/profile?user_name=${encodeURIComponent(userName)}`, {
           signal: controller.signal,
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -99,7 +98,7 @@ export default function PharmacyAdmin() {
         longitude:
           profile.longitude === "" ? undefined : Number(profile.longitude),
       };
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pharmacy/profile`, {
+      const res = await fetch("http://localhost:5000/api/pharmacy/profile", {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json",
@@ -205,7 +204,7 @@ export default function PharmacyAdmin() {
                       onChange={(e) =>
                         setProfile((p) => ({ ...p, address: e.target.value }))
                       }
-                      style={{ minHeight: '3.5em' }} // Larger input box
+                      style={{ minHeight: '3.5em' }} 
                     />
                   </div>
 
@@ -297,13 +296,14 @@ export default function PharmacyAdmin() {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="fm-footer">
-        <a href="/">About Us</a>
-        <a href="/">Services</a>
-        <a href="/">Contact</a>
-        <a href="/">Privacy Policy</a>
-        <a href="/">Terms of Service</a>
+        <div className="fm-footer-links">
+          <Link to="/">About Us</Link>
+          <Link to="/">Services</Link>
+          <Link to="/">Contact</Link>
+          <Link to="/">Privacy Policy</Link>
+          <Link to="/">Terms of Service</Link>
+        </div>
       </footer>
     </div>
   );

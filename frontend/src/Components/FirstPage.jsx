@@ -134,14 +134,13 @@ function FindMedicine() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="fp-footer">
-        <div className="fp-footer-links">
-          <a href="/">About Us</a>
-          <a href="/">Services</a>
-          <a href="/">Contact</a>
-          <a href="/">Privacy Policy</a>
-          <a href="/">Terms of Service</a>
+      <footer className="fm-footer">
+        <div className="fm-footer-links">
+          <Link to="/">About Us</Link>
+          <Link to="/">Services</Link>
+          <Link to="/">Contact</Link>
+          <Link to="/">Privacy Policy</Link>
+          <Link to="/">Terms of Service</Link>
         </div>
       </footer>
     </div>

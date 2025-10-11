@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaCapsules, FaDollarSign, FaEdit, FaPlus, FaSave, FaSortNumericUp, FaTrash } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import "./pharmacy_page.css";
 
 export default function PharmacyPage() {
@@ -757,11 +757,11 @@ export default function PharmacyPage() {
 
       <footer className="fm-footer">
         <div className="fm-footer-links">
-          <a href="/">About Us</a>
-          <a href="/">Services</a>
-          <a href="/">Contact</a>
-          <a href="/">Privacy Policy</a>
-          <a href="/">Terms of Service</a>
+          <Link to="/">About Us</Link>
+          <Link to="/">Services</Link>
+          <Link to="/">Contact</Link>
+          <Link to="/">Privacy Policy</Link>
+          <Link to="/">Terms of Service</Link>
         </div>
       </footer>
     </div>

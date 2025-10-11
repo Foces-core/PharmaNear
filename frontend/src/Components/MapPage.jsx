@@ -1,8 +1,8 @@
 import L from "leaflet";
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
-import { useLocation } from "react-router-dom";
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from "react-leaflet";
+import { useLocation, Link } from "react-router-dom";
 import "./MapPage.css";
 
 const fallbackPharmacies = [
@@ -304,16 +304,15 @@ export default function MapPage() {
                 </div>
             </main>
 
-            {/* Footer */}
-            <footer className="fm-footer">
-                <div className="fm-footer-content">
-                    <a href="/">About Us</a>
-                    <a href="/">Services</a>
-                    <a href="/">Contact</a>
-                    <a href="/">Privacy Policy</a>
-                    <a href="/">Terms of Service</a>
-                </div>
-            </footer>
+      <footer className="fm-footer">
+        <div className="fm-footer-links">
+          <Link to="/">About Us</Link>
+          <Link to="/">Services</Link>
+          <Link to="/">Contact</Link>
+          <Link to="/">Privacy Policy</Link>
+          <Link to="/">Terms of Service</Link>
         </div>
-    );
+      </footer>
+    </div>
+  );
 }
