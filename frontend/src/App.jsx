@@ -4,9 +4,9 @@ import FirstPage from './components/FirstPage.jsx';
 import MapPage from './components/MapPage.jsx';
 import PharmacyAdmin from './components/PharmacyAdmin.jsx';
 import PharmacyPage from './components/PharmacyPage.jsx';
-import PharmacyDashboard from './components/pharmacy_dashboard.jsx';
-import LoginPage from './components/login_page.jsx';
-import SignupPage from './components/signup_page.jsx';
+import PharmacyDashboard from './components/PharmacyDashboard.jsx';
+import LoginPage from './components/LoginPage.jsx';
+import SignupPage from './components/SignupPage.jsx';
 
 function App() {
   return (

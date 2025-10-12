@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import "./pharmacy_dashboard.css";
+import "./PharmacyDashboard.css";
 
 const initialMedicines = [
   { id: 1, name: "Paracetamol 500mg", batchNo: "A123", expiryDate: "2025-12-31", quantity: 150, price: 5.5, supplier: "Pharma Inc." },
