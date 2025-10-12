@@ -1,0 +1,416 @@
+/* General body and container styles */
+html, body, #root {
+    height: 100%;
+    min-height: 100vh;
+}
+body {
+    font-family: -apple-system, BlinkMacMacFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+}
+
+/* ================= Page Layout ================= */
+.find-medicine-page {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+/* ================= Header ================= */
+.fm-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px;
+    background-color: #1a9e87;
+    color: white;
+    gap: 15px;
+    flex-wrap: wrap;
+    overflow: hidden; /* Prevent content from overflowing */
+    min-height: 50px;
+}
+
+/* App Name */
+.fm-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+/* Ensure location is always on the right */
+.fm-header .fm-location {
+    margin-left: auto;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ================= SEARCH + SORT (Final Clean Version) ================= */
+.search-sort-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #fff;
+  border-radius: 8px;
+  margin: 15px 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;   /* force white background */
+  color: #333;
+  outline: none;
+  transition: border 0.2s ease-in-out;
+}
+
+.search-input:focus {
+  border-color: #4f4f4f;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+.sort-wrapper {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.sort-label {
+  font-size: 14px;
+  margin-right: 8px;
+  color: #444;
+}
+
+/* Sort dropdown only (with arrow) */
+.sort-select {
+  padding: 8px 35px 8px 12px; /* space on right for arrow */
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='gray'><path d='M2 4l4 4 4-4z'/></svg>") no-repeat right 10px center;
+  background-size: 12px;
+  cursor: pointer;
+  outline: none;
+  appearance: none; /* hide default arrow */
+  transition: border 0.2s ease-in-out;
+  color: #000000;
+}
+
+.sort-select:focus {
+  border-color: #009688;
+  box-shadow: 0 0 4px rgba(0,150,136,0.3);
+}
+
+
+
+/* ========== Location (Icon + Text) ========== */
+.header-leftmost {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* spacing between icon and text */
+}
+
+.location-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.fm-location {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.location-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.location-info h6 {
+    font-weight: normal;
+    margin: 0;
+}
+
+/* ================= Main Content ================= */
+.fm-main {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    min-height: 0;
+    overflow: hidden;
+    height: calc(100vh - 120px); /* Adjusted height for header/footer */
+}
+
+.content-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+    gap: 20px;
+    height: 100%;
+}
+
+/* ========== Left Panel (List) ========== */
+.left-panel {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
+}
+
+.right-panel {
+    flex: 2;
+    min-width: 400px;
+    background-color: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+.pharmacy-list-scroll {
+  flex-grow: 1;
+  overflow-y: auto; /* Scroll only this box */
+  padding-right: 6px; /* Optional scrollbar padding */
+  max-height: 100%;
+}
+
+/* Make the search-sort-container responsive */
+.search-sort-container {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    min-width: 300px;
+    margin: 0 10px;
+}
+
+.pharmacy-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+/* Hide scrollbar while keeping scroll functionality */
+.pharmacy-list {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}
+.pharmacy-list::-webkit-scrollbar { /* WebKit */
+    width: 0px;
+    height: 0px;
+}
+
+.pharmacy-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    padding-right: 50px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px; 
+}
+
+.pharmacy-info {
+    flex-grow: 1;
+    line-height: 1.5;
+}
+
+.pharmacy-info h3 {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.pharmacy-info p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 2px 0;
+}
+
+/* Stock Indicator */
+.stock {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.in-stock {
+    background-color: #e6f7e9;
+    color: #28a745;
+}
+
+.out-of-stock {
+    background-color: #fcebeb;
+    color: #dc3545;
+}
+
+/* Direction Icon */
+.direction-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.direction-icon img {
+    width: 25px;
+    height: 25px;
+    filter: invert(50%);
+}
+
+/* Google Maps Button */
+.google-maps-btn {
+    background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(66, 133, 244, 0.3);
+}
+
+.google-maps-btn:hover {
+    background: linear-gradient(135deg, #3367d6 0%, #2d8f47 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(66, 133, 244, 0.4);
+}
+
+.google-maps-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(66, 133, 244, 0.3);
+}
+
+.no-pharmacies-message {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #666;
+}
+
+/* ========== Right Panel (Map) ========== */
+.right-panel {
+    flex: 2;
+    background-color: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    height: 100%;
+    min-height: 400px; /* Ensure minimum height for map visibility */
+}
+
+.leaflet-container {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    border-radius: 10px;
+}
+
+/* ================= Responsive Design ================= */
+
+@media (max-width: 800px) {
+    .fm-main {
+        padding: 10px;
+        height: calc(100vh - 100px); /* Adjust height for mobile */
+    }
+
+    .content-wrapper {
+        flex-direction: column; /* Stack list and map vertically */
+        gap: 10px;
+    }
+
+    .left-panel {
+        flex: 1; /* Take up part of the space */
+        min-width: 100%;
+        max-height: 40%; /* List takes 40% of the vertical space */
+    }
+
+    .right-panel {
+        flex: 1.5; /* Map takes the remaining space */
+        min-width: 100%;
+        min-height: 50%; /* Ensure map is visible */
+    }
+
+    .fm-header {
+        padding: 8px 15px;
+    }
+}
+
+/* Remove or ignore the old .fm-footer-text class if it's not used */
+/* .fm-footer-text { ... } */
+
+
+/* Responsive Design for Google Maps Button */
+@media (max-width: 768px) {
+    .google-maps-btn {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+        margin-top: 8px;
+    }
+    
+    .pharmacy-card {
+        padding: 12px;
+        padding-right: 40px;
+    }
+    
+    .stock {
+        right: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .google-maps-btn {
+        font-size: 0.75rem;
+        padding: 5px 8px;
+        margin-top: 6px;
+    }
+    
+    .google-maps-btn span {
+        display: none; /* Hide emoji on very small screens if needed */
+    }
+    .fm-footer-links {
+        gap: 10px 15px; /* Reduce gap on very small screens */
+    }
+}

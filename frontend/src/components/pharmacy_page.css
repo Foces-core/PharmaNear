@@ -1,0 +1,618 @@
+:root {
+  --primary-color: #008060; 
+  --primary-hover-color: #00664c;
+  --secondary-color: #e5e7eb;
+  --danger-color: #dc2626;
+  --warning-color: #ea580c;
+  --text-dark: #1f2937;
+  --text-medium: #6b7280;
+  --text-light: #ffffff;
+  --background-color: #f9fafb;
+  --card-background: #ffffff;
+  --border-color: #e5e7eb;
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --border-radius: 0.35rem; 
+}
+
+*
+{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.medicine-page
+{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f9fafb;
+    overflow: visible; /* Allow dropdown to be visible */
+}
+
+.fm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* FIX 1: Vertically aligns the title and icon */
+  padding: 8px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  min-height: 50px;
+  position: relative; 
+  z-index: 500;      /* FIX 2: Puts the header layer on top */
+  overflow: visible; /* Allow dropdown to extend beyond header */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.fm-header .fm-text 
+{
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 2px;
+  flex-shrink: 0; /* Prevent text from shrinking */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.fm-location
+{
+  position: relative; 
+  display: flex;
+  align-items: center;
+  flex-shrink: 0; /* Prevent menu area from shrinking */
+}
+
+/* ======================================== */
+/* Dropdown Styles (Final & Isolated)     */
+/* ======================================== */
+
+.medicine-page .hamburger-menu-button {
+  background-color: transparent;
+  border: 1.5px solid white;
+  color: white;
+  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.medicine-page .hamburger-menu-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.medicine-page .hamburger-menu-button.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.05);
+}
+
+.medicine-page .dropdown-menu {
+  position: absolute;
+  top: 50px; 
+  right: 0;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  z-index: 1000; /* Higher z-index to ensure visibility */
+  width: 200px;
+  overflow: hidden;
+  border: 1px solid #e9e9e9;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: all 0.2s ease;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.medicine-page .dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  background: none;
+  border: none;
+  text-align: left;
+  color: #333;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.medicine-page .dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #00664c;
+  transform: translateX(2px);
+}
+
+.medicine-page .dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.pharmacy-main {
+  padding: 24px 16px 0 16px;
+  flex-grow: 1;
+  position: relative; 
+  z-index: 1;       /* FIX 3: Puts the main content layer behind the header */
+}
+
+.pharmacy-main-top {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap; /* Allow wrapping */
+}
+
+.pharmacy-summary-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 220px;
+  flex: 0 0 220px;
+}
+
+.pharmacy-summary-card {
+  background: var(--primary-color);
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  padding: 28px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.summary-value {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.summary-label {
+  font-size: 1rem;
+  opacity: 0.92;
+}
+
+.pharmacy-add-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+  padding: 32px 28px 28px 28px;
+  min-width: 340px;
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.pharmacy-welcome {
+  color: #00664c;
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 18px;
+  text-align: center;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.pharmacy-add-title {
+  color: #14967f;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.pharmacy-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pharmacy-error {
+  color: #633737;
+  background: #fee2e2;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-top: 12px;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.pharmacy-table-section {
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto 0 auto; /* Center the table section horizontally */
+}
+
+/* New styles for pharmacy table rows */
+.pharmacy-table-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+  margin-bottom: 12px; /* This adds the vertical gap */
+}
+
+.pharmacy-table-row:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+/* This is the container for the inline edit form */
+.edit-form-container {
+  display: contents; /* This makes it work with the parent grid */
+}
+
+.edit-form-container > div {
+  padding: 0 5px; /* Adds a small horizontal gap for desktop */
+}
+
+.medicine-details {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 16px;
+}
+
+.medicine-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.medicine-detail-label {
+  font-size: 0.9rem;
+  color: var(--text-medium);
+}
+
+.medicine-detail-value {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.edit-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.edit-button:hover {
+  background-color: var(--primary-hover-color);
+}
+
+.save-button {
+  background-color: #34d399;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-button:hover {
+  background-color: #4ade80;
+}
+
+.cancel-button {
+  background-color: #f87171;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cancel-button:hover {
+  background-color: #fb7185;
+}
+
+.fm-footer {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 16px 0;
+  text-align: center;
+  position: relative;
+  z-index: 500;
+}
+
+.fm-footer a {
+  color: white;
+  text-decoration: underline;
+}
+
+.fm-footer a:hover {
+  color: #e0f2f1;
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .fm-header {
+    padding: 8px 12px; /* Reduce padding on tablet */
+  }
+  
+  .fm-header .fm-text {
+    font-size: 1.3rem; /* Slightly smaller text on tablet */
+  }
+  
+  /* Adjust dropdown positioning on tablet */
+  .medicine-page .dropdown-menu {
+    top: 45px; /* Adjust for smaller header */
+    right: 0;
+    width: 180px; /* Slightly smaller dropdown */
+  }
+  
+  .pharmacy-main-top {
+    flex-direction: column;
+    gap: 24px;
+    align-items: center; /* Center items when stacked */
+  }
+  .pharmacy-summary-cards {
+    flex-direction: row;
+    flex-wrap: wrap; /* Allow summary cards to wrap */
+    gap: 16px;
+    min-width: unset;
+    justify-content: center;
+  }
+  .pharmacy-summary-card {
+    flex: 1 1 150px; /* Allow cards to grow and shrink */
+    min-width: 120px;
+    padding: 18px 10px;
+    font-size: 1rem;
+  }
+  .pharmacy-add-card {
+    min-width: unset;
+    width: 100%; /* Make add card full width */
+    max-width: 100%;
+    padding: 20px 10px 18px 10px;
+  }
+  .pharmacy-table-section {
+    margin: 24px auto 0 auto; /* Center on tablet */
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .fm-header {
+    padding: 6px 8px; /* Further reduce padding on mobile */
+    min-height: 45px; /* Slightly smaller header on mobile */
+  }
+  
+  .fm-header .fm-text {
+    font-size: 1.1rem; /* Smaller text on mobile */
+  }
+  
+  /* Adjust dropdown for mobile */
+  .medicine-page .dropdown-menu {
+    top: 40px; /* Adjust for mobile header */
+    right: 0;
+    width: 160px; /* Smaller dropdown on mobile */
+  }
+  
+  .pharmacy-main {
+    padding: 16px 12px 0 12px;
+  }
+  .menu-button span {
+    display: none; /* Hide text on very small screens, show only icon */
+  }
+  .pharmacy-add-card {
+    padding: 16px; /* This adds padding inside the form card */
+  }
+  .pharmacy-table-section {
+    margin: 20px auto 0 auto; /* Center on mobile */
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+  }
+  
+  /* Make table responsive on mobile */
+  .pharmacy-table-section > div {
+    margin: 0; /* Remove any margins from the table container */
+    border-radius: 8px; /* Smaller border radius on mobile */
+  }
+  
+  /* This will stack the edit form inputs vertically on mobile */
+  .edit-form-container {
+    display: flex; /* Switch to flex for mobile stacking */
+    flex-direction: column;
+    align-items: stretch; /* Make inputs full width */
+    gap: 10px; /* This adds the vertical gap for mobile */
+    width: 100%;
+  }
+
+  /* Target the button container specifically on mobile */
+  .edit-form-container > div:last-child {
+    flex-direction: column;
+  }
+
+  .edit-form-container > div {
+    padding: 0; /* Reset padding for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .fm-header {
+    padding: 4px 6px; /* Minimal padding on very small screens */
+    min-height: 40px; /* Compact header */
+  }
+  
+  .fm-header .fm-text {
+    font-size: 1rem; /* Even smaller text on very small screens */
+  }
+  
+  /* Adjust dropdown for very small screens */
+  .medicine-page .dropdown-menu {
+    top: 35px; /* Adjust for compact header */
+    right: 0;
+    width: 140px; /* Even smaller dropdown */
+    font-size: 0.9rem; /* Smaller text in dropdown */
+  }
+  
+  .pharmacy-table-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .medicine-details {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Ensure table section is fully responsive on very small screens */
+  .pharmacy-table-section {
+    margin: 20px auto 0 auto; /* Center on very small screens */
+    width: 100%;
+    max-width: 100%;
+    padding: 0 8px; /* Add small padding on very small screens */
+  }
+  
+  .pharmacy-table-section > div {
+    margin: 0;
+    border-radius: 6px; /* Even smaller border radius */
+  }
+}
+
+/* Existing styles for inputs, buttons, footer, etc. */
+.fm-input-group,
+.fm-input-groups 
+{
+  width: 100%;
+  max-width: 800px;
+  height: 50px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.fm-input-groups 
+{
+  flex-grow: 1;
+}
+
+.fm-input 
+{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cad4d9;
+  background-color: #f4f5f7;
+  color: #232323;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.fm-input:hover 
+{
+  background-color: #dee8ec;
+  border-color: #14967f;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.fm-input::placeholder 
+{
+  color: #415055;
+}
+
+.fm-search-btn 
+{
+  width: 100%;
+  max-width: 800px;
+  padding: 12px 20px;
+  background-color: #14967f;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+.fm-search-btn:hover {
+  background-color: #1a9e87;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.fm-search-btn:disabled 
+{
+  cursor: not-allowed;
+}
+
+.relative 
+{
+  position: relative;
+}
+
+.fm-icon 
+{
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #415055;
+  font-size: 1.2rem;
+}
+
+.with-icon 
+{
+  padding-left: 40px;
+}
+
+/* Fix for content overflow on all screen sizes */
+.fm-main {
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.fm-input-group,
+.fm-input-groups {
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.fm-text,
+.fm-title,
+.fm-footer a {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}

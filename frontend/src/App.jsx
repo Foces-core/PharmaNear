@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import FirstPage from './Components/FirstPage.jsx';
-import MapPage from './Components/MapPage.jsx';
-import PharmacyAdmin from './Components/PharmacyAdmin.jsx';
-import PharmacyPage from './Components/PharmacyPage.jsx';
-import PharmacyDashboard from './Components/pharmacy_dashboard.jsx';
+import FirstPage from './components/FirstPage.jsx';
+import MapPage from './components/MapPage.jsx';
+import PharmacyAdmin from './components/PharmacyAdmin.jsx';
+import PharmacyPage from './components/PharmacyPage.jsx';
+import PharmacyDashboard from './components/pharmacy_dashboard.jsx';
 import LoginPage from './components/login_page.jsx';
 import SignupPage from './components/signup_page.jsx';
 
