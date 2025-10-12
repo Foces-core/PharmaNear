@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaCapsules, FaSearch, FaSortNumericUp } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import "./first_page.css";
+import './first_page.css';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
