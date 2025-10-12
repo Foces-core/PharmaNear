@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaCapsules, FaDollarSign, FaEdit, FaPlus, FaSave, FaSortNumericUp, FaTrash, FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
-import "./Pharmacyage.css";
+import "./PharmacyPage.css";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
