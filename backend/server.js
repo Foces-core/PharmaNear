@@ -509,7 +509,7 @@ const frontendDistPath = path.join(__dirname, "../frontend/dist");
 app.use(express.static(frontendDistPath));
 
 // For all non-API routes, serve index.html (for React Router)
-app.get("/*", (req, res) => {
+app.get("*", (req, res) => {
   // If it’s an API route, skip it
   if (req.originalUrl.startsWith("/api")) return res.status(404).json({ message: "API route not found" });
 
