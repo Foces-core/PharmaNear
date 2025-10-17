@@ -7,8 +7,6 @@ import mongoose from "mongoose";
 import Medicine from "./models/medicine.js";
 import Pharmacy from "./models/pharmacy.js";
 import Stock from "./models/stock.js";
-import path from "path";
-import { fileURLToPath } from "url";
 
 dotenv.config();
 
@@ -496,24 +494,6 @@ app.delete("/api/pharmacy/stock", AuthMiddleware, async (req, res) => {
     console.error("Error removing stock:", error);
     res.status(500).json({ message: "Server error" });
   }
-});
-
-// Needed for ESM-style imports (like yours)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Serve Vite build
-const frontendDistPath = path.join(__dirname, "../frontend/dist");
-
-// Serve static files (CSS, JS, images)
-app.use(express.static(frontendDistPath));
-
-// For all non-API routes, serve index.html (for React Router)
-app.get("*", (req, res) => {
-  // If it’s an API route, skip it
-  if (req.originalUrl.startsWith("/api")) return res.status(404).json({ message: "API route not found" });
-
-  res.sendFile(path.join(frontendDistPath, "index.html"));
 });
 
 app.listen(port, () => {
