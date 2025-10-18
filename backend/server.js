@@ -73,6 +73,10 @@ const AuthMiddleware = (req, res, next) => {
   });
 };
 
+app.get("/", (req, res) => {
+  res.send("server check");
+});
+
 app.post("/api/pharmacy/signup", async (req, res) => {
   try {
     const { user_name, owner_name, city, phone_number, password } = req.body;
