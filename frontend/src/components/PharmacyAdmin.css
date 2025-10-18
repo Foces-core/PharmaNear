@@ -372,7 +372,7 @@ html::-webkit-scrollbar {
     flex-direction: column;
     gap: var(--spacing-sm);
   }
-  @media (max-width: 768px) {
+  
   .admin-cards-wrapper {
     flex-direction: column; /* Stack vertically */
     gap: var(--spacing-md);
