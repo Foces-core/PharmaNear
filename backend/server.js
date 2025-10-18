@@ -11,7 +11,7 @@ import Stock from "./models/stock.js";
 dotenv.config();
 
 const app = express();
-const allowedOrigin = process.env.CORS_ORIGIN || "http://localhost:5173";
+const allowedOrigin = process.env.CORS_ORIGIN || "http://localhost:5173" || "https://pharmanear-1.onrender.com";
 app.use(
   cors({
     origin: allowedOrigin,
