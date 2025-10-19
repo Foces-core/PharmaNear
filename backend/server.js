@@ -11,14 +11,23 @@ import Stock from "./models/stock.js";
 dotenv.config();
 
 const app = express();
-const allowedOrigin = process.env.CORS_ORIGIN || "http://localhost:5173";
-app.use(
-  cors({
-    origin: allowedOrigin,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    credentials: true,
-  })
-);
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://pharmanear-1.onrender.com"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps, curl)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  credentials: true
+}));
 
 app.use(express.json());
 mongoose
@@ -63,6 +72,10 @@ const AuthMiddleware = (req, res, next) => {
     next();
   });
 };
+
+app.get("/", (req, res) => {
+  res.send("server check");
+});
 
 app.post("/api/pharmacy/signup", async (req, res) => {
   try {
