@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaArrowLeft, FaMapPin } from "react-icons/fa";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./PharmacyAdmin.css";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
@@ -147,8 +147,8 @@ export default function PharmacyAdmin() {
       <header className="fm-header">
         <div className="fm-text" style={{ color: '#ffffff', marginTop: 1, fontWeight: 'bold', textShadow: '0 2px 4px rgba(0, 0, 0, 0.33)' }}>PharmaNear</div>
         <div className="fm-location">
-          <h6 style={{ color: 'white', fontSize: '1.2rem', fontWeight: 'bold', marginBottom: 15, textShadow: '0 2px 4px rgba(0, 0, 0, 0.33)' }}>
-            Welcome, {profile.user_name}
+          <h6 className="fm-welcome-text">
+            Welcome, <span className="user-name">{profile.user_name}</span>
           </h6>
         </div>
       </header>
