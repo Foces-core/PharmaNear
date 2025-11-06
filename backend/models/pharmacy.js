@@ -14,6 +14,7 @@ const pharmacySchema = new mongoose.Schema({
   closing_hours: { type: String },
   phone_number: { type: String, required: true },
   password: { type: String, required: true },
+  location_url:String,
 });
 
 // Prevent OverwriteModelError if imported multiple times
