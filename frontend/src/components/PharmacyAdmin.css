@@ -66,18 +66,20 @@ html::-webkit-scrollbar {
 .fm-welcome-text {
   margin: 0;
   color: #ffffff;
-  font-weight: 700;
-  font-size: 1.2rem;
+  font-weight: 500;
+  font-size: 1rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.33);
   max-width: 60vw;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap:15x;
+
 }
 
-.user-name {
-  font-weight: 600;
-}
+
 
 /* Align container and allow better wrapping on small screens */
 .fm-location {
@@ -115,6 +117,23 @@ html::-webkit-scrollbar {
   gap: 15px;
   box-sizing: border-box;
   flex-shrink: 0;
+}
+
+@media (max-width: 960px) {
+  .fm-main {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+  .admin-cards-wrapper {
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+  .fm-grid{
+    margin-top: 550px;
+    margin-bottom: 10px;
+  }
+  .profile-card {
+    min-width: 100%;
+  }
 }
 
 .license-address-card input#address {
@@ -415,14 +434,14 @@ html::-webkit-scrollbar {
     margin-right: 0;
   }
   .fm-welcome-text {
-    font-size: 1rem;
+    font-size: 0.7rem;
     max-width: 80vw;
   }
 }
 
 @media (max-width: 480px) {
   .fm-welcome-text {
-    font-size: 0.95rem;
+    font-size: 0.65rem;
     max-width: 90vw;
   }
 }
