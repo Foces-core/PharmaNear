@@ -12,10 +12,11 @@ dotenv.config();
 
 const app = express();
 const allowedOrigins = [
-  "http://localhost:5173",
-  "https://pharmanear-1.onrender.com"
+  "http://localhost:5173"
 ];
-
+if (process.env.CORS_ORIGIN) {
+  allowedOrigins.push(process.env.CORS_ORIGIN);
+}
 app.use(cors({
   origin: function (origin, callback) {
     // allow requests with no origin (like mobile apps, curl)
