@@ -367,18 +367,16 @@
 /* Responsive styles */
 @media (max-width: 900px) {
   .fm-header {
-    padding: 8px 12px; /* Reduce padding on tablet */
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    /* Reduce padding on tablet */
   }
-  
   .fm-header .fm-text {
-    font-size: 1.3rem; /* Slightly smaller text on tablet */
-  }
-  
-  /* Adjust dropdown positioning on tablet */
-  .medicine-page .dropdown-menu {
-    top: 45px; /* Adjust for smaller header */
-    right: 0;
-    width: 180px; /* Slightly smaller dropdown */
+    display: none;
   }
   
   .pharmacy-main-top {
@@ -415,20 +413,15 @@
 @media (max-width: 600px) {
   .fm-header {
     padding: 6px 8px; /* Further reduce padding on mobile */
-    min-height: 45px; /* Slightly smaller header on mobile */
+    min-height: 45px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
   }
   
-  .fm-header .fm-text {
-    font-size: 1.1rem; /* Smaller text on mobile */
-  }
-  
-  /* Adjust dropdown for mobile */
-  .medicine-page .dropdown-menu {
-    top: 40px; /* Adjust for mobile header */
-    right: 0;
-    width: 160px; /* Smaller dropdown on mobile */
-  }
-  
+
   .pharmacy-main {
     padding: 16px 12px 0 12px;
   }
@@ -615,4 +608,87 @@
 .fm-footer a {
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+
+/* New: Profile button in header */
+.profile-button {
+  background-color: transparent;
+  color: var(--text-light);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.profile-button:hover {
+  background-color: rgba(255,255,255,0.10);
+  transform: scale(1.03);
+}
+
+/* Icon size controlled via font-size to be media-query friendly */
+.profile-icon {
+  font-size: 22px;
+}
+
+@media (max-width: 900px) {
+  .fm-header {
+    padding: 8px 12px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .profile-button {
+    width: 44px;
+    height: 44px;
+  }
+  .profile-icon {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .fm-header {
+    padding: 6px 8px; /* Further reduce padding on mobile */
+    min-height: 45px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .profile-button {
+    width: 40px;
+    height: 40px;
+  }
+  .profile-icon {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fm-header {
+    padding: 4px 6px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 40px; /* Compact header */
+  }
+  .profile-button {
+    width: 36px;
+    height: 36px;
+  }
+  .profile-icon {
+    font-size: 16px;
+  }
 }

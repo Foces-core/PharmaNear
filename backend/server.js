@@ -240,6 +240,7 @@ app.get("/api/pharmacy/details", async (req, res) => {
       opening_hours: pharmacy.opening_hours,
       closing_hours: pharmacy.closing_hours,
       phone_number: pharmacy.phone_number,
+      location_url: pharmacy.location_url,
     });
   } catch (err) {
     console.error(err);
@@ -255,8 +256,20 @@ app.put("/api/pharmacy/profile", AuthMiddleware, async (req, res) => {
       return res.status(400).json({ message: "user_name is required" });
 
     // Verify user can only update their own profile
-    if (req.user.user_name !== user_name) {
+    // Use req.user.user_name to find the pharmacy (current user_name from token)
+    const currentUserName = req.user.user_name;
+    if (currentUserName !== user_name) {
       return res.status(403).json({ message: "Access denied" });
+    }
+
+    // Check if user_name is being changed
+    const newUserName = req.body.new_user_name;
+    if (newUserName && newUserName !== currentUserName) {
+      // Check if new user_name already exists
+      const existingPharmacy = await Pharmacy.findOne({ user_name: newUserName });
+      if (existingPharmacy) {
+        return res.status(400).json({ message: "Pharmacy name already exists" });
+      }
     }
 
     const allowed = [
@@ -270,12 +283,18 @@ app.put("/api/pharmacy/profile", AuthMiddleware, async (req, res) => {
       "contact_number",
       "latitude",
       "longitude",
+      "location_url",
     ];
     const update = {};
     for (const key of allowed) if (key in req.body) update[key] = req.body[key];
+    
+    // Handle user_name update separately if new_user_name is provided
+    if (newUserName && newUserName !== currentUserName) {
+      update.user_name = newUserName;
+    }
 
     const pharmacy = await Pharmacy.findOneAndUpdate(
-      { user_name },
+      { user_name: currentUserName },
       { $set: update },
       { new: true }
     );

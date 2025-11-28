@@ -319,11 +319,15 @@ export default function PharmacyPage() {
       <header className="fm-header">
         <h6 className="fm-text">PharmaNear</h6>
         <div className="fm-location">
-          <button onClick={() => setIsMenuOpen(o => !o)} className="menu-button" style={{ backgroundColor: "transparent", marginLeft: -15, color: '#ffffff', boxShadow: '0 4px 16px rgba(0,0,0,0.10)',fontWeight: '600', borderRadius: '50%', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', padding: '0', transition: 'all 0.2s ease' }}>
-            <FaUserCircle size={28} />
+          <button
+            onClick={() => setIsMenuOpen(o => !o)}
+            className="profile-button"
+            aria-label="Profile menu"
+          >
+            <FaUserCircle className="profile-icon" />
           </button>
           {isMenuOpen && (
-            <div className="dropdown-menu" style={{ position: 'absolute', top: '50px', right: '0', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 8px 24px rgba(0,0,0,0.2)', zIndex: '1000', width: '200px', overflow: 'hidden', border: '1px solid #e9e9e9', opacity: '1', visibility: 'visible', transform: 'translateY(0)', transition: 'all 0.2s ease', animation: 'slideDown 0.2s ease' }}>
+            <div className="dropdown-menu">
               <button onClick={goToAdmin} className="dropdown-item">
                 Go to Admin Panel
               </button>

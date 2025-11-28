@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaArrowLeft, FaMapPin } from "react-icons/fa";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./PharmacyAdmin.css";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
@@ -16,6 +16,7 @@ export default function PharmacyAdmin() {
     pincode: "",
     latitude: "",
     longitude: "",
+    location_url: "",
   });
 
   useEffect(() => {
@@ -38,6 +39,8 @@ export default function PharmacyAdmin() {
 
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [savingProfile, setSavingProfile] = useState(false);
+  const [originalUserName, setOriginalUserName] = useState("");
+  const [saveError, setSaveError] = useState("");
 
   useEffect(() => {
     const userName = localStorage.getItem("pharmacy_user_name") || "";
@@ -66,9 +69,11 @@ export default function PharmacyAdmin() {
       );
       if (!res.ok) throw new Error("Failed to load profile");
       const data = await res.json();
+      const fetchedUserName = data.user_name || userName;
+      setOriginalUserName(fetchedUserName);
       setProfile((p) => ({
         ...p,
-        user_name: data.user_name || userName,
+        user_name: fetchedUserName,
         license_number: data.license_number || "",
         address: data.address || "",
         city: data.city || "",
@@ -76,6 +81,7 @@ export default function PharmacyAdmin() {
         pincode: data.pincode || "",
         latitude: data.latitude ?? "",
         longitude: data.longitude ?? "",
+        location_url: data.location_url || "",
       }));
     } catch (e) {
       console.error("Failed to load profile:", e);
@@ -92,14 +98,24 @@ export default function PharmacyAdmin() {
   async function saveProfile() {
     try {
       setSavingProfile(true);
+      setSaveError("");
       const token = localStorage.getItem("pharmacy_token") || "";
+      // Track if user_name is being changed
+      const userNameChanged = profile.user_name !== originalUserName;
+      
       const payload = {
         ...profile,
+        // Always send the original user_name for authentication verification
+        user_name: originalUserName,
         latitude:
           profile.latitude === "" ? undefined : Number(profile.latitude),
         longitude:
           profile.longitude === "" ? undefined : Number(profile.longitude),
       };
+      // If user_name changed, send the new name as new_user_name
+      if (userNameChanged) {
+        payload.new_user_name = profile.user_name;
+      }
       const res = await fetch(`${BACKEND_URL}/api/pharmacy/profile`, {
         method: "PUT",
         headers: { 
@@ -108,17 +124,39 @@ export default function PharmacyAdmin() {
         },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error("Failed to save");
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || "Failed to save");
+      }
       const data = await res.json();
+      const updatedUserName = data.pharmacy.user_name || profile.user_name;
+      
+      // If username was changed, logout and redirect to login
+      if (userNameChanged) {
+        // Clear all local storage
+        localStorage.clear();
+        // Show a brief message before redirecting
+
+        // Navigate to login page
+        navigate('/login');
+        return;
+      }
+      
+      // If username didn't change, update state normally
+      setOriginalUserName(updatedUserName);
       setProfile((p) => ({
         ...p,
         ...data.pharmacy,
+        user_name: updatedUserName,
         latitude: data.pharmacy.latitude ?? "",
         longitude: data.pharmacy.longitude ?? "",
+        location_url: data.pharmacy.location_url || "",
       }));
       console.log("Profile saved:", data);
+      setSaveError("");
     } catch (e) {
       console.error("Unable to save profile:", e);
+      setSaveError(e.message || "Unable to save profile. Please try again.");
     } finally {
       setSavingProfile(false);
     }
@@ -147,13 +185,13 @@ export default function PharmacyAdmin() {
       <header className="fm-header">
         <div className="fm-text" style={{ color: '#ffffff', marginTop: 1, fontWeight: 'bold', textShadow: '0 2px 4px rgba(0, 0, 0, 0.33)' }}>PharmaNear</div>
         <div className="fm-location">
-          <h6 style={{ color: 'white', fontSize: '1.2rem', fontWeight: 'bold', marginBottom: 15, textShadow: '0 2px 4px rgba(0, 0, 0, 0.33)' }}>
-            Welcome, {profile.user_name}
+          <h6 className="fm-welcome-text">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/></svg><span className="user-name">{profile.user_name}</span>
           </h6>
         </div>
       </header>
 
-      <div className="back-to-dashboard-container">
+      <div className="back-to-dashboard-container" style={{background:'transparent'}}>
         <button
           type="button"
           className="fm-search-btn back-btn"
@@ -179,8 +217,23 @@ export default function PharmacyAdmin() {
                 }}
               >
                 <div className="admin-cards-wrapper">
-                  {/* First Card - License Number and Address */}
+                  {/* First Card - Pharmacy Name, License Number and Address */}
                   <div className="admin-card profile-card license-address-card">
+                    <label htmlFor="user_name">Pharmacy Name *</label>
+                    <input
+                      id="user_name"
+                      type="text"
+                      className="fm-input"
+                      placeholder="Enter pharmacy name"
+                      value={profile.user_name}
+                      onChange={(e) =>
+                        setProfile((p) => ({
+                          ...p,
+                          user_name: e.target.value,
+                        }))
+                      }
+                      required
+                    />
                     <label htmlFor="license_number">License Number *</label>
                     <input
                       id="license_number"
@@ -208,6 +261,7 @@ export default function PharmacyAdmin() {
                       }
                       style={{ minHeight: '3.5em' }} 
                     />
+                    
                   </div>
 
                   {/* Second Card - City, State, Pincode */}
@@ -247,7 +301,7 @@ export default function PharmacyAdmin() {
                     />
                   </div>
 
-                  {/* Third Card - Latitude, Longitude, Use Current Location Button */}
+                  {/* Third Card - Latitude, Longitude, Location URL, Use Current Location Button */}
                   <div className="admin-card profile-card coordinates-card">
                     <label htmlFor="latitude">Latitude</label>
                     <input
@@ -275,6 +329,7 @@ export default function PharmacyAdmin() {
                       }
                       style={{ overflow: 'hidden' }}
                     />
+                    
                     <button
                       type="button"
                       className="fm-search-btn save-btn"
@@ -282,9 +337,32 @@ export default function PharmacyAdmin() {
                     >
                       <FaMapPin /> Use current location
                     </button>
+                    <label htmlFor="location_url">Location URL</label>
+                    <input
+                      id="location_url"
+                      type="url"
+                      className="fm-input"
+                      placeholder="https://maps.google.com/..."
+                      value={profile.location_url}
+                      onChange={(e) =>
+                        setProfile((p) => ({ ...p, location_url: e.target.value }))
+                      }
+                    />
                   </div>
                 </div>
 
+                {saveError && (
+                  <div style={{ 
+                    color: "#dc2626", 
+                    background: "#fee2e2", 
+                    borderRadius: "6px", 
+                    padding: "12px", 
+                    marginBottom: "16px",
+                    fontSize: "0.95rem"
+                  }}>
+                    {saveError}
+                  </div>
+                )}
                 <button
                   className="fm-search-btn save-btn"
                   type="submit"

@@ -1,8 +1,8 @@
 import L from "leaflet";
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from "react-leaflet";
-import { useLocation, Link } from "react-router-dom";
+import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
+import { Link, useLocation } from "react-router-dom";
 import "./MapPage.css";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
@@ -152,6 +152,7 @@ export default function MapPage() {
                                     phone: pharmacy?.phone_number || "Not available",
                                     lat: pharmacy?.latitude != null ? pharmacy.latitude : userLocation.lat + Math.random() * 0.01,
                                     lng: pharmacy?.longitude != null ? pharmacy.longitude : userLocation.lng + Math.random() * 0.01,
+                                    location_url: pharmacy?.location_url || null,
                                     stock: item?.stock?.quantity > 0 ? "in-stock" : "out-of-stock",
                                     price: item?.stock?.price || 0,
                                     quantity: item?.stock?.quantity || 0,
@@ -216,23 +217,22 @@ export default function MapPage() {
             <div key={pharmacy.id} className="pharmacy-card">
               <div className="pharmacy-info">
                 <h3>{pharmacy.name}</h3>
-                <p>{pharmacy.address}</p>
+                <p>Address: {pharmacy.address}</p>
                 <p>Closes: {pharmacy.closing}</p>
-                <p>{pharmacy.phone}</p>
+                <p>Phone: {pharmacy.phone}</p>
                 {pharmacy.price > 0 && <p>Price: ₹{pharmacy.price}</p>}
-                {pharmacy.quantity > 0 && <p>Available: {pharmacy.quantity} units</p>}
 
                 <button
                   className="google-maps-btn"
-                  onClick={() =>
-                    window.open(
-                      `https://www.google.com/maps?q=${pharmacy.lat},${pharmacy.lng}`,
-                      '_blank'
-                    )
-                  }
+                  onClick={() => {
+                    const mapsUrl = pharmacy.location_url 
+                      ? pharmacy.location_url 
+                      : `https://www.google.com/maps?q=${pharmacy.lat},${pharmacy.lng}`;
+                    window.open(mapsUrl, '_blank');
+                  }}
                   title="Open in Google Maps"
                 >
-                  📍 Open in Google Maps
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"/></svg>
                 </button>
               </div>
               <div className={`stock ${pharmacy.stock}`}>
