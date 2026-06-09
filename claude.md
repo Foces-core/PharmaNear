@@ -1,1 +1,1 @@
-@import agent.md
+read and consider agent.md

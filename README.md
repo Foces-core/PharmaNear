@@ -146,6 +146,8 @@ Contributions are welcome! Please follow these steps:
 
 Please ensure your code follows the project's style guidelines and includes tests where applicable.
 
+> **CRITICAL:** All important architectural decisions made by humans or AI agents MUST be recorded in the `memory.md` file to provide context for future development.
+
 ---
 
 ## 📜 License

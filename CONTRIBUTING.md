@@ -48,6 +48,7 @@ If you only want to test a specific area:
 4. Push your branch and open a Pull Request.
 5. In your PR description, explain what you changed and why.
 
-## 🏛️ Architecture Goals
+## 🏛️ Architecture Goals & Memory
 
-If you are contributing to the backend, please note that we are actively trying to migrate away from a monolithic `server.js` file toward a strict MVC pattern (`routes/`, `controllers/`, `middleware/`). If your PR helps us move toward that goal, we will love you forever!
+- If you are contributing to the backend, please note that we are actively trying to migrate away from a monolithic `server.js` file toward a strict MVC pattern (`routes/`, `controllers/`, `middleware/`). If your PR helps us move toward that goal, we will love you forever!
+- **CRITICAL:** All important architectural decisions made by humans or AI agents MUST be recorded in the `memory.md` file to provide context for future development.
