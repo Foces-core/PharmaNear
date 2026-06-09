@@ -47,6 +47,25 @@ PharmaNear/
 └── .env.example            # Template for environment variables
 ```
 
+### 🚧 Planned Architecture Refactor
+
+In the future, the project is planned to be refactored to follow a stricter MVC pattern for better scalability and maintainability:
+
+```text
+PharmaNear/
+├── backend/
+│   ├── config/             # DB connection & Passport/Auth config
+│   ├── controllers/        # Request handling logic
+│   ├── models/             # Mongoose Schemas (Medicine, Pharmacy, Stock)
+│   ├── routes/             # API Endpoints
+│   └── middleware/         # Auth & Error handling
+├── frontend/
+│   ├── src/
+│   │   ├── components/     # Reusable UI (Navbar, Map, Search)
+│   │   ├── pages/          # View components (Home, Dashboard)
+│   │   └── api/            # API service calls
+```
+
 ## 🚀 Getting Started
 
 Follow these steps to set up and run the project locally.
