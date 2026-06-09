@@ -6,6 +6,11 @@ First off, thank you for considering contributing to PharmaNear! It's people lik
 
 We use `pnpm` as our package manager. Please ensure you have Node.js and `pnpm` installed.
 
+**Need help installing?**
+- 🟢 [Node.js Official Download](https://nodejs.org/en/download/)
+- 🟡 [pnpm Official Installation Guide](https://pnpm.io/installation)
+- 📺 [YouTube Video: How to install Node.js](https://www.youtube.com/watch?v=EIJeLiaGfA0) *(Note: Once Node is installed, open your terminal and run `npm install -g pnpm` to install pnpm!)*
+
 1. **Clone the repo**
    ```bash
    git clone https://github.com/Foces-core/pharmanear.git

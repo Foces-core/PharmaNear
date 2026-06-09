@@ -71,7 +71,7 @@ PharmaNear/
 Follow these steps to set up and run the project locally.
 
 ### Prerequisites
-- **Node.js** (v18 or higher) - [Download here](https://nodejs.org/)
+- **Node.js** (v18 or higher) - [Download here](https://nodejs.org/) *(New? Watch a [YouTube Guide](https://www.youtube.com/watch?v=EIJeLiaGfA0))*
 - **MongoDB** (local or cloud instance) - [MongoDB Atlas](https://www.mongodb.com/atlas) for cloud setup
 - **Git** - [Download here](https://git-scm.com/)
 
