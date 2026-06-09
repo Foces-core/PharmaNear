@@ -120,11 +120,11 @@ Contributions are welcome! Please follow these steps:
 
 1.Fork the Project.
 
-2.Create your Feature Branch (git checkout -b feature/AmazingFeature).
+2.Create your Feature Branch (git checkout -b feature/Featurename).
 
 3.Commit your Changes (git commit -m 'Add some AmazingFeature').
 
-4.Push to the Branch (git push origin feature/AmazingFeature).
+4.Push to the Branch (git push origin feature/Featurename).
 
 5.Open a Pull Request.
 
@@ -140,7 +140,7 @@ This project is licensed under the MIT License.
 
 ## 📬 Contact
 
-- **Project Link:** [https://github.com/your-username/pharmanear](https://github.com/your-username/pharmanear)
+- **Project Link:** [https://github.com/Foces-core/pharmanear](https://github.com/Foces-core/pharmanear)
 - **Live Demo:** [https://pharmanear-frontend.onrender.com](https://pharmanear-frontend.onrender.com)
 - **Issues:** Open an issue on GitHub for bugs or feature requests.
 
