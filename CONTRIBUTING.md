@@ -49,7 +49,7 @@ If you only want to test a specific area:
 
 ## 📝 Pull Request Process
 
-1. Create a new branch from `main` (e.g., `git checkout -b feature/awesome-new-button`).
+1. Create a new branch from `main` (e.g., `git checkout -b feature/feature-name`).
 2. Make your changes and commit them with clear, descriptive messages.
 3. Run the tests locally using `pnpm run test` and ensure they pass.
 4. Push your branch and open a Pull Request.

@@ -136,11 +136,11 @@ Contributions are welcome! Please follow these steps:
 
 1. Fork the Project.
 
-2. Create your Feature Branch (`git checkout -b feature/Featurename`).
+2. Create your Feature Branch (`git checkout -b feature/feature-name`).
 
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`).
+3. Commit your Changes (`git commit -m 'feat: add feature name'`).
 
-4. Push to the Branch (`git push origin feature/Featurename`).
+4. Push to the Branch (`git push origin feature/feature-name`).
 
 5. Open a Pull Request.
 
