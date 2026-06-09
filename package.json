@@ -1,0 +1,10 @@
+{
+  "name": "pharmanear-root",
+  "private": true,
+  "scripts": {
+    "test": "pnpm run test:backend && pnpm run test:frontend",
+    "test:backend": "cd backend && pnpm test",
+    "test:frontend": "cd frontend && pnpm test",
+    "install:all": "pnpm install && cd backend && pnpm install && cd ../frontend && pnpm install"
+  }
+}
