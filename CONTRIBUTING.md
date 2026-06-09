@@ -45,6 +45,8 @@ If you only want to test a specific area:
 - Backend: `cd backend && pnpm test`
 - Frontend: `cd frontend && pnpm test`
 
+*(If you are ever confused about which test to run, just run the full `pnpm run test` command from the root directory!)*
+
 ## 📝 Pull Request Process
 
 1. Create a new branch from `main` (e.g., `git checkout -b feature/awesome-new-button`).
