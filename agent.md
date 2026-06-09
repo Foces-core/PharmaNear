@@ -16,4 +16,8 @@
 - Current: Monolith (`server.js`). Goal: MVC pattern.
 - DB: `Medicine` (reference), `Pharmacy` (users/locations), `Stock` (links Pharmacy+Medicine with quantity/price).
 
-**READ `memory.md` NEXT. IT IS MANDATORY FOR ALL AI AGENTS.**
+**MANDATORY READING FOR AI AGENTS:**
+1. `memory.md`
+2. `CONTRIBUTING.md`
+3. `CODE_OF_CONDUCT.md`
+You MUST read these files to understand the project architecture, contribution guidelines, and community standards before assisting.

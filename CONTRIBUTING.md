@@ -57,5 +57,10 @@ If you only want to test a specific area:
 
 ## 🏛️ Architecture Goals & Memory
 
-- If you are contributing to the backend, please note that we are actively trying to migrate away from a monolithic `server.js` file toward a strict MVC pattern (`routes/`, `controllers/`, `middleware/`). If your PR helps us move toward that goal, we will love you forever!
+- If you are contributing to the backend, please note that we are actively trying to migrate away from a monolithic `server.js` file toward a strict MVC pattern (`routes/`, `controllers/`, `middleware/`). If your PR helps us move toward that goal, we will love you forever! Here is how we define the components:
+  - **Models (`models/`)**: Mongoose schemas defining the structure of our database documents.
+  - **Views (`frontend/src/`)**: Our React components (we keep views completely decoupled from the backend API).
+  - **Controllers (`controllers/`)**: Business logic. They receive requests from routes, interact with models, and send responses.
+  - **Routes (`routes/`)**: Define the API endpoints and map them to the appropriate controller functions.
+  - **Middleware (`middleware/`)**: Authentication (e.g., verifying JWTs) and error handling functions.
 - **CRITICAL:** All important architectural decisions made by humans or AI agents MUST be recorded in the `memory.md` file to provide context for future development.
