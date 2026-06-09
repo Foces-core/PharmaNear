@@ -142,7 +142,7 @@ Contributions are welcome! Please follow these steps:
 
 4. Push to the Branch (`git push origin feature/feature-name`).
 
-5. Open a Pull Request.
+5. Open a Pull Request targeting the `main` branch.
 
 Please ensure your code follows the project's style guidelines and includes tests where applicable.
 
