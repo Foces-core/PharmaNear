@@ -49,6 +49,7 @@ PharmaNear/
 │   │   └── api/            # API service calls
 │   └── public/             # Static assets
 └── .env.example            # Template for environment variables
+```
 
 ## 🚀 Getting Started
 
@@ -61,7 +62,7 @@ Follow these steps to set up and run the project locally.
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/pharmanear.git
+git clone https://github.com/Foces-core/pharmanear.git
 cd pharmanear
 ```
 
@@ -87,16 +88,16 @@ CORS_ORIGIN=http://localhost:5173
 ### 3. Backend Setup
 ```bash
 cd backend
-npm install
-npm start  # or node server.js
+pnpm install  # or npm install
+pnpm start    # or npm start / node server.js
 ```
 The backend will run on [http://localhost:5000](http://localhost:5000).
 
 ### 4. Frontend Setup
 ```bash
 cd ../frontend
-npm install
-npm run dev
+pnpm install  # or npm install
+pnpm dev      # or npm run dev
 ```
 The frontend will run on [http://localhost:5173](http://localhost:5173).
 
@@ -118,15 +119,15 @@ The frontend will run on [http://localhost:5173](http://localhost:5173).
 
 Contributions are welcome! Please follow these steps:
 
-1.Fork the Project.
+1. Fork the Project.
 
-2.Create your Feature Branch (git checkout -b feature/Featurename).
+2. Create your Feature Branch (`git checkout -b feature/Featurename`).
 
-3.Commit your Changes (git commit -m 'Add some AmazingFeature').
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`).
 
-4.Push to the Branch (git push origin feature/Featurename).
+4. Push to the Branch (`git push origin feature/Featurename`).
 
-5.Open a Pull Request.
+5. Open a Pull Request.
 
 Please ensure your code follows the project's style guidelines and includes tests where applicable.
 
