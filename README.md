@@ -37,16 +37,12 @@
 ```text
 PharmaNear/
 ├── backend/                # Node.js & Express server
-│   ├── config/             # DB connection & Passport/Auth config
-│   ├── controllers/        # Request handling logic
 │   ├── models/             # Mongoose Schemas (Medicine, Pharmacy, Stock)
-│   ├── routes/             # API Endpoints
-│   └── middleware/         # Auth & Error handling
+│   ├── server.js           # Main application logic, endpoints, and middleware
+│   └── medicine.js         # Script to fetch and seed medicine data
 ├── frontend/               # React + Vite application
 │   ├── src/
-│   │   ├── components/     # Reusable UI (Navbar, Map, Search)
-│   │   ├── pages/          # View components (Home, Dashboard)
-│   │   └── api/            # API service calls
+│   │   └── components/     # All UI components and pages (Home, Map, Dashboard)
 │   └── public/             # Static assets
 └── .env.example            # Template for environment variables
 ```
