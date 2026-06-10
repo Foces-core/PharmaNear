@@ -13,9 +13,6 @@ export default function PharmacyPage() {
   const [strength, setStrength] = useState("");
   const [stockItems, setStockItems] = useState([]);
   const [editingItem, setEditingItem] = useState(null);
-  const [showAddMedicineForm, setShowAddMedicineForm] = useState(false);
-  const [newMedicineName, setNewMedicineName] = useState("");
-  const [newMedicineStrength, setNewMedicineStrength] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [profile, setProfile] = useState({
     user_name: "",
@@ -65,12 +62,6 @@ export default function PharmacyPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        if (errorData.medicineNotFound) {
-          setError(`Medicine "${errorData.medicineName}" not found. Please add it first.`);
-          setNewMedicineName(errorData.medicineName);
-          setShowAddMedicineForm(true);
-          return;
-        }
         throw new Error(errorData.message || 'Add medicine failed');
       }
 

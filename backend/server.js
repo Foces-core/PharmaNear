@@ -322,9 +322,12 @@ app.post("/api/pharmacy/stock", AuthMiddleware, async (req, res) => {
     if (!price || price <= 0)
       return res.status(400).json({ message: "Valid price is required" });
 
+    // Escape special regex characters in medicine_name to prevent ReDoS
+    const escapedMedicineName = medicine_name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
     // Find medicine by name (case-insensitive exact match)
     let medicine = await Medicine.find({
-      name: new RegExp(`^${medicine_name}$`, "i"),
+      name: new RegExp(`^${escapedMedicineName}$`, "i"),
     });
 
     if (medicine.length > 1) {
