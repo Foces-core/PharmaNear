@@ -161,7 +161,15 @@ This project is licensed under the MIT License.
 - **Project Link:** [https://github.com/Foces-core/pharmanear](https://github.com/Foces-core/pharmanear)
 - **Live Demo:** [https://pharmanear-frontend.onrender.com](https://pharmanear-frontend.onrender.com)
 - **Issues:** Open an issue on GitHub for bugs or feature requests.
-
+  
 ---
+
+### Contact Maintainers
+
+- **Sebin Mathew**
+  - 📧 Email: sebinmathew543@gmail.com
+
+- **Lisha Jins**
+  - 📧 Email: lishajins2006@gmail.com
 
 
